@@ -5,7 +5,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	LWP::System::StartUp("TD3");
 #ifdef DEMO
 #else
-	//LWP::Window::ChangeFullScreenMode();
 	LWP::Window::ChangeFullScreenMode();
 #endif
 	LWP::System::Run(new TitleScene());
