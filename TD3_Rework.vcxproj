@@ -148,10 +148,16 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Scenes\Game\Clear\GameClearScene.cpp" />
+    <ClCompile Include="Game\Scenes\Game\Over\GameOverScene.cpp" />
+    <ClCompile Include="Game\Scenes\Game\Play\PlayScene.cpp" />
     <ClCompile Include="Game\Scenes\Title\TitleScene.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Scenes\Game\Clear\GameClearScene.h" />
+    <ClInclude Include="Game\Scenes\Game\Over\GameOverScene.h" />
+    <ClInclude Include="Game\Scenes\Game\Play\PlayScene.h" />
     <ClInclude Include="Game\Scenes\Title\TitleScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

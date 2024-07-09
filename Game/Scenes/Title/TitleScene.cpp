@@ -1,6 +1,6 @@
 #include "TitleScene.h"
 
-//#include "Game/Scenes/Game/GameScene.h"
+#include "../Game/Play/PlayScene.h"
 
 using namespace LWP;
 using namespace LWP::Input;
@@ -27,15 +27,13 @@ void TitleScene::Initialize()
 // 更新
 void TitleScene::Update()
 {
-	if (Keyboard::GetTrigger(DIK_SPACE) ||
-		Pad::GetTrigger(XINPUT_GAMEPAD_A))
-	{
-		//sceneTransition_->Start();
+	if (Keyboard::GetTrigger(DIK_N)){
+		nextSceneFunction = []() { return new PlayScene; };
 	}
 
 	//sceneTransition_->Update();
 
 	//if (sceneTransition_->GetIsSceneChange()) {
-	//	nextSceneFunction = []() {return new GameScene; };
+	//	
 	//}
 }
