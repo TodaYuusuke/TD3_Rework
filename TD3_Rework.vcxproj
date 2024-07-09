@@ -129,7 +129,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXGame\Adapter;$(SolutionDir)DirectXGame\Engine;$(SolutionDir)DirectXGame\Externals\assimp\include;$(SolutionDir)DirectXGame\Externals</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXGame\Adapter;$(SolutionDir)DirectXGame\Engine;$(SolutionDir)DirectXGame\Externals\assimp\include;$(SolutionDir)DirectXGame\Externals;$(SolutionDir)Game</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <Optimization>MinSpace</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
@@ -148,7 +148,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Scenes\Game\Clear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Over\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Play\PlayScene.cpp" />
@@ -156,7 +156,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Player\Player.h" />
+    <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Scenes\Game\Clear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\Game\Over\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\Game\Play\PlayScene.h" />

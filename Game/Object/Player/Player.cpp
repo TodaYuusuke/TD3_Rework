@@ -11,4 +11,5 @@ void Player::Init() {
 }
 
 void Player::Update() {
+	model_.worldTF.translation.z += 0.01f;
 }
