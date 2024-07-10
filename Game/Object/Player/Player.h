@@ -37,5 +37,7 @@ private: //*** メンバ変数 ***//
 	// モデル
 	LWP::Resource::RigidModel model_;
 
+	Behavior behavior_ = Idle;
+	std::optional<Behavior> reqBehavior_ = std::nullopt;
 
 };

@@ -23,6 +23,6 @@ public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
 
-	
+	std::unique_ptr<Player> player_;
 
 };

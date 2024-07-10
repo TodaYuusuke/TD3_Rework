@@ -14,8 +14,9 @@ struct Parameter
 
 ConstantBuffer<Parameter> gPara : register(b0);
 Texture2D<float32_t4> gTexture : register(t0);
-Texture2D<float32_t4> gDepth : register(t1);
+Texture2D<float32_t> gDepth : register(t1);
 SamplerState gSampler : register(s0);
+SamplerState gPointSampler : register(s1);
 
 float32_t4 main(PSInput input) : SV_TARGET {
 	float32_t4 output;

@@ -11,5 +11,10 @@ void Player::Init() {
 }
 
 void Player::Update() {
-	model_.worldTF.translation.z += 0.01f;
+	// すぐに消す
+	ImGui::Begin("player");
+
+	model_.worldTF.DebugGUI();
+
+	ImGui::End();
 }
