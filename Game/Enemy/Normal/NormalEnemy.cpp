@@ -24,7 +24,7 @@ void NormalEnemy::Update()
 		// 攻撃処理
 		Attack();
 		// 攻撃アニメーション
-		//AttackAnimation();
+
 	}
 	else
 	{
@@ -35,6 +35,11 @@ void NormalEnemy::Update()
 
 void NormalEnemy::Attack()
 {
+	//後ろに移動
+
+	//貯める
+
+	//突進
 }
 
 void NormalEnemy::DyingAnimation()

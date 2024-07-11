@@ -50,7 +50,7 @@ bool IEnemy::CheckAttackRange()
 	// 自機との距離
 	float distance = (models_[0].worldTF.translation - player_->GetWorldPosition()).Length();
 	if (distance <= kAttackRange_) {
-		return false;
+		return true;
 	}
 	return false;
 }

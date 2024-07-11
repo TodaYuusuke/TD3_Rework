@@ -11,4 +11,6 @@ public:
 	void DyingAnimation()override;
 
 private:
+
+
 };
