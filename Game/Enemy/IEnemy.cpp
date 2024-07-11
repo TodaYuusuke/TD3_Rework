@@ -3,9 +3,9 @@
 
 void IEnemy::Move()
 {
-	lwp::Vector3 MoveVec = GetDirectVel();
-	MoveVec.y = 0.0f;
-	models_[0].worldTF.translation += MoveVec * MoveSpeed * LWP::Info::GetDeltaTimeF();
+	lwp::Vector3 moveVec = GetDirectVel();
+	moveVec.y = 0.0f;
+	models_[0].worldTF.translation += moveVec * moveSpeed_ * LWP::Info::GetDeltaTimeF();
 }
 
 void IEnemy::LockPlayer()
@@ -23,6 +23,36 @@ void IEnemy::LockPlayer()
 
 	//行きたい方向のQuaternionの作成
 	models_[0].worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
+}
+
+void IEnemy::Dying()
+{
+	DyingAnimation();
+	deadFlame_--;
+	if (deadFlame_ <= kDeadFlame_) {
+		IsDead_ = true;
+	}
+	if (IsDead_) {
+		Dead();
+	}
+}
+
+void IEnemy::Dead()
+{
+	//IsDead_ = true;
+	//collider_.isActive = false;
+	//// 経験値を生成
+	//manager_->Create(models_[0].transform.translation);
+}
+
+bool IEnemy::CheckAttackRange()
+{
+	// 自機との距離
+	float distance = (models_[0].worldTF.translation - player_->GetWorldPosition()).Length();
+	if (distance <= kAttackRange_) {
+		return false;
+	}
+	return false;
 }
 
 lwp::Vector3 IEnemy::GetDirectVel(){

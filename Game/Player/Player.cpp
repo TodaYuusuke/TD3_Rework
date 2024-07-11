@@ -11,4 +11,7 @@ void Player::Init() {
 }
 
 void Player::Update() {
+	ImGui::Begin("Player");
+	ImGui::DragFloat3("Translate",&model_.worldTF.translation.x);
+	ImGui::End();
 }
