@@ -36,7 +36,16 @@ void NormalEnemy::Update()
 void NormalEnemy::Attack()
 {
 	//後ろに移動
+	atackWork = AtackWork::Stert;
+	if (atackWork == AtackWork::Stert) {
 
+	}
+	else if (atackWork == AtackWork::Interval) {
+
+	}
+	else if (atackWork == AtackWork::End) {
+		IsAttack_ = false;
+	}
 	//貯める
 
 	//突進

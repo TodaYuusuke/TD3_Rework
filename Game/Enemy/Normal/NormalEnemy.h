@@ -1,5 +1,10 @@
 #pragma once
 #include "../IEnemy.h"
+enum AtackWork {
+	Stert,
+	Interval,
+	End
+};
 
 class NormalEnemy : public IEnemy {
 public:
@@ -11,6 +16,6 @@ public:
 	void DyingAnimation()override;
 
 private:
-
+	AtackWork atackWork;
 
 };
