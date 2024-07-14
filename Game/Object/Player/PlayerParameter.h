@@ -1,10 +1,14 @@
 #pragma once
 
+#include "PlayerConfig.h"
+
 
 /// <summary>
-/// プレイヤーの基本的な設定を格納
+/// プレイヤーの基本的な設定を持っている
+/// 設定から参照し、計算した結果を格納
+/// 設計的に、初期設定と同じ項目が多い
 /// </summary>
-class PlayerConfig final {
+class PlayerParameter final {
 public: //*** メンバ関数 ***//
 
 	/// <summary>
@@ -20,6 +24,8 @@ public: //*** メンバ関数 ***//
 
 private: //*** サブクラス ***//
 
+	//*** 初期設定から計算した結果を格納 ***//
+
 	// 移動時の値を格納
 	// 秒速で計算している
 	struct MoveSpeed {
@@ -34,7 +40,7 @@ private: //*** サブクラス ***//
 		float momentTime;	// 攻撃後の後隙の時間1
 	};
 
-	// 距離や範囲を格納
+	// 距離を格納
 	struct LengthRadius {
 		float playerRadius;	// プレイヤーの判定
 		float attackRadius;	// 攻撃の範囲
@@ -47,19 +53,21 @@ private: //*** サブクラス ***//
 		float momentStuckRatio;		// 攻撃後に動けない時間の割合(0 に近いほど早く動く)
 	};
 
-public: //*** 変数群 ***//
 
-	// 移動速度のパラメータをまとめている
+public: //*** メンバ変数 ***//
+
+	// 基本的な設定
+	PlayerConfig config;
+	
+	// 移動速度のパラメータ
 	MoveSpeed moveSpeed;
-
-	// 経過させる時間のパラメータ
+	// 時間のパラメータ
 	ProgressTime progressTime;
-
-	// あらゆる距離のパラメータ
+	// 距離のパラメータ
 	LengthRadius lengthRadius;
-
 	// 補正や割合のパラメータ
 	CollectionRatio collectionRatio;
+
 
 private: //*** 関数群 ***//
 

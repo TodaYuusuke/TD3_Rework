@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
     <ClCompile Include="Game\Scenes\Game\Clear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Over\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Play\PlayScene.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\Player\PlayerConfig.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParameter.h" />
     <ClInclude Include="Game\Scenes\Game\Clear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\Game\Over\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\Game\Play\PlayScene.h" />

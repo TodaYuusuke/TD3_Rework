@@ -13,8 +13,9 @@ void Player::Init() {
 	model_.LoadCube();
 	// 関数ポインタ配列を初期化
 	InitStateFunctions();
+
 	// 設定を初期化
-	configs_.Init();
+	parameter_.Init();
 	//当たり判定を初期化
 	InitColliders();
 }
@@ -121,13 +122,13 @@ void Player::InitColliders() {
 
 void Player::InitColliderPlayer() {
 	playerCollider_.collider.name = "Player";
-	playerCollider_.capsule.radius = configs_.lengthRadius.playerRadius;
+	playerCollider_.capsule.radius = parameter_.lengthRadius.playerRadius;
 }
 
 void Player::InitColliderAttack() {
 	attackCollider_.collider.name = "PlayerAttack";
 	attackCollider_.collider.isActive = false;
-	attackCollider_.capsule.radius = configs_.lengthRadius.attackRadius;
+	attackCollider_.capsule.radius = parameter_.lengthRadius.attackRadius;
 }
 
 #pragma region 状態の初期化
@@ -143,7 +144,7 @@ void Player::InitAttack() {
 	behaviorTime_ = 0.0f;
 	// 速度を設定
 	// 移動速度は固定し、デルタタイムは後で計算する
-	velocity_ = destinate_ * configs_.moveSpeed.attackSpeed;
+	velocity_ = destinate_ * parameter_.moveSpeed.attackSpeed;
 	// 攻撃を有効化
 	attackCollider_.collider.isActive = true;
 	// 攻撃の判定を設定する
@@ -151,7 +152,7 @@ void Player::InitAttack() {
 	attackCollider_.capsule.start = model_.worldTF.translation;
 	// 攻撃の範囲を設定する
 	// コンフィグではなくパラメータを使うことになる
-	attackCollider_.capsule.radius = configs_.lengthRadius.attackRadius;
+	attackCollider_.capsule.radius = parameter_.lengthRadius.attackRadius;
 }
 
 void Player::InitMoment() {
@@ -181,7 +182,7 @@ void Player::UpdateMove() {
 	// 移動入力されている時
 	if (flags_.isInputMove) {
 		// 速度を代入する
-		velocity_ = destinate_ * configs_.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
+		velocity_ = destinate_ * parameter_.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
 	}
 	// 入力をやめた時
 	else {
@@ -206,14 +207,14 @@ void Player::UpdateAttack() {
 	model_.worldTF.translation += velocity_ * Info::GetDeltaTimeF();
 
 	// 攻撃を少しづつ短くする
-	attackCollider_.capsule.start += velocity_ * 0.75f * Info::GetDeltaTimeF();
+	attackCollider_.capsule.start += velocity_ * parameter_.collectionRatio.attackReduceStart * Info::GetDeltaTimeF();
 	// 攻撃は最初は進行方向に長くしたい
 	// 徐々に短くなっていくのがいい
 	// 進む速度分伸びる(速度を上げると前に伸びる)
-	attackCollider_.capsule.end = model_.worldTF.translation + velocity_ * Info::GetDeltaTimeF();
+	attackCollider_.capsule.end = model_.worldTF.translation + velocity_ * parameter_.collectionRatio.attackExtendEnd * Info::GetDeltaTimeF();
 
 	// 一定時間経過した時
-	if (configs_.progressTime.attackTime <= behaviorTime_) {
+	if (parameter_.progressTime.attackTime <= behaviorTime_) {
 		reqBehavior_ = Behavior::Moment;
 	}
 }
@@ -223,11 +224,11 @@ void Player::UpdateMoment() {
 	behaviorTime_ += Info::GetDeltaTimeF();
 
 	// 一定時間経たないと移動入力は反映されない
-	if (configs_.progressTime.momentTime * 0.55f <= behaviorTime_) {
+	if (parameter_.progressTime.momentTime * parameter_.collectionRatio.momentStuckRatio <= behaviorTime_) {
 		// 移動入力されている時
 		if (flags_.isInputMove) {
 			// 速度を代入する
-			velocity_ = destinate_ * configs_.moveSpeed.momentSpeed * Info::GetDeltaTimeF();
+			velocity_ = destinate_ * parameter_.moveSpeed.momentSpeed * Info::GetDeltaTimeF();
 		}
 		// 入力をやめた時
 		else {
@@ -237,7 +238,7 @@ void Player::UpdateMoment() {
 		model_.worldTF.translation += velocity_;
 	}
 	// 一定時間経過した時
-	if (configs_.progressTime.momentTime <= behaviorTime_) {
+	if (parameter_.progressTime.momentTime <= behaviorTime_) {
 		reqBehavior_ = Behavior::Idle;
 	}
 }
@@ -272,7 +273,7 @@ void Player::DebugWindow() {
 	}
 
 	// 設定を表示
-	configs_.DebugTree();
+	parameter_.DebugTree();
 
 	ImGui::End();
 #endif // DEMO

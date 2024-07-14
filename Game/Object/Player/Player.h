@@ -1,6 +1,6 @@
 #pragma once
 #include <Adapter.h>
-#include "PlayerConfig.h"
+#include "PlayerParameter.h"
 
 /// <summary>
 /// プレイヤークラス
@@ -70,8 +70,8 @@ private: //*** メンバ変数 ***//
 	// 更新関数ポインタの配列
 	void (Player::* stateUpdate_[(int)Behavior::_Count])();
 
-	// 初期設定を格納
-	PlayerConfig configs_;
+	// 各種パラメータを格納
+	PlayerParameter parameter_;
 
 private: //*** 細かく設定される変数 ***//
 

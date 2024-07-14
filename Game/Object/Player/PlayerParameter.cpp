@@ -1,22 +1,28 @@
-#include "PlayerConfig.h"
+#include "PlayerParameter.h"
 
 #include <Adapter.h>
 
-void PlayerConfig::Init() {
+void PlayerParameter::Init() {
+	// 最初に設定を初期化する
+	config.Init();
+
 	// 移動値を初期化
 	InitMoveSpeed();
 	// 時間を初期化
 	InitProgressTime();
-	// 距離や補正を初期化
+	// 距離や範囲を初期化
 	InitLengthRadius();
 	// 補正や割合を初期化
 	InitCollectionRatio();
 }
 
-void PlayerConfig::DebugTree() {
+void PlayerParameter::DebugTree() {
 #ifdef DEMO
+	// 設定の表示
+	config.DebugTree();
+
 	// Tree で表示
-	if (ImGui::TreeNode("PlayerConfig")) {
+	if (ImGui::TreeNode("PlayerParameter")) {
 		// 初期化する
 		if (ImGui::Button("Init")) {
 			Init();
@@ -26,7 +32,7 @@ void PlayerConfig::DebugTree() {
 		DebugTreeMoveSpeed();
 		// 時間の表示
 		DebugTreeProgressTime();
-		// 距離や範囲の表示
+		// 距離の表示
 		DebugTreeLengthRadius();
 		// 補正や割合の表示
 		DebugTreeCollectionRatio();
@@ -39,29 +45,29 @@ void PlayerConfig::DebugTree() {
 #endif // DEMO
 }
 
-void PlayerConfig::InitMoveSpeed() {
-	moveSpeed.moveSpeed = 5.0f;
-	moveSpeed.attackSpeed = 200.0f;
-	moveSpeed.momentSpeed = 1.0f;
+void PlayerParameter::InitMoveSpeed() {
+	moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
+	moveSpeed.attackSpeed = config.moveSpeed.attackSpeed;
+	moveSpeed.momentSpeed = config.moveSpeed.momentSpeed;
 }
 
-void PlayerConfig::InitProgressTime() {
-	progressTime.attackTime = 0.2f;
-	progressTime.momentTime = 0.5f;
+void PlayerParameter::InitProgressTime() {
+	progressTime.attackTime = config.progressTime.attackTime;
+	progressTime.momentTime = config.progressTime.momentTime;
 }
 
-void PlayerConfig::InitLengthRadius() {
-	lengthRadius.playerRadius = 1.0f;
-	lengthRadius.attackRadius = 2.0f;
+void PlayerParameter::InitLengthRadius() {
+	lengthRadius.playerRadius = config.lengthRadius.playerRadius;
+	lengthRadius.attackRadius = config.lengthRadius.attackRadius;
 }
 
-void PlayerConfig::InitCollectionRatio() {
-	collectionRatio.attackReduceStart = 0.75f;
-	collectionRatio.attackExtendEnd = 1.0f;
-	collectionRatio.momentStuckRatio = 0.5f;
+void PlayerParameter::InitCollectionRatio() {
+	collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
+	collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
+	collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
 }
 
-void PlayerConfig::DebugTreeMoveSpeed() {
+void PlayerParameter::DebugTreeMoveSpeed() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("MoveSpeed")) {
 		ImGui::SliderFloat("moveSpeed", &moveSpeed.moveSpeed, 0.0f, 50.0f);
@@ -75,7 +81,7 @@ void PlayerConfig::DebugTreeMoveSpeed() {
 	}
 }
 
-void PlayerConfig::DebugTreeProgressTime() {
+void PlayerParameter::DebugTreeProgressTime() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("ProgressTime")) {
 		ImGui::SliderFloat("attackTime", &progressTime.attackTime, 0.0f, 5.0f);
@@ -88,7 +94,7 @@ void PlayerConfig::DebugTreeProgressTime() {
 	}
 }
 
-void PlayerConfig::DebugTreeLengthRadius() {
+void PlayerParameter::DebugTreeLengthRadius() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("LengthRadius")) {
 		ImGui::SliderFloat("playerRadius", &lengthRadius.playerRadius, 0.01f, 5.0f);
@@ -101,7 +107,7 @@ void PlayerConfig::DebugTreeLengthRadius() {
 	}
 }
 
-void PlayerConfig::DebugTreeCollectionRatio() {
+void PlayerParameter::DebugTreeCollectionRatio() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("CollectionRatio")) {
 		ImGui::SliderFloat("attackReduceStart", &collectionRatio.attackReduceStart, -2.0f, 2.0f);
