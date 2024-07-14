@@ -18,12 +18,6 @@ public: // ** メンバ関数 ** //
 	void Update();
 
 	/// <summary>
-	/// デバッグウィンドウを表示する
-	/// <para>内部で #ifdef DEMO している</para>
-	/// </summary>
-	void DebugWindow();
-
-	/// <summary>
 	/// ワールド座標を取得
 	/// </summary>
 	/// <returns></returns>
@@ -149,4 +143,11 @@ private: //*** 各状態の関数群 ***//
 	void UpdateMoment();
 
 
+public: //*** デバッグ用の関数 ***//
+
+	/// <summary>
+	/// デバッグウィンドウを表示する
+	/// <para>内部で #ifdef DEMO している</para>
+	/// </summary>
+	void DebugWindow();
 };

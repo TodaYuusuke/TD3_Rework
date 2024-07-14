@@ -52,40 +52,6 @@ void Player::Update() {
 	playerCollider_.capsule.end = model_.worldTF.translation;
 }
 
-void Player::DebugWindow() {
-#ifdef DEMO
-	// カプセルの描画も当たり判定に追従させる
-	playerCollider_.capsule.isActive = playerCollider_.collider.isActive;
-	attackCollider_.capsule.isActive = attackCollider_.collider.isActive;
-
-	ImGui::Begin("PlayerWindow");
-
-	// 今の行動を表示
-	ImGui::Text("Behavior : "); ImGui::SameLine();
-	switch (behavior_) {
-	case Player::Behavior::Idle:
-		ImGui::Text("Idle");
-		break;
-	case Player::Behavior::Move:
-		ImGui::Text("Move");
-		break;
-	case Player::Behavior::Attack:
-		ImGui::Text("Attack");
-		break;
-	case Player::Behavior::Moment:
-		ImGui::Text("Moment");
-		break;
-	default:
-		break;
-	}
-
-	// 設定を表示
-	configs_.DebugTree();
-
-	ImGui::End();
-#endif // DEMO
-}
-
 void Player::CheckInputMove() {
 	// 方向を取得
 	lwp::Vector2 direct{ 0.0f,0.0f };
@@ -277,3 +243,37 @@ void Player::UpdateMoment() {
 }
 
 #pragma endregion
+
+void Player::DebugWindow() {
+#ifdef DEMO
+	// カプセルの描画も当たり判定に追従させる
+	playerCollider_.capsule.isActive = playerCollider_.collider.isActive;
+	attackCollider_.capsule.isActive = attackCollider_.collider.isActive;
+
+	ImGui::Begin("PlayerWindow");
+
+	// 今の行動を表示
+	ImGui::Text("Behavior : "); ImGui::SameLine();
+	switch (behavior_) {
+	case Player::Behavior::Idle:
+		ImGui::Text("Idle");
+		break;
+	case Player::Behavior::Move:
+		ImGui::Text("Move");
+		break;
+	case Player::Behavior::Attack:
+		ImGui::Text("Attack");
+		break;
+	case Player::Behavior::Moment:
+		ImGui::Text("Moment");
+		break;
+	default:
+		break;
+	}
+
+	// 設定を表示
+	configs_.DebugTree();
+
+	ImGui::End();
+#endif // DEMO
+}
