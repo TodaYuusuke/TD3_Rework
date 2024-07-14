@@ -1,5 +1,6 @@
 #pragma once
 #include <Adapter.h>
+#include "PlayerConfig.h"
 
 /// <summary>
 /// プレイヤークラス
@@ -16,6 +17,11 @@ public: // ** メンバ関数 ** //
 	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// デバッグウィンドウを表示する
+	/// <para>内部で #ifdef DEMO している</para>
+	/// </summary>
+	void DebugWindow();
 
 	/// <summary>
 	/// ワールド座標を取得
@@ -30,6 +36,7 @@ private: //*** サブクラス ***//
 		Idle = 0,
 		Move,
 		Attack,
+		Moment,
 
 		_Count,	// 状態最大数
 	};
@@ -37,6 +44,21 @@ private: //*** サブクラス ***//
 	// フラグをまとめた構造体
 	struct Flags {
 		bool isInputMove = false;
+		bool isInputAttack = false;
+	};
+
+	// コライダーと形状をまとめた構造体
+	// 形状はカプセル
+	struct CapsuleCollider {
+		LWP::Object::Collider::Collider collider;	// 当たり判定
+		LWP::Object::Collider::Capsule& capsule;	// 形状
+
+		/// <summary>
+		/// コンストラクタ
+		/// <para>参照変数のために用意</para>
+		/// </summary>
+		CapsuleCollider() : capsule(collider.SetBroadShape(lwp::Collider::Capsule())) {
+		}
 	};
 
 private: //*** メンバ変数 ***//
@@ -53,26 +75,35 @@ private: //*** メンバ変数 ***//
 	void (Player::* stateInit_[(int)Behavior::_Count])();
 	// 更新関数ポインタの配列
 	void (Player::* stateUpdate_[(int)Behavior::_Count])();
-	
+
+	// 初期設定を格納
+	PlayerConfig configs_;
+
 private: //*** 細かく設定される変数 ***//
 
 	// まとめられたフラグ
 	Flags flags_;
 
-	// 次に移動する方向 | 向いている方向
-	// モデルの向きから判断すればいいかもしれない
-	// でも違う方向に向かう時に使うかも
-	// ↑別の変数に役割を分ければいい
+	// 向いている方向
+	// 操作があった時に向く方向を決定している
 	LWP::Math::Vector3 destinate_ = { 0.0f,0.0f,1.0f };
 
 	// プレイヤーの速度を格納
 	LWP::Math::Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 
+	// 行動を続けている時間
+	float behaviorTime_ = 0.0f;
+
+	// プレイヤーの当たり判定
+	CapsuleCollider playerCollider_;
 
 private: //*** メンバ関数 ***//
 
 	// 移動方向、向いている方向の入力を受け取る
 	void CheckInputMove();
+
+	// 攻撃の入力を受け取る
+	void CheckInputAttack();
 
 	// 関数ポインタ配列を初期化
 	void InitStateFunctions();
@@ -87,6 +118,8 @@ private: //*** 各状態の関数群 ***//
 	void InitMove();
 	// 攻撃状態
 	void InitAttack();
+	// 攻撃後の後隙状態
+	void InitMoment();
 
 
 	// 状態の更新
@@ -97,6 +130,8 @@ private: //*** 各状態の関数群 ***//
 	void UpdateMove();
 	// 攻撃状態
 	void UpdateAttack();
+	// 攻撃後の後隙状態
+	void UpdateMoment();
 
 
 };
