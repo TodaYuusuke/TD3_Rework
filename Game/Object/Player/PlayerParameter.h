@@ -37,8 +37,11 @@ private: //*** サブクラス ***//
 
 	// 経過させる時間(秒)
 	struct ProgressTime {
-		float attackTime;	// 攻撃を行っている時間
-		float momentTime;	// 攻撃後の後隙の時間1
+		float attackTime;			// 攻撃を行っている時間
+		float momentTime;			// 攻撃後の後隙の時間
+		float damageTime;			// ダメージを喰らった後の時間
+		float damageInvincibleTime;	// ダメージを喰らった後の無敵時間
+		float invincibleTime;		// 当たり判定のない時間
 	};
 
 	// 距離を格納
@@ -58,6 +61,8 @@ private: //*** サブクラス ***//
 	struct CountGage {
 		int MaxAttackCount;		// 攻撃ができる最大数
 		int attackCount;		// 現在攻撃ができる回数
+		int MaxHpCount;			// 体力の最大数
+		int hpCount;			// 現在の体力数
 	};
 
 	// 攻撃力とかは...?

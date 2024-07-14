@@ -58,6 +58,9 @@ void PlayerParameter::InitMoveSpeed() {
 void PlayerParameter::InitProgressTime() {
 	progressTime.attackTime = config.progressTime.attackTime;
 	progressTime.momentTime = config.progressTime.momentTime;
+	progressTime.damageTime = config.progressTime.damageTime;
+	progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
+	progressTime.invincibleTime = 0.0f;
 }
 
 void PlayerParameter::InitLengthRadius() {
@@ -74,6 +77,8 @@ void PlayerParameter::InitCollectionRatio() {
 void PlayerParameter::InitCountGage() {
 	countGage.MaxAttackCount = 1;
 	countGage.attackCount = countGage.MaxAttackCount;
+	countGage.MaxHpCount = 3;
+	countGage.hpCount = countGage.MaxHpCount;
 }
 
 void PlayerParameter::DebugTreeMoveSpeed() {
@@ -95,6 +100,9 @@ void PlayerParameter::DebugTreeProgressTime() {
 	if (ImGui::TreeNode("ProgressTime")) {
 		ImGui::SliderFloat("attackTime", &progressTime.attackTime, 0.0f, 5.0f);
 		ImGui::SliderFloat("momentTime", &progressTime.momentTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageTime", &progressTime.damageTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageInvincigleTime", &progressTime.damageInvincibleTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("invincigleTime", &progressTime.invincibleTime, 0.0f, 5.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -137,6 +145,10 @@ void PlayerParameter::DebugTreeCountGage() {
 		if(ImGui::SliderInt("MaxAttackCount", &countGage.MaxAttackCount, 1, 10))
 			countGage.attackCount = countGage.MaxAttackCount;
 		ImGui::SliderInt("attackCount", &countGage.attackCount, 0, countGage.MaxAttackCount);
+		// 最大値が変わった時、HPも変更
+		if(ImGui::SliderInt("MaxHpCount", &countGage.MaxHpCount, 3, 10))
+			countGage.hpCount = countGage.MaxHpCount;
+		ImGui::SliderInt("hpCount", &countGage.hpCount, 0, countGage.MaxHpCount);
 		
 
 		// Tree を閉じる

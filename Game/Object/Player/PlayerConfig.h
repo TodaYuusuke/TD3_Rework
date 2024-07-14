@@ -30,9 +30,12 @@ private: //*** サブクラス ***//
 
 	// 経過させる時間(秒)
 	struct ProgressTime {
-		float attackTime;	// 攻撃を行っている時間
-		float momentTime;	// 攻撃後の後隙の時間1
+		float attackTime;			// 攻撃を行っている時間
+		float momentTime;			// 攻撃後の後隙の時間
+		float damageTime;			// ダメージを喰らった後の時間
+		float damageInvincibleTime;	// ダメージを喰らった後の無敵時間
 	};
+	// TODO : 攻撃中の無敵時間
 
 	// 距離や範囲を格納
 	struct LengthRadius {

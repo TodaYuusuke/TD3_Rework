@@ -48,6 +48,8 @@ void PlayerConfig::InitMoveSpeed() {
 void PlayerConfig::InitProgressTime() {
 	progressTime.attackTime = 0.2f;
 	progressTime.momentTime = 0.5f;
+	progressTime.damageTime = 0.3f;
+	progressTime.damageInvincibleTime = 1.0f;
 }
 
 void PlayerConfig::InitLengthRadius() {
@@ -80,6 +82,8 @@ void PlayerConfig::DebugTreeProgressTime() {
 	if (ImGui::TreeNode("ProgressTime")) {
 		ImGui::SliderFloat("attackTime", &progressTime.attackTime, 0.0f, 5.0f);
 		ImGui::SliderFloat("momentTime", &progressTime.momentTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageTime", &progressTime.damageTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageInvincigleTime", &progressTime.damageInvincibleTime, 0.0f, 5.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();

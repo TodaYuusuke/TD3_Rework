@@ -31,14 +31,16 @@ private: //*** サブクラス ***//
 		Move,
 		Attack,
 		Moment,
+		Damage,
 
 		_Count,	// 状態最大数
 	};
 
 	// フラグをまとめた構造体
 	struct Flags {
-		bool isInputMove = false;
-		bool isInputAttack = false;
+		bool isInputMove = false;	// 移動入力されたか
+		bool isInputAttack = false;	// 攻撃入力されたか
+		bool isDead = false;		// 死んでいるか
 	};
 
 	// コライダーと形状をまとめた構造体
@@ -96,6 +98,9 @@ private: //*** 細かく設定される変数 ***//
 
 private: //*** メンバ関数 ***//
 
+	// 体力を減らす
+	void DecreaseHP();
+
 	// 移動方向、向いている方向の入力を受け取る
 	void CheckInputMove();
 
@@ -108,6 +113,7 @@ private: //*** メンバ関数 ***//
 	// 当たり判定を初期化
 	void InitColliders();
 
+
 private: //*** 各状態の関数群 ***//
 
 	// 当たり判定の初期化
@@ -117,6 +123,15 @@ private: //*** 各状態の関数群 ***//
 	// 攻撃の当たり判定
 	void InitColliderAttack();
 
+	// プレイヤーの当たり判定関数
+	void EnterPlayer(LWP::Object::Collider::Collider* hitTarget);
+	void StayPlayer(LWP::Object::Collider::Collider* hitTarget);
+	void ExitPlayer(LWP::Object::Collider::Collider* hitTarget);
+
+	// 攻撃の当たり判定関数
+	void EnterAttack(LWP::Object::Collider::Collider* hitTarget);
+	void StayAttack(LWP::Object::Collider::Collider* hitTarget);
+	void ExitAttack(LWP::Object::Collider::Collider* hitTarget);
 
 
 	// 状態の初期化
@@ -129,6 +144,8 @@ private: //*** 各状態の関数群 ***//
 	void InitAttack();
 	// 攻撃後の後隙状態
 	void InitMoment();
+	// ダメージを喰らった状態
+	void InitDamage();
 
 
 	// 状態の更新
@@ -141,7 +158,8 @@ private: //*** 各状態の関数群 ***//
 	void UpdateAttack();
 	// 攻撃後の後隙状態
 	void UpdateMoment();
-
+	// ダメージを喰らった状態
+	void UpdateDamage();
 
 public: //*** デバッグ用の関数 ***//
 

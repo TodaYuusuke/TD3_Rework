@@ -22,6 +22,15 @@ void Player::Init() {
 
 void Player::Update() {
 
+	// 死んでいる時
+	if (flags_.isDead) {
+		// デバッグ情報を入力、処理前に確認する
+		DebugWindow();
+		// デバッグ表示用
+		model_.isActive = !model_.isActive;
+		return;
+	}
+
 	// 移動する前の情報を入力
 	playerCollider_.capsule.start = model_.worldTF.translation + Vector3(0.0f, 0.1f, 0.0f);
 
@@ -51,6 +60,26 @@ void Player::Update() {
 	// 移動した後の情報を入力
 	// 参照なので当たり判定に反映される
 	playerCollider_.capsule.end = model_.worldTF.translation;
+
+	// 無敵時間中の時
+	if (0.0f < parameter_.progressTime.invincibleTime) {
+		parameter_.progressTime.invincibleTime -= Info::GetDeltaTimeF();
+		// 無敵時間が切れた時
+		if (parameter_.progressTime.invincibleTime <= 0.0f) {
+			// 判定を取るようにする
+			playerCollider_.collider.isActive = true;
+		}
+	}
+}
+
+void Player::DecreaseHP() {
+	// 体力を減らす
+	parameter_.countGage.hpCount--;
+	// 体力が 0 以下になった時
+	if (parameter_.countGage.hpCount <= 0) {
+		// 死ぬ
+		flags_.isDead = true;
+	}
 }
 
 void Player::CheckInputMove() {
@@ -104,6 +133,7 @@ void Player::InitStateFunctions() {
 	stateInit_[(int)Behavior::Move] = &Player::InitMove;
 	stateInit_[(int)Behavior::Attack] = &Player::InitAttack;
 	stateInit_[(int)Behavior::Moment] = &Player::InitMoment;
+	stateInit_[(int)Behavior::Damage] = &Player::InitDamage;
 
 
 	// 更新関数を格納
@@ -111,7 +141,10 @@ void Player::InitStateFunctions() {
 	stateUpdate_[(int)Behavior::Move] = &Player::UpdateMove;
 	stateUpdate_[(int)Behavior::Attack] = &Player::UpdateAttack;
 	stateUpdate_[(int)Behavior::Moment] = &Player::UpdateMoment;
+	stateUpdate_[(int)Behavior::Damage] = &Player::UpdateDamage;
 }
+
+#pragma region 当たり判定関数
 
 void Player::InitColliders() {
 	// プレイヤーの当たり判定を初期化
@@ -123,13 +156,54 @@ void Player::InitColliders() {
 void Player::InitColliderPlayer() {
 	playerCollider_.collider.name = "Player";
 	playerCollider_.capsule.radius = parameter_.lengthRadius.playerRadius;
+
+	// ヒットしたときの処理を設定
+	playerCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterPlayer(hitTarget); };
+	playerCollider_.collider.stayLambda = [this](Collider::Collider* hitTarget) { StayPlayer(hitTarget); };
+	playerCollider_.collider.exitLambda = [this](Collider::Collider* hitTarget) { ExitPlayer(hitTarget); };
 }
 
 void Player::InitColliderAttack() {
 	attackCollider_.collider.name = "PlayerAttack";
 	attackCollider_.collider.isActive = false;
 	attackCollider_.capsule.radius = parameter_.lengthRadius.attackRadius;
+
+	// ヒットしたときの処理を設定
+	attackCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterAttack(hitTarget); };
+	attackCollider_.collider.stayLambda = [this](Collider::Collider* hitTarget) { StayAttack(hitTarget); };
+	attackCollider_.collider.exitLambda = [this](Collider::Collider* hitTarget) { ExitAttack(hitTarget); };
 }
+
+#pragma region ヒット時処理
+
+void Player::EnterPlayer(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::StayPlayer(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::ExitPlayer(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::EnterAttack(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::StayAttack(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::ExitAttack(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+// ヒット時処理
+#pragma endregion
+
+// 当たり判定関数
+#pragma endregion
 
 #pragma region 状態の初期化
 
@@ -160,12 +234,24 @@ void Player::InitAttack() {
 }
 
 void Player::InitMoment() {
-	// 攻撃を無効化
-	attackCollider_.collider.isActive = false;
 	// 経過時間を初期化
 	behaviorTime_ = 0.0f;
+	// 攻撃を無効化
+	attackCollider_.collider.isActive = false;
 }
 
+void Player::InitDamage() {
+	// 体力を減らす
+	DecreaseHP();
+	// 経過時間を初期化
+	behaviorTime_ = 0.0f;
+	// 無敵時間を設定する
+	parameter_.progressTime.invincibleTime = parameter_.progressTime.damageInvincibleTime;
+	// 当たり判定を消す
+	playerCollider_.collider.isActive = false;
+}
+
+// 状態の初期化
 #pragma endregion
 
 
@@ -250,9 +336,19 @@ void Player::UpdateMoment() {
 	if (flags_.isInputAttack && 0 < parameter_.countGage.attackCount) {
 		reqBehavior_ = Behavior::Attack;
 	}
-
 }
 
+void Player::UpdateDamage() {
+	// 経過時間加算
+	behaviorTime_ += Info::GetDeltaTimeF();
+
+	// 一定時間経過した時
+	if (parameter_.progressTime.damageTime <= behaviorTime_) {
+		reqBehavior_ = Behavior::Idle;
+	}
+}
+
+// 状態の更新
 #pragma endregion
 
 void Player::DebugWindow() {
@@ -278,15 +374,37 @@ void Player::DebugWindow() {
 	case Player::Behavior::Moment:
 		ImGui::Text("Moment");
 		break;
-	default:
+	case Player::Behavior::Damage:
+		ImGui::Text("Damage");
 		break;
+	default:
+		ImGui::Text("%d",(int)behavior_);
+		break;
+	}
+	ImGui::Separator();
+
+	// 今の体力を表示
+	ImGui::Text("HpCount(Now/Max)");
+	ImGui::Text("%d / %d", parameter_.countGage.hpCount, parameter_.countGage.MaxHpCount);
+	// 体力やフラグをリセットする
+	if (ImGui::Button("ResetHP")) {
+		parameter_.countGage.hpCount = parameter_.countGage.MaxHpCount;
+		flags_.isDead = false;
 	}
 
 	ImGui::Separator();
+
+	if (ImGui::Button("Damage")) {
+		reqBehavior_ = Behavior::Damage;
+	}
+	// 無敵時間か表示
+	ImGui::Text("Invincible : %s", playerCollider_.collider.isActive ? "FALSE" : "TRUE");
+	ImGui::Separator();
+
 	// 攻撃回数を表示
 	ImGui::Text("AttackCount(Now/Max)");
 	ImGui::Text("%d / %d", parameter_.countGage.attackCount, parameter_.countGage.MaxAttackCount);
-
+	ImGui::Separator();
 
 	// 設定を表示
 	parameter_.DebugTree();
