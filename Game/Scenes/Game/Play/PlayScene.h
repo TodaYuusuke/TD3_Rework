@@ -2,6 +2,7 @@
 #include <scene/IScene.h>
 
 #include "Player/Player.h"
+#include "Enemy/Maneger/EnemyManager.h"
 #include "Enemy/Normal/NormalEnemy.h"
 
 class PlayScene final : public IScene{
@@ -24,5 +25,5 @@ public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
 	Player* player_;
-	NormalEnemy* normalEnemy_;
+	EnemyManager* enemyManager_;
 };

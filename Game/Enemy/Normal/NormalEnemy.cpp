@@ -17,7 +17,7 @@ void NormalEnemy::Update()
 {
 	if (CheckAttackRange())
 	{
-		IsAttack_ = true;
+		IsAttack_ = false;
 	}
 	if (IsAttack_)
 	{
@@ -38,10 +38,10 @@ void NormalEnemy::Attack()
 	//後ろに移動
 	atackWork = AtackWork::Stert;
 	if (atackWork == AtackWork::Stert) {
-
+		atackWork = AtackWork::Interval;
 	}
 	else if (atackWork == AtackWork::Interval) {
-
+		atackWork = AtackWork::End;
 	}
 	else if (atackWork == AtackWork::End) {
 		IsAttack_ = false;

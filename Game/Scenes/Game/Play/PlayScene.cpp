@@ -12,9 +12,9 @@ void PlayScene::Initialize()
 {
 	player_ = new Player();
 	player_->Init();
-	normalEnemy_ = new NormalEnemy();
-	normalEnemy_->Init();
-	normalEnemy_->SetTarget(player_);
+	enemyManager_ = new EnemyManager(player_);
+	enemyManager_->Init();
+
 }
 
 void PlayScene::Update()
@@ -23,5 +23,5 @@ void PlayScene::Update()
 		nextSceneFunction = []() { return new GameClearScene; };
 	}
 	player_->Update();
-	normalEnemy_->Update();
+	enemyManager_->Update();
 }

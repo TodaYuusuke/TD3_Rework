@@ -14,6 +14,8 @@ public:
 		: kAttackWaitTime_(attackWaitTime),
 		kAttackRange_(attackRange),
 		kDeadFlame_(deadFlame) {};
+	virtual ~IEnemy() {};
+
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 
@@ -31,6 +33,10 @@ public:
 	virtual void DyingAnimation() = 0;
 	//死亡時の処理
 	void Dead();
+	//
+	bool GetIsDead() {
+		return IsDead_;
+	}
 #pragma endregion 死亡処理関連
 
 #pragma region

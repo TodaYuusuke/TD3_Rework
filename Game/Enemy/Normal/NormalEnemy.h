@@ -8,7 +8,7 @@ enum AtackWork {
 
 class NormalEnemy : public IEnemy {
 public:
-	NormalEnemy() : IEnemy(180.0f, 1.0f, 1.0f) {};
+	NormalEnemy() : IEnemy(60.0f, 1.0f, 1.0f) {};
 
 	void Init()override;
 	void Update()override;
