@@ -34,6 +34,14 @@ private: //*** サブクラス ***//
 		float momentTime;	// 攻撃後の後隙の時間1
 	};
 
+	// 距離を格納
+	struct LengthRadius {
+		float playerRadius;	// プレイヤーの判定
+		float attackRadius;	// 攻撃の範囲
+	};
+
+	// 補正もまとめるかも
+
 public: //*** 変数群 ***//
 
 	// 移動速度のパラメータをまとめている
@@ -42,17 +50,23 @@ public: //*** 変数群 ***//
 	// 経過させる時間のパラメータ
 	ProgressTime progressTime;
 
+	// あらゆる距離のパラメータ
+	LengthRadius lengthRadius;
+
 private: //*** 関数群 ***//
 
 	// 移動値を初期化
 	void InitMoveSpeed();
 	// 時間を初期化
 	void InitProgressTime();
-
+	// 距離を初期化
+	void InitLengthRadius();
 
 	// 移動値のデバッグ表示
 	void DebugTreeMoveSpeed();
 	// 時間のデバッグ表示
 	void DebugTreeProgressTime();
+	// 距離のデバッグ表示
+	void DebugTreeLengthRadius();
 
 };

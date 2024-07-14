@@ -3,8 +3,12 @@
 #include <Adapter.h>
 
 void PlayerConfig::Init() {
+	// 移動値を初期化
 	InitMoveSpeed();
+	// 時間を初期化
 	InitProgressTime();
+	// 距離を初期化
+	InitLengthRadius();
 }
 
 void PlayerConfig::DebugTree() {
@@ -15,6 +19,8 @@ void PlayerConfig::DebugTree() {
 		DebugTreeMoveSpeed();
 		// 時間の表示
 		DebugTreeProgressTime();
+		// 距離の表示
+		DebugTreeLengthRadius();
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -36,6 +42,11 @@ void PlayerConfig::InitProgressTime() {
 	progressTime.momentTime = 0.5f;
 }
 
+void PlayerConfig::InitLengthRadius() {
+	lengthRadius.playerRadius = 1.0f;
+	lengthRadius.attackRadius = 2.0f;
+}
+
 void PlayerConfig::DebugTreeMoveSpeed() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("MoveSpeed")) {
@@ -55,6 +66,19 @@ void PlayerConfig::DebugTreeProgressTime() {
 	if (ImGui::TreeNode("ProgressTime")) {
 		ImGui::SliderFloat("attackTime", &progressTime.attackTime, 0.0f, 5.0f);
 		ImGui::SliderFloat("momentTime", &progressTime.momentTime, 0.0f, 5.0f);
+
+		// Tree を閉じる
+		ImGui::TreePop();
+		// 見やすいために区切る
+		ImGui::Separator();
+	}
+}
+
+void PlayerConfig::DebugTreeLengthRadius() {
+	// 更に Tree でまとめる
+	if (ImGui::TreeNode("LengthRadius")) {
+		ImGui::SliderFloat("playerRadius", &lengthRadius.playerRadius, 0.01f, 5.0f);
+		ImGui::SliderFloat("attackRadius", &lengthRadius.attackRadius, 0.01f, 5.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();

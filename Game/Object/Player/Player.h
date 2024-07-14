@@ -94,8 +94,11 @@ private: //*** 細かく設定される変数 ***//
 	// 行動を続けている時間
 	float behaviorTime_ = 0.0f;
 
+	// 当たり判定は外部でまとめたい
 	// プレイヤーの当たり判定
 	CapsuleCollider playerCollider_;
+	// 攻撃の当たり判定
+	CapsuleCollider attackCollider_;
 
 private: //*** メンバ関数 ***//
 
@@ -108,7 +111,19 @@ private: //*** メンバ関数 ***//
 	// 関数ポインタ配列を初期化
 	void InitStateFunctions();
 
+	// 当たり判定を初期化
+	void InitColliders();
+
 private: //*** 各状態の関数群 ***//
+
+	// 当たり判定の初期化
+
+	// プレイヤー自体の当たり判定
+	void InitColliderPlayer();
+	// 攻撃の当たり判定
+	void InitColliderAttack();
+
+
 
 	// 状態の初期化
 
