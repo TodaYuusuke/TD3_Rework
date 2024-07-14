@@ -134,6 +134,8 @@ void Player::InitColliderAttack() {
 #pragma region 状態の初期化
 
 void Player::InitIdle() {
+	// 攻撃可能回数を元に戻す
+	parameter_.countGage.attackCount = parameter_.countGage.MaxAttackCount;
 }
 
 void Player::InitMove() {
@@ -153,6 +155,8 @@ void Player::InitAttack() {
 	// 攻撃の範囲を設定する
 	// コンフィグではなくパラメータを使うことになる
 	attackCollider_.capsule.radius = parameter_.lengthRadius.attackRadius;
+	// 攻撃回数を 1 減らす
+	parameter_.countGage.attackCount--;
 }
 
 void Player::InitMoment() {
@@ -203,7 +207,7 @@ void Player::UpdateAttack() {
 	// 経過時間加算
 	behaviorTime_ += Info::GetDeltaTimeF();
 
-	
+
 	model_.worldTF.translation += velocity_ * Info::GetDeltaTimeF();
 
 	// 攻撃を少しづつ短くする
@@ -241,6 +245,12 @@ void Player::UpdateMoment() {
 	if (parameter_.progressTime.momentTime <= behaviorTime_) {
 		reqBehavior_ = Behavior::Idle;
 	}
+
+	// 攻撃入力されていて、まだ攻撃できるとき
+	if (flags_.isInputAttack && 0 < parameter_.countGage.attackCount) {
+		reqBehavior_ = Behavior::Attack;
+	}
+
 }
 
 #pragma endregion
@@ -271,6 +281,12 @@ void Player::DebugWindow() {
 	default:
 		break;
 	}
+
+	ImGui::Separator();
+	// 攻撃回数を表示
+	ImGui::Text("AttackCount(Now/Max)");
+	ImGui::Text("%d / %d", parameter_.countGage.attackCount, parameter_.countGage.MaxAttackCount);
+
 
 	// 設定を表示
 	parameter_.DebugTree();

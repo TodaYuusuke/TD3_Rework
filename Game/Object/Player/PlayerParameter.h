@@ -7,6 +7,7 @@
 /// プレイヤーの基本的な設定を持っている
 /// 設定から参照し、計算した結果を格納
 /// 設計的に、初期設定と同じ項目が多い
+/// 初期値が決まっているものは設定から読み込みたくない
 /// </summary>
 class PlayerParameter final {
 public: //*** メンバ関数 ***//
@@ -53,6 +54,13 @@ private: //*** サブクラス ***//
 		float momentStuckRatio;		// 攻撃後に動けない時間の割合(0 に近いほど早く動く)
 	};
 
+	// 回数やゲージ的なものを格納
+	struct CountGage {
+		int MaxAttackCount;		// 攻撃ができる最大数
+		int attackCount;		// 現在攻撃ができる回数
+	};
+
+	// 攻撃力とかは...?
 
 public: //*** メンバ変数 ***//
 
@@ -67,7 +75,8 @@ public: //*** メンバ変数 ***//
 	LengthRadius lengthRadius;
 	// 補正や割合のパラメータ
 	CollectionRatio collectionRatio;
-
+	// 回数やゲージのパラメータを
+	CountGage countGage;
 
 private: //*** 関数群 ***//
 
@@ -79,6 +88,8 @@ private: //*** 関数群 ***//
 	void InitLengthRadius();
 	// 補正や割合を初期化
 	void InitCollectionRatio();
+	// 回数やゲージを初期化
+	void InitCountGage();
 
 	// 移動値のデバッグ表示
 	void DebugTreeMoveSpeed();
@@ -88,5 +99,6 @@ private: //*** 関数群 ***//
 	void DebugTreeLengthRadius();
 	// 補正や割合のデバッグ表示
 	void DebugTreeCollectionRatio();
-
+	// 回数やゲージのデバッグ表示
+	void DebugTreeCountGage();
 };

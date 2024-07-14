@@ -14,6 +14,8 @@ void PlayerParameter::Init() {
 	InitLengthRadius();
 	// 補正や割合を初期化
 	InitCollectionRatio();
+	// 回数やゲージを初期化
+	InitCountGage();
 }
 
 void PlayerParameter::DebugTree() {
@@ -36,6 +38,8 @@ void PlayerParameter::DebugTree() {
 		DebugTreeLengthRadius();
 		// 補正や割合の表示
 		DebugTreeCollectionRatio();
+		// 回数やゲージの表示
+		DebugTreeCountGage();
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -65,6 +69,11 @@ void PlayerParameter::InitCollectionRatio() {
 	collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
 	collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
 	collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
+}
+
+void PlayerParameter::InitCountGage() {
+	countGage.MaxAttackCount = 1;
+	countGage.attackCount = countGage.MaxAttackCount;
 }
 
 void PlayerParameter::DebugTreeMoveSpeed() {
@@ -113,6 +122,22 @@ void PlayerParameter::DebugTreeCollectionRatio() {
 		ImGui::SliderFloat("attackReduceStart", &collectionRatio.attackReduceStart, -2.0f, 2.0f);
 		ImGui::SliderFloat("attackExtendEnd", &collectionRatio.attackExtendEnd, -2.0f, 2.0f);
 		ImGui::SliderFloat("momentStuckRatio", &collectionRatio.momentStuckRatio, 0.0f, 1.0f);
+
+		// Tree を閉じる
+		ImGui::TreePop();
+		// 見やすいために区切る
+		ImGui::Separator();
+	}
+}
+
+void PlayerParameter::DebugTreeCountGage() {
+	// 更に Tree でまとめる
+	if (ImGui::TreeNode("CountGage")) {
+		// 最大値が変わった時、攻撃可能回数も変更
+		if(ImGui::SliderInt("MaxAttackCount", &countGage.MaxAttackCount, 1, 10))
+			countGage.attackCount = countGage.MaxAttackCount;
+		ImGui::SliderInt("attackCount", &countGage.attackCount, 0, countGage.MaxAttackCount);
+		
 
 		// Tree を閉じる
 		ImGui::TreePop();
