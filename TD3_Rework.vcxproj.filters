@@ -34,6 +34,9 @@
     </ClCompile>
     <ClCompile Include="Game\Scenes\Game\Over\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Clear\GameClearScene.cpp" />
+    <ClCompile Include="Game\Object\Player\Player.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
+    <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scenes\Title\TitleScene.h">
@@ -44,5 +47,8 @@
     </ClInclude>
     <ClInclude Include="Game\Scenes\Game\Over\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\Game\Clear\GameClearScene.h" />
+    <ClInclude Include="Game\Object\Player\Player.h" />
+    <ClInclude Include="Game\Object\Player\PlayerConfig.h" />
+    <ClInclude Include="Game\Object\Player\PlayerParameter.h" />
   </ItemGroup>
 </Project>
