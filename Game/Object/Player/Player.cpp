@@ -62,10 +62,10 @@ void Player::Update() {
 	playerCollider_.capsule.end = model_.worldTF.translation;
 
 	// 無敵時間中の時
-	if (0.0f < parameter_.progressTime.invincibleTime) {
-		parameter_.progressTime.invincibleTime -= Info::GetDeltaTimeF();
+	if (0.0f < times_.invincibleTime) {
+		times_.invincibleTime -= Info::GetDeltaTimeF();
 		// 無敵時間が切れた時
-		if (parameter_.progressTime.invincibleTime <= 0.0f) {
+		if (times_.invincibleTime <= 0.0f) {
 			// 判定を取るようにする
 			playerCollider_.collider.isActive = true;
 		}
@@ -217,7 +217,7 @@ void Player::InitMove() {
 
 void Player::InitAttack() {
 	// 経過時間を初期化
-	behaviorTime_ = 0.0f;
+	times_.behaviorTime = 0.0f;
 	// 速度を設定
 	// 移動速度は固定し、デルタタイムは後で計算する
 	velocity_ = destinate_ * parameter_.moveSpeed.attackSpeed;
@@ -235,7 +235,7 @@ void Player::InitAttack() {
 
 void Player::InitMoment() {
 	// 経過時間を初期化
-	behaviorTime_ = 0.0f;
+	times_.behaviorTime = 0.0f;
 	// 攻撃を無効化
 	attackCollider_.collider.isActive = false;
 }
@@ -244,9 +244,9 @@ void Player::InitDamage() {
 	// 体力を減らす
 	DecreaseHP();
 	// 経過時間を初期化
-	behaviorTime_ = 0.0f;
+	times_.behaviorTime = 0.0f;
 	// 無敵時間を設定する
-	parameter_.progressTime.invincibleTime = parameter_.progressTime.damageInvincibleTime;
+	times_.invincibleTime = parameter_.progressTime.damageInvincibleTime;
 	// 当たり判定を消す
 	playerCollider_.collider.isActive = false;
 }
@@ -291,7 +291,7 @@ void Player::UpdateMove() {
 
 void Player::UpdateAttack() {
 	// 経過時間加算
-	behaviorTime_ += Info::GetDeltaTimeF();
+	times_.behaviorTime += Info::GetDeltaTimeF();
 
 
 	model_.worldTF.translation += velocity_ * Info::GetDeltaTimeF();
@@ -304,17 +304,17 @@ void Player::UpdateAttack() {
 	attackCollider_.capsule.end = model_.worldTF.translation + velocity_ * parameter_.collectionRatio.attackExtendEnd * Info::GetDeltaTimeF();
 
 	// 一定時間経過した時
-	if (parameter_.progressTime.attackTime <= behaviorTime_) {
+	if (parameter_.progressTime.attackTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Moment;
 	}
 }
 
 void Player::UpdateMoment() {
 	// 経過時間加算
-	behaviorTime_ += Info::GetDeltaTimeF();
+	times_.behaviorTime += Info::GetDeltaTimeF();
 
 	// 一定時間経たないと移動入力は反映されない
-	if (parameter_.progressTime.momentTime * parameter_.collectionRatio.momentStuckRatio <= behaviorTime_) {
+	if (parameter_.progressTime.momentTime * parameter_.collectionRatio.momentStuckRatio <= times_.behaviorTime) {
 		// 移動入力されている時
 		if (flags_.isInputMove) {
 			// 速度を代入する
@@ -328,7 +328,7 @@ void Player::UpdateMoment() {
 		model_.worldTF.translation += velocity_;
 	}
 	// 一定時間経過した時
-	if (parameter_.progressTime.momentTime <= behaviorTime_) {
+	if (parameter_.progressTime.momentTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Idle;
 	}
 
@@ -340,10 +340,10 @@ void Player::UpdateMoment() {
 
 void Player::UpdateDamage() {
 	// 経過時間加算
-	behaviorTime_ += Info::GetDeltaTimeF();
+	times_.behaviorTime += Info::GetDeltaTimeF();
 
 	// 一定時間経過した時
-	if (parameter_.progressTime.damageTime <= behaviorTime_) {
+	if (parameter_.progressTime.damageTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Idle;
 	}
 }

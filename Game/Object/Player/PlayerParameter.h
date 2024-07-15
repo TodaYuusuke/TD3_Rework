@@ -41,7 +41,6 @@ private: //*** サブクラス ***//
 		float momentTime;			// 攻撃後の後隙の時間
 		float damageTime;			// ダメージを喰らった後の時間
 		float damageInvincibleTime;	// ダメージを喰らった後の無敵時間
-		float invincibleTime;		// 当たり判定のない時間
 	};
 
 	// 距離を格納

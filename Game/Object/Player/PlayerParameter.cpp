@@ -60,7 +60,6 @@ void PlayerParameter::InitProgressTime() {
 	progressTime.momentTime = config.progressTime.momentTime;
 	progressTime.damageTime = config.progressTime.damageTime;
 	progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
-	progressTime.invincibleTime = 0.0f;
 }
 
 void PlayerParameter::InitLengthRadius() {
@@ -102,8 +101,7 @@ void PlayerParameter::DebugTreeProgressTime() {
 		ImGui::SliderFloat("momentTime", &progressTime.momentTime, 0.0f, 5.0f);
 		ImGui::SliderFloat("damageTime", &progressTime.damageTime, 0.0f, 5.0f);
 		ImGui::SliderFloat("damageInvincigleTime", &progressTime.damageInvincibleTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("invincigleTime", &progressTime.invincibleTime, 0.0f, 5.0f);
-
+		
 		// Tree を閉じる
 		ImGui::TreePop();
 		// 見やすいために区切る

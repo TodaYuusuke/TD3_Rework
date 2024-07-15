@@ -43,6 +43,13 @@ private: //*** サブクラス ***//
 		bool isDead = false;		// 死んでいるか
 	};
 
+	// 処理中の時間をまとめた構造体
+	struct Times {
+		float behaviorTime;		// 各行動中の経過時間
+		float invincibleTime;	// 無敵時間
+	};
+
+
 	// コライダーと形状をまとめた構造体
 	// 形状はカプセル
 	struct CapsuleCollider {
@@ -77,9 +84,6 @@ private: //*** メンバ変数 ***//
 
 private: //*** 細かく設定される変数 ***//
 
-	// まとめられたフラグ
-	Flags flags_;
-
 	// 向いている方向
 	// 操作があった時に向く方向を決定している
 	LWP::Math::Vector3 destinate_ = { 0.0f,0.0f,1.0f };
@@ -87,8 +91,11 @@ private: //*** 細かく設定される変数 ***//
 	// プレイヤーの速度を格納
 	LWP::Math::Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 
-	// 行動を続けている時間
-	float behaviorTime_ = 0.0f;
+	// まとめられたフラグ
+	Flags flags_;
+
+	// まとめられた時間
+	Times times_;
 
 	// 当たり判定は外部でまとめたい
 	// プレイヤーの当たり判定
