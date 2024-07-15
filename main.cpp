@@ -1,4 +1,4 @@
-#include "Game/Scenes/Title/TitleScene.h"
+#include "Game/Scenes/Test/TestScene.h"
 
 // Windowsアプリでのエントリーポイント(main関数)
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
@@ -7,6 +7,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #else
 	LWP::Window::ChangeFullScreenMode();
 #endif
-	LWP::System::Run(new TitleScene());
+	LWP::System::Run(new TestScene());
 	return 0;
 }
