@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -109,6 +115,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,6 +141,7 @@
       <Optimization>MinSpace</Optimization>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,9 +156,10 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game\Object\Player\Player.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
-    <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
+    <ClCompile Include="Game\Enemy\IEnemy.cpp" />
+    <ClCompile Include="Game\Enemy\Maneger\EnemyManager.cpp" />
+    <ClCompile Include="Game\Enemy\Normal\NormalEnemy.cpp" />
+    <ClCompile Include="Game\Player\Player.cpp" />
     <ClCompile Include="Game\Scenes\Game\Clear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Over\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\Game\Play\PlayScene.cpp" />
@@ -158,9 +167,10 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game\Object\Player\Player.h" />
-    <ClInclude Include="Game\Object\Player\PlayerConfig.h" />
-    <ClInclude Include="Game\Object\Player\PlayerParameter.h" />
+    <ClInclude Include="Game\Enemy\IEnemy.h" />
+    <ClInclude Include="Game\Enemy\Maneger\EnemyManager.h" />
+    <ClInclude Include="Game\Enemy\Normal\NormalEnemy.h" />
+    <ClInclude Include="Game\Player\Player.h" />
     <ClInclude Include="Game\Scenes\Game\Clear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\Game\Over\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\Game\Play\PlayScene.h" />

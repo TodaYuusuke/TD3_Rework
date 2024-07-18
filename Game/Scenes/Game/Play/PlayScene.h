@@ -1,7 +1,9 @@
 #pragma once
 #include <scene/IScene.h>
 
-#include "Object/Player/Player.h"
+#include "Player/Player.h"
+#include "Enemy/Maneger/EnemyManager.h"
+#include "Enemy/Normal/NormalEnemy.h"
 
 class PlayScene final : public IScene{
 public:
@@ -22,7 +24,6 @@ private: //*** これより先に必要な処理や変数を記述 ***//
 public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
-
-	std::unique_ptr<Player> player_;
-
+	Player* player_;
+	EnemyManager* enemyManager_;
 };

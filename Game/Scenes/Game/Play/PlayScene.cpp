@@ -10,9 +10,10 @@ using namespace LWP::Utility;
 
 void PlayScene::Initialize()
 {
-	// プレイヤー生成
-	player_ = std::make_unique<Player>();
+	player_ = new Player();
 	player_->Init();
+	enemyManager_ = new EnemyManager(player_);
+	enemyManager_->Init();
 }
 
 void PlayScene::Update()
@@ -20,6 +21,6 @@ void PlayScene::Update()
 	if (Keyboard::GetTrigger(DIK_N)){
 		nextSceneFunction = []() { return new GameClearScene; };
 	}
-	// プレイヤーを更新
 	player_->Update();
+	enemyManager_->Update();
 }
