@@ -97,9 +97,6 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-TestScene.h
-TestScene.cpp
-main.cpp
 
 
 # Chutzpah Test files
