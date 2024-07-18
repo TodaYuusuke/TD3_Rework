@@ -1,10 +1,6 @@
 #pragma once
 #include <scene/IScene.h>
-
-#include "Particle/DamageParticle.h"
-#include "Particle/DeadParticle.h"
-#include "Particle/SpawnParticle.h"
-#include "Particle/AccumulateParticle.h"
+//#include "../../SceneTransition/SceneTransition.h"
 
 class TestScene final
 	: public IScene
@@ -22,12 +18,9 @@ public:
 
 	// scene遷移したい場合、ISceneポインタ型のnextSceneに次のシーンの実体を代入
 
+private: //*** これより先に必要な処理や変数を記述 ***//
+
+public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
-
-	// パーティクルテスト
-	DamageParticle damageParticle_;
-	DeadParticle deadParticle_;
-	SpawnParticle spawnParticle_;
-	AccumulateParticle accumulateParticle_;
 };

@@ -1,6 +1,6 @@
-#include "PlayScene.h"
+#include "GameClearScene.h"
 
-#include "../Clear/GameClearScene.h"
+#include "../Title/TitleScene.h"
 
 using namespace LWP;
 using namespace LWP::Input;
@@ -8,14 +8,13 @@ using namespace LWP::Primitive;
 using namespace LWP::Math;
 using namespace LWP::Utility;
 
-void PlayScene::Initialize()
+void GameClearScene::Initialize()
 {
-
 }
 
-void PlayScene::Update()
+void GameClearScene::Update()
 {
 	if (Keyboard::GetTrigger(DIK_N)){
-		nextSceneFunction = []() { return new GameClearScene; };
+		nextSceneFunction = []() { return new TitleScene; };
 	}
 }
