@@ -4,7 +4,7 @@ void NormalEnemy::Init()
 {
 	models_.reserve(1);
 	models_.emplace_back();
-	models_[0].LoadShortPath("NormalEnemy/NormalEnemy.obj");
+	models_[0].LoadCube();
 	models_[0].materials[1].enableLighting = false;
 
 	attackWaitTime_ = kAttackWaitTime_;
