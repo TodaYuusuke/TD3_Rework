@@ -14,7 +14,6 @@ void PlayScene::Initialize()
 	player_->Init();
 	enemyManager_ = new EnemyManager(player_);
 	enemyManager_->Init();
-
 }
 
 void PlayScene::Update()
