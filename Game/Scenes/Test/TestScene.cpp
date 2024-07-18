@@ -1,7 +1,5 @@
 #include "TestScene.h"
 
-#include "Game/Play/PlayScene.h"
-
 using namespace LWP;
 using namespace LWP::Input;
 using namespace LWP::Primitive;

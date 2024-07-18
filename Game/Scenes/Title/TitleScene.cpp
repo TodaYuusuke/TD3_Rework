@@ -1,6 +1,6 @@
 #include "TitleScene.h"
 
-#include "../Game/Play/PlayScene.h"
+#include "../GamePlay/GamePlayScene.h"
 
 using namespace LWP;
 using namespace LWP::Input;
@@ -14,6 +14,7 @@ void TitleScene::Initialize()
 	// 画面全体
 	backSprite_.material.texture = Resource::LoadTexture("Title.png");
 	backSprite_.isUI = true;
+	backSprite_.material.enableLighting = false;
 	backSprite_.isActive = true;
 	// 適当にサイズを画面全体に拡げる
 	Vector2 spSize = backSprite_.material.texture.t.GetSize();
@@ -28,7 +29,7 @@ void TitleScene::Initialize()
 void TitleScene::Update()
 {
 	if (Keyboard::GetTrigger(DIK_N)){
-		nextSceneFunction = []() { return new PlayScene; };
+		nextSceneFunction = []() { return new GamePlayScene; };
 	}
 
 	//sceneTransition_->Update();

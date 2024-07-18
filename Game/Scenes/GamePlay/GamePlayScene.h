@@ -1,14 +1,14 @@
 #pragma once
 #include <scene/IScene.h>
 
-#include "Player/Player.h"
-#include "Enemy/Maneger/EnemyManager.h"
-#include "Enemy/Normal/NormalEnemy.h"
+#include "Object/Player/Player.h"
+#include "Object/Enemy/Maneger/EnemyManager.h"
+#include "Object/Enemy/Normal/NormalEnemy.h"
 
-class PlayScene final : public IScene{
+class GamePlayScene final : public IScene{
 public:
-	PlayScene() = default;	// コンストラクタは自由に定義可能
-	~PlayScene() = default;
+	GamePlayScene() = default;	// コンストラクタは自由に定義可能
+	~GamePlayScene() = default;
 
 	//*** 純粋仮想関数の実体宣言 ***//
 

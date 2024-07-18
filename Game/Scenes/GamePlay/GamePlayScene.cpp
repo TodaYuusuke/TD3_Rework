@@ -1,6 +1,6 @@
-#include "PlayScene.h"
+#include "GamePlayScene.h"
 
-#include "../Clear/GameClearScene.h"
+#include "../GameClear/GameClearScene.h"
 
 using namespace LWP;
 using namespace LWP::Input;
@@ -8,7 +8,7 @@ using namespace LWP::Primitive;
 using namespace LWP::Math;
 using namespace LWP::Utility;
 
-void PlayScene::Initialize()
+void GamePlayScene::Initialize()
 {
 	player_ = new Player();
 	player_->Init();
@@ -16,7 +16,7 @@ void PlayScene::Initialize()
 	enemyManager_->Init();
 }
 
-void PlayScene::Update()
+void GamePlayScene::Update()
 {
 	if (Keyboard::GetTrigger(DIK_N)){
 		nextSceneFunction = []() { return new GameClearScene; };

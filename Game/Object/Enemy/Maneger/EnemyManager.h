@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Game/Enemy/IEnemy.h"
-#include "Game/Enemy/Normal/NormalEnemy.h"
+#include "../Normal/NormalEnemy.h"
 
 class Player;
 class EnemyManager

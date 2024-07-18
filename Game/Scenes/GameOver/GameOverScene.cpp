@@ -1,6 +1,6 @@
 #include "GameOverScene.h"
 
-#include "../Over/GameOverScene.h"
+#include "../GameOver/GameOverScene.h"
 
 void GameOverScene::Initialize()
 {

@@ -1,6 +1,6 @@
 #include "GameClearScene.h"
 
-#include "../../Title/TitleScene.h"
+#include "../Title/TitleScene.h"
 
 using namespace LWP;
 using namespace LWP::Input;

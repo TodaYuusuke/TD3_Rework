@@ -1,5 +1,5 @@
 #include "EnemyManager.h"
-#include "Game/Player/Player.h"
+#include "Object/Player/Player.h"
 
 void EnemyManager::Init(){
 	NormalEnemy* enemy = new NormalEnemy();
