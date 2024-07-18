@@ -54,10 +54,10 @@
     <ClInclude Include="Game\Scenes\GameClear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\GameOver\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\GamePlay\GamePlayScene.h" />
-    <ClInclude Include="Game\Particle\AccumulateParticle.h" />
-    <ClInclude Include="Game\Particle\DamageParticle.h" />
-    <ClInclude Include="Game\Particle\DeadParticle.h" />
-    <ClInclude Include="Game\Particle\SoilParticle.h" />
-    <ClInclude Include="Game\Particle\SpawnParticle.h" />
+    <ClInclude Include="Game\Object\Particle\AccumulateParticle.h" />
+    <ClInclude Include="Game\Object\Particle\DamageParticle.h" />
+    <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
+    <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
+    <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
   </ItemGroup>
 </Project>
