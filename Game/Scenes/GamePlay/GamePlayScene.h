@@ -7,7 +7,7 @@
 
 class GamePlayScene final : public IScene{
 public:
-	GamePlayScene() = default;	// コンストラクタは自由に定義可能
+	GamePlayScene();	// コンストラクタは自由に定義可能
 	~GamePlayScene() = default;
 
 	//*** 純粋仮想関数の実体宣言 ***//
@@ -24,6 +24,6 @@ private: //*** これより先に必要な処理や変数を記述 ***//
 public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
-	Player* player_;
-	EnemyManager* enemyManager_;
+	Player player_;
+	EnemyManager enemyManager_;
 };
