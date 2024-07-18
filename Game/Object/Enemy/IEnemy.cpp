@@ -31,6 +31,7 @@ void IEnemy::Dying()
 	deadFlame_--;
 	if (deadFlame_ <= kDeadFlame_) {
 		IsDead_ = true;
+
 	}
 	if (IsDead_) {
 		Dead();

@@ -53,4 +53,5 @@ void NormalEnemy::Attack()
 
 void NormalEnemy::DyingAnimation()
 {
+
 }

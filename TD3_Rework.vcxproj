@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+    <IncludePath>D:\repos\TD3_Rework;C:\2nd\TD3_Rework;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+    <IncludePath>D:\repos\TD3_Rework;C:\2nd\TD3_Rework;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,6 +159,8 @@
     <ClCompile Include="Game\Object\Enemy\IEnemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Maneger\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Enemy\Normal\NormalEnemy.cpp" />
+    <ClCompile Include="Game\Object\EXP\EXP.cpp" />
+    <ClCompile Include="Game\Object\EXP\Manager\EXPManager.cpp" />
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
@@ -173,6 +175,8 @@
     <ClInclude Include="Game\Object\Enemy\IEnemy.h" />
     <ClInclude Include="Game\Object\Enemy\Maneger\EnemyManager.h" />
     <ClInclude Include="Game\Object\Enemy\Normal\NormalEnemy.h" />
+    <ClInclude Include="Game\Object\EXP\EXP.h" />
+    <ClInclude Include="Game\Object\EXP\Manager\EXPManager.h" />
     <ClInclude Include="Game\Object\Player\Player.h" />
     <ClInclude Include="Game\Object\Player\PlayerConfig.h" />
     <ClInclude Include="Game\Object\Player\PlayerParameter.h" />
