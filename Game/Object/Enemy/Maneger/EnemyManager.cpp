@@ -23,7 +23,7 @@ void EnemyManager::Update(){
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
-		enemy->Update();
+		enemy->CommonUpdate();
 	}
 
 	currentFrame_++;

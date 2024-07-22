@@ -1,5 +1,6 @@
 #pragma once
 #include <Adapter.h>
+#include "Object/EXP/EXP.h"
 
 class Player;
 
@@ -18,6 +19,7 @@ public:
 
 	virtual void Init() = 0;
 	virtual void Update() = 0;
+	void CommonUpdate();
 
 	// 位置を指定して移動する
 	void SetPosition(lwp::Vector3 Pos) {
