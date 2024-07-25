@@ -5,6 +5,7 @@ void EnemyManager::Init(){
 	NormalEnemy* enemy = new NormalEnemy();
 	enemy->Init();
 	enemy->SetTarget(player_);
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 
@@ -23,25 +24,27 @@ void EnemyManager::Update(){
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
+		enemy->Update();
+		enemy->ImGui();
 		enemy->CommonUpdate();
 	}
 
 	currentFrame_++;
 
 	// 通常敵の出現
-	if (currentFrame_ >= kSpawnFrequency)
-	{
-		//ランダム生成用
-		std::random_device seedGenerator;
-		std::mt19937 randomEngine(seedGenerator());
-		std::uniform_int_distribution<int> distribution(1, 3);
-		int spawn = distribution(randomEngine);
-		for (int It = 0; It < spawn; It++)
-		{
-			EnemySpawn();
-		}
-		currentFrame_ = 0;
-	}
+	//if (currentFrame_ >= kSpawnFrequency)
+	//{
+	//	//ランダム生成用
+	//	std::random_device seedGenerator;
+	//	std::mt19937 randomEngine(seedGenerator());
+	//	std::uniform_int_distribution<int> distribution(1, 3);
+	//	int spawn = distribution(randomEngine);
+	//	for (int It = 0; It < spawn; It++)
+	//	{
+	//		EnemySpawn();
+	//	}
+	//	currentFrame_ = 0;
+	//}
 
 }
 
@@ -115,7 +118,7 @@ void EnemyManager::NormalEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 //TODO: 生成する敵を指定のものに変更
@@ -125,7 +128,7 @@ void EnemyManager::ArrowEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 
@@ -135,6 +138,6 @@ void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }

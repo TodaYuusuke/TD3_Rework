@@ -26,7 +26,7 @@ public: //*** 関数群 ***//
 private: //*** 変数群 ***//
 	Player player_;
 	EnemyManager enemyManager_;
-
+	EXPManager expManager_;
 	// 太陽
 	LWP::Object::PointLight sun_;
 };

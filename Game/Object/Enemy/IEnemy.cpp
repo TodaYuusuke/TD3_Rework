@@ -1,6 +1,18 @@
 #include "IEnemy.h"
 #include "Object/Player/Player.h"
 
+void IEnemy::ImGui()
+{
+	ImGui::Begin("Enemy");
+	ImGui::DragFloat3("translate",&models_[0].worldTF.translation.x);
+
+	if (ImGui::Button("HP")) {
+		hp_ = 0;
+	}
+	ImGui::End();
+
+}
+
 void IEnemy::CommonUpdate()
 {
 
@@ -22,12 +34,6 @@ void IEnemy::LockPlayer()
 	LWP::Math::Vector3 targetVel = GetDirectVel();
 	// 狙う対象に身体を向ける
 	lwp::Vector3 sub = targetVel - models_[0].worldTF.translation;
-
-	ImGui::Begin("Enemy");
-	if (ImGui::Button("Dead")) {
-		IsDead_ = true;
-	}
-	ImGui::End();
 
 	//プレイヤーの現在の向き
 	sub = sub.Normalize();
@@ -54,8 +60,11 @@ void IEnemy::Dying()
 
 void IEnemy::Dead()
 {
-	EXP* exp = new EXP();
-	exp->Init(models_[0].worldTF.translation);
+	//IsDead_ = true;
+	//collider_.isActive = false;
+	//// 経験値を生成
+	//manager_->Create(models_[0].transform.translation);
+	expManager_->AddEXP(models_[0].worldTF.translation);
 }
 
 bool IEnemy::CheckAttackRange()

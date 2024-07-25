@@ -8,7 +8,7 @@ using namespace LWP::Primitive;
 using namespace LWP::Math;
 using namespace LWP::Utility;
 
-GamePlayScene::GamePlayScene() : enemyManager_(&player_) {}
+GamePlayScene::GamePlayScene() : enemyManager_(&player_, &expManager_) {}
 
 void GamePlayScene::Initialize() {
 	levelData.LoadShortPath("Field.json");
@@ -25,6 +25,7 @@ void GamePlayScene::Initialize() {
 
 	player_.Init();
 	enemyManager_.Init();
+	expManager_.Init();
 }
 
 void GamePlayScene::Update()
@@ -34,4 +35,5 @@ void GamePlayScene::Update()
 	}
 	player_.Update();
 	enemyManager_.Update();
+	expManager_.Update();
 }

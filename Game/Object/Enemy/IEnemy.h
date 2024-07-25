@@ -1,7 +1,6 @@
 #pragma once
 #include <Adapter.h>
-#include "Object/EXP/EXP.h"
-
+#include "Game/Object/EXP/Manager/EXPManager.h"
 class Player;
 
 class IEnemy
@@ -21,6 +20,8 @@ public:
 	virtual void Update() = 0;
 	void CommonUpdate();
 
+	void ImGui();
+
 	// 位置を指定して移動する
 	void SetPosition(lwp::Vector3 Pos) {
 		models_[0].worldTF.translation.x = Pos.x;
@@ -33,7 +34,7 @@ public:
 	void LockPlayer();
 	// 狙う対象をセット(今回は自機をセットする)
 	void SetTarget(Player* player) { player_ = player; }
-
+	void SetEXPManager(EXPManager* expManager) { expManager_ = expManager; }
 #pragma region
 	//倒された後の処理をまとめた関数
 	void Dying();
@@ -76,6 +77,7 @@ protected://変数
 	// プレイヤーのポインタ
 	Player* player_;
 
+	EXPManager* expManager_;
 	//移動の速さ
 	//いじると移動速度に掛ける倍率が変わります
 	float moveSpeed_ = 1.0f;

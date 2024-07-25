@@ -6,8 +6,9 @@ class Player;
 class EnemyManager
 {
 public:
-	EnemyManager(Player* player) {
+	EnemyManager(Player* player,EXPManager* expManager) {
 		player_ = player;
+		expManager_ = expManager;
 	};
 	~EnemyManager() {
 		for (IEnemy* enemy : enemys_)
@@ -44,4 +45,5 @@ private:// 変数
 	// 自機
 	Player* player_;
 
+	EXPManager* expManager_;
 };

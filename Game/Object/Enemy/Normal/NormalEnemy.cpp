@@ -15,6 +15,11 @@ void NormalEnemy::Init()
 
 void NormalEnemy::Update()
 {
+	if (hp_ == 0) {
+		Dying();
+		return;
+	}
+
 	if (CheckAttackRange())
 	{
 		IsAttack_ = false;
