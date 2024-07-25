@@ -10,5 +10,16 @@ void EXP::Init(lwp::Vector3 position){
 }
 
 void EXP::Update(){
-	model_.worldTF.translation = { 5.0f,0.0f,0.0f };
+	// モデルの回転
+	Rotate_.y += rotateSpeed_;
+	if (Rotate_.y < -3.14f)
+	{
+		Rotate_.y += 3.14f;
+	}
+	else if (3.14f < Rotate_.y)
+	{
+		Rotate_.y -= 3.14f;
+	}
+
+	model_.worldTF.rotation = lwp::Quaternion::ConvertEuler(Rotate_);
 }

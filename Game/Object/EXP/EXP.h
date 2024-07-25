@@ -13,6 +13,9 @@ public:
 private:
 	LWP::Resource::RigidModel model_;
 
+	lwp::Vector3 Rotate_;
+	float rotateSpeed_ = 0.3f;
+
 	// サイズ
 	const float kSize_ = 0.25f;
 };
