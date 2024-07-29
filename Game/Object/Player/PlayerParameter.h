@@ -16,6 +16,10 @@ public: //*** メンバ関数 ***//
 	/// 初期化
 	/// </summary>
 	void Init();
+	/// <summary>
+	/// スキルのアップグレードを更新
+	/// </summary>
+	void Update();
 
 	/// <summary>
 	/// Tree 形式で内部の情報を表示する

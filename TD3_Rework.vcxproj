@@ -162,6 +162,7 @@
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
+    <ClCompile Include="Game\Object\Upgrage\Manager\UpgradeManager.cpp" />
     <ClCompile Include="Game\Scenes\GameClear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOver\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\GamePlay\GamePlayScene.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
     <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
+    <ClInclude Include="Game\Object\Upgrage\Manager\UpgradeManager.h" />
     <ClInclude Include="Game\Scenes\GameClear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\GameOver\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\GamePlay\GamePlayScene.h" />

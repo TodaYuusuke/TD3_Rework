@@ -18,36 +18,11 @@ void PlayerParameter::Init() {
 	InitCountGage();
 }
 
-void PlayerParameter::DebugTree() {
-#ifdef DEMO
-	// 設定の表示
-	config.DebugTree();
+void PlayerParameter::Update(){
 
-	// Tree で表示
-	if (ImGui::TreeNode("PlayerParameter")) {
-		// 初期化する
-		if (ImGui::Button("Init")) {
-			Init();
-		}
-
-		// 移動値の表示
-		DebugTreeMoveSpeed();
-		// 時間の表示
-		DebugTreeProgressTime();
-		// 距離の表示
-		DebugTreeLengthRadius();
-		// 補正や割合の表示
-		DebugTreeCollectionRatio();
-		// 回数やゲージの表示
-		DebugTreeCountGage();
-
-		// Tree を閉じる
-		ImGui::TreePop();
-		// 見やすいために区切る
-		ImGui::Separator();
-	}
-#endif // DEMO
 }
+
+#pragma region
 
 void PlayerParameter::InitMoveSpeed() {
 	moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
@@ -78,6 +53,41 @@ void PlayerParameter::InitCountGage() {
 	countGage.attackCount = countGage.MaxAttackCount;
 	countGage.MaxHpCount = 3;
 	countGage.hpCount = countGage.MaxHpCount;
+}
+
+#pragma endregion Init
+
+#pragma region
+
+void PlayerParameter::DebugTree() {
+#ifdef DEMO
+	// 設定の表示
+	config.DebugTree();
+
+	// Tree で表示
+	if (ImGui::TreeNode("PlayerParameter")) {
+		// 初期化する
+		if (ImGui::Button("Init")) {
+			Init();
+		}
+
+		// 移動値の表示
+		DebugTreeMoveSpeed();
+		// 時間の表示
+		DebugTreeProgressTime();
+		// 距離の表示
+		DebugTreeLengthRadius();
+		// 補正や割合の表示
+		DebugTreeCollectionRatio();
+		// 回数やゲージの表示
+		DebugTreeCountGage();
+
+		// Tree を閉じる
+		ImGui::TreePop();
+		// 見やすいために区切る
+		ImGui::Separator();
+	}
+#endif // DEMO
 }
 
 void PlayerParameter::DebugTreeMoveSpeed() {
@@ -155,3 +165,5 @@ void PlayerParameter::DebugTreeCountGage() {
 		ImGui::Separator();
 	}
 }
+
+#pragma endregion DebugTree
