@@ -182,6 +182,7 @@
     <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
     <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
+    <ClInclude Include="Game\Object\Upgrage\IUpgrade.h" />
     <ClInclude Include="Game\Object\Upgrage\Manager\UpgradeManager.h" />
     <ClInclude Include="Game\Scenes\GameClear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\GameOver\GameOverScene.h" />
