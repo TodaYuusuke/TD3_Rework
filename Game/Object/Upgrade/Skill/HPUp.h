@@ -15,7 +15,7 @@ public:
 	}
 
 	std::string GetUpgradeName()override {
-		return "AttackUp";
+		return "HPUp";
 	}
 
 };

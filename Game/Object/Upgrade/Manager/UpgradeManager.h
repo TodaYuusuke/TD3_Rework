@@ -26,6 +26,9 @@ private:
 	void RandomUpgrade();
 
 private:
+	//ImGui用
+	std::vector<std::string> SelectUpgradeName;
+
 	// アップグレードのリスト
 	std::vector<IUpgrade*> attackUpgrade_;
 	std::vector<IUpgrade*> escapeUpgrade_;
