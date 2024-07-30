@@ -25,34 +25,34 @@ void PlayerParameter::Update(){
 #pragma region
 
 void PlayerParameter::InitMoveSpeed() {
-	moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
-	moveSpeed.attackSpeed = config.moveSpeed.attackSpeed;
-	moveSpeed.momentSpeed = config.moveSpeed.momentSpeed;
+	upgrade.moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
+	upgrade.moveSpeed.attackSpeed = config.moveSpeed.attackSpeed;
+	upgrade.moveSpeed.momentSpeed = config.moveSpeed.momentSpeed;
 }
 
 void PlayerParameter::InitProgressTime() {
-	progressTime.attackTime = config.progressTime.attackTime;
-	progressTime.momentTime = config.progressTime.momentTime;
-	progressTime.damageTime = config.progressTime.damageTime;
-	progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
+	upgrade.progressTime.attackTime = config.progressTime.attackTime;
+	upgrade.progressTime.momentTime = config.progressTime.momentTime;
+	upgrade.progressTime.damageTime = config.progressTime.damageTime;
+	upgrade.progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
 }
 
 void PlayerParameter::InitLengthRadius() {
-	lengthRadius.playerRadius = config.lengthRadius.playerRadius;
-	lengthRadius.attackRadius = config.lengthRadius.attackRadius;
+	upgrade.lengthRadius.playerRadius = config.lengthRadius.playerRadius;
+	upgrade.lengthRadius.attackRadius = config.lengthRadius.attackRadius;
 }
 
 void PlayerParameter::InitCollectionRatio() {
-	collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
-	collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
-	collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
+	upgrade.collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
+	upgrade.collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
+	upgrade.collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
 }
 
 void PlayerParameter::InitCountGage() {
-	countGage.MaxAttackCount = 1;
-	countGage.attackCount = countGage.MaxAttackCount;
-	countGage.MaxHpCount = 3;
-	countGage.hpCount = countGage.MaxHpCount;
+	upgrade.countGage.MaxAttackCount = 1;
+	upgrade.countGage.attackCount = upgrade.countGage.MaxAttackCount;
+	upgrade.countGage.MaxHpCount = 3;
+	upgrade.countGage.hpCount = upgrade.countGage.MaxHpCount;
 }
 
 #pragma endregion Init
@@ -93,9 +93,9 @@ void PlayerParameter::DebugTree() {
 void PlayerParameter::DebugTreeMoveSpeed() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("MoveSpeed")) {
-		ImGui::SliderFloat("moveSpeed", &moveSpeed.moveSpeed, 0.0f, 50.0f);
-		ImGui::SliderFloat("attackSpeed", &moveSpeed.attackSpeed, 0.0f, 1000.0f);
-		ImGui::SliderFloat("momentSpeed", &moveSpeed.momentSpeed, 0.0f, 30.0f);
+		ImGui::SliderFloat("moveSpeed", &upgrade.moveSpeed.moveSpeed, 0.0f, 50.0f);
+		ImGui::SliderFloat("attackSpeed", &upgrade.moveSpeed.attackSpeed, 0.0f, 1000.0f);
+		ImGui::SliderFloat("momentSpeed", &upgrade.moveSpeed.momentSpeed, 0.0f, 30.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -107,10 +107,10 @@ void PlayerParameter::DebugTreeMoveSpeed() {
 void PlayerParameter::DebugTreeProgressTime() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("ProgressTime")) {
-		ImGui::SliderFloat("attackTime", &progressTime.attackTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("momentTime", &progressTime.momentTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("damageTime", &progressTime.damageTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("damageInvincigleTime", &progressTime.damageInvincibleTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("attackTime", &upgrade.progressTime.attackTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("momentTime", &upgrade.progressTime.momentTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageTime", &upgrade.progressTime.damageTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageInvincigleTime", &upgrade.progressTime.damageInvincibleTime, 0.0f, 5.0f);
 		
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -122,8 +122,8 @@ void PlayerParameter::DebugTreeProgressTime() {
 void PlayerParameter::DebugTreeLengthRadius() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("LengthRadius")) {
-		ImGui::SliderFloat("playerRadius", &lengthRadius.playerRadius, 0.01f, 5.0f);
-		ImGui::SliderFloat("attackRadius", &lengthRadius.attackRadius, 0.01f, 5.0f);
+		ImGui::SliderFloat("playerRadius", &upgrade.lengthRadius.playerRadius, 0.01f, 5.0f);
+		ImGui::SliderFloat("attackRadius", &upgrade.lengthRadius.attackRadius, 0.01f, 5.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -135,9 +135,9 @@ void PlayerParameter::DebugTreeLengthRadius() {
 void PlayerParameter::DebugTreeCollectionRatio() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("CollectionRatio")) {
-		ImGui::SliderFloat("attackReduceStart", &collectionRatio.attackReduceStart, -2.0f, 2.0f);
-		ImGui::SliderFloat("attackExtendEnd", &collectionRatio.attackExtendEnd, -2.0f, 2.0f);
-		ImGui::SliderFloat("momentStuckRatio", &collectionRatio.momentStuckRatio, 0.0f, 1.0f);
+		ImGui::SliderFloat("attackReduceStart", &upgrade.collectionRatio.attackReduceStart, -2.0f, 2.0f);
+		ImGui::SliderFloat("attackExtendEnd", &upgrade.collectionRatio.attackExtendEnd, -2.0f, 2.0f);
+		ImGui::SliderFloat("momentStuckRatio", &upgrade.collectionRatio.momentStuckRatio, 0.0f, 1.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -150,14 +150,13 @@ void PlayerParameter::DebugTreeCountGage() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("CountGage")) {
 		// 最大値が変わった時、攻撃可能回数も変更
-		if(ImGui::SliderInt("MaxAttackCount", &countGage.MaxAttackCount, 1, 10))
-			countGage.attackCount = countGage.MaxAttackCount;
-		ImGui::SliderInt("attackCount", &countGage.attackCount, 0, countGage.MaxAttackCount);
+		if(ImGui::SliderInt("MaxAttackCount", &upgrade.countGage.MaxAttackCount, 1, 10))
+			upgrade.countGage.attackCount = upgrade.countGage.MaxAttackCount;
+		ImGui::SliderInt("attackCount", &upgrade.countGage.attackCount, 0, upgrade.countGage.MaxAttackCount);
 		// 最大値が変わった時、HPも変更
-		if(ImGui::SliderInt("MaxHpCount", &countGage.MaxHpCount, 3, 10))
-			countGage.hpCount = countGage.MaxHpCount;
-		ImGui::SliderInt("hpCount", &countGage.hpCount, 0, countGage.MaxHpCount);
-		
+		if(ImGui::SliderInt("MaxHpCount", &upgrade.countGage.MaxHpCount, 3, 10))
+			upgrade.countGage.hpCount = upgrade.countGage.MaxHpCount;
+		ImGui::SliderInt("hpCount", &upgrade.countGage.hpCount, 0, upgrade.countGage.MaxHpCount);
 
 		// Tree を閉じる
 		ImGui::TreePop();

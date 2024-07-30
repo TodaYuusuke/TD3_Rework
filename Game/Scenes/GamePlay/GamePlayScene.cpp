@@ -25,10 +25,18 @@ void GamePlayScene::Initialize() {
 
 	player_.Init();
 	enemyManager_.Init();
+	upgradeManager_.Init(player_.GetPlayerParameter());
 }
 
 void GamePlayScene::Update()
 {
+	upgradeManager_.Update();
+
+	if (upgradeManager_.GetUpgradeFlag()) {
+		return;
+	}
+
+
 	if (Keyboard::GetTrigger(DIK_N)){
 		nextSceneFunction = []() { return new GameClearScene; };
 	}

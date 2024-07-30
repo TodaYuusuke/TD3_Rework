@@ -23,6 +23,9 @@ public: // ** メンバ関数 ** //
 	/// <returns></returns>
 	LWP::Math::Vector3 GetWorldPosition() { return model_.worldTF.GetWorldPosition(); }
 
+	PlayerParameter& GetPlayerParameter() {
+		return parameter_;
+	}
 
 private: //*** サブクラス ***//
 

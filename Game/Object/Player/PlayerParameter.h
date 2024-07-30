@@ -67,6 +67,19 @@ private: //*** サブクラス ***//
 		int hpCount;			// 現在の体力数
 	};
 
+	struct Upgrade {
+		// 移動速度のパラメータ
+		MoveSpeed moveSpeed;
+		// 時間のパラメータ
+		ProgressTime progressTime;
+		// 距離のパラメータ
+		LengthRadius lengthRadius;
+		// 補正や割合のパラメータ
+		CollectionRatio collectionRatio;
+		// 回数やゲージのパラメータを
+		CountGage countGage;
+	};
+
 	// 攻撃力とかは...?
 
 public: //*** メンバ変数 ***//
@@ -74,16 +87,7 @@ public: //*** メンバ変数 ***//
 	// 基本的な設定
 	PlayerConfig config;
 	
-	// 移動速度のパラメータ
-	MoveSpeed moveSpeed;
-	// 時間のパラメータ
-	ProgressTime progressTime;
-	// 距離のパラメータ
-	LengthRadius lengthRadius;
-	// 補正や割合のパラメータ
-	CollectionRatio collectionRatio;
-	// 回数やゲージのパラメータを
-	CountGage countGage;
+	Upgrade upgrade;
 
 private: //*** 関数群 ***//
 

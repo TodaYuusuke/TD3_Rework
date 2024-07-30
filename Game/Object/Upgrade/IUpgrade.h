@@ -1,7 +1,8 @@
 #pragma once
 #include <Adapter.h>
 #include <string>
-class PlayerParameter;
+#include "Game/Object/Player/PlayerParameter.h"
+//class PlayerParameter;
 class IUpgrade
 {
 public:
@@ -31,7 +32,7 @@ private:
 protected: // ** 派生先用のメンバ変数 ** //
 
 	//アップグレードの内容を決定
-	virtual void Upgrade(PlayerParameter* para) = 0;
+	virtual void Upgrade(PlayerParameter* Input) = 0;
 
 	// スプライト
 	LWP::Primitive::Sprite sprite_;

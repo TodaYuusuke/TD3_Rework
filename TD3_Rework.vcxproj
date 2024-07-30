@@ -71,10 +71,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+    <IncludePath>D:\repos\TD3_Rework;C:\2nd\TD3_Rework;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>D:\repos\TD3_Rework;$(IncludePath)</IncludePath>
+    <IncludePath>D:\repos\TD3_Rework;C:\2nd\TD3_Rework;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -162,7 +162,7 @@
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
-    <ClCompile Include="Game\Object\Upgrage\Manager\UpgradeManager.cpp" />
+    <ClCompile Include="Game\Object\Upgrade\Manager\UpgradeManager.cpp" />
     <ClCompile Include="Game\Scenes\GameClear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOver\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\GamePlay\GamePlayScene.cpp" />
@@ -182,8 +182,10 @@
     <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
     <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
-    <ClInclude Include="Game\Object\Upgrage\IUpgrade.h" />
-    <ClInclude Include="Game\Object\Upgrage\Manager\UpgradeManager.h" />
+    <ClInclude Include="Game\Object\Upgrade\IUpgrade.h" />
+    <ClInclude Include="Game\Object\Upgrade\Manager\UpgradeManager.h" />
+    <ClInclude Include="Game\Object\Upgrade\Skill\AttackUp.h" />
+    <ClInclude Include="Game\Object\Upgrade\Skill\HPUp.h" />
     <ClInclude Include="Game\Scenes\GameClear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\GameOver\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\GamePlay\GamePlayScene.h" />
