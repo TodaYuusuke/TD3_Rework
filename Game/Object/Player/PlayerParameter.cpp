@@ -19,7 +19,29 @@ void PlayerParameter::Init() {
 }
 
 void PlayerParameter::Update(){
+#ifdef _DEBUG
+	ImGui::Begin("PlayerParameter");
+	if (ImGui::Button("IsUpgrade")) {
+		LevelUp();
+	}
+	ImGui::End();
+#endif
 
+}
+
+bool PlayerParameter::GetLevelUpSignal(){
+	if (IsUpGradeFlag) {
+		IsUpGradeFlag = false;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void PlayerParameter::LevelUp(){
+	IsUpGradeFlag = true;
+	//TODO:レベルアップした時の処理を色々する
 }
 
 #pragma region
@@ -89,6 +111,8 @@ void PlayerParameter::DebugTree() {
 	}
 #endif // DEMO
 }
+
+
 
 void PlayerParameter::DebugTreeMoveSpeed() {
 	// 更に Tree でまとめる

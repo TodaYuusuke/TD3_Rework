@@ -11,6 +11,11 @@ void UpgradeManager::Init(PlayerParameter& Input)
 
 void UpgradeManager::Update()
 {
+
+	if (parameter_->GetLevelUpSignal()) {
+		LevelUp();
+	}
+#ifdef _DEBUG
 	ImGui::Begin("Upgrade");
 	if (ImGui::Button("LevelUp")) {
 		LevelUp();
@@ -19,9 +24,11 @@ void UpgradeManager::Update()
 		ImGui::Text(String.c_str());
 	}
 	ImGui::End();
+#endif
+
 	//アップグレードを選択
 	if (UpgradeFlag) {
-	SelectUpgrade();
+		SelectUpgrade();
 	}
 }
 

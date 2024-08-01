@@ -20,7 +20,6 @@ public:
 
 	bool GetUpgradeFlag() {return UpgradeFlag;};
 
-
 private:
 
 	void RandomUpgrade();

@@ -21,10 +21,16 @@ public: //*** メンバ関数 ***//
 	void Update();
 
 	/// <summary>
+	/// レベルがあがっとことを知らせるシグナル
+	/// </summary>
+	bool GetLevelUpSignal();
+
+	/// <summary>
 	/// Tree 形式で内部の情報を表示する
 	/// <para>内部でも #ifdef DEMO をしている</para>
 	/// </summary>
 	void DebugTree();
+
 
 private: //*** サブクラス ***//
 
@@ -67,6 +73,13 @@ private: //*** サブクラス ***//
 		int hpCount;			// 現在の体力数
 	};
 
+	//　レベル関連
+	struct Level {
+		
+		float exp_;//貯まっている経験値
+
+	};
+
 	struct Upgrade {
 		// 移動速度のパラメータ
 		MoveSpeed moveSpeed;
@@ -82,6 +95,9 @@ private: //*** サブクラス ***//
 
 	// 攻撃力とかは...?
 
+	//レベルアップのフラグ
+	bool IsUpGradeFlag = false;
+
 public: //*** メンバ変数 ***//
 
 	// 基本的な設定
@@ -89,7 +105,13 @@ public: //*** メンバ変数 ***//
 	
 	Upgrade upgrade;
 
+
 private: //*** 関数群 ***//
+
+	/// <summary>
+	/// レベルアップした時に呼び出す
+	/// </summary>
+	void LevelUp();
 
 	// 移動値を初期化
 	void InitMoveSpeed();
@@ -112,4 +134,6 @@ private: //*** 関数群 ***//
 	void DebugTreeCollectionRatio();
 	// 回数やゲージのデバッグ表示
 	void DebugTreeCountGage();
+
+
 };

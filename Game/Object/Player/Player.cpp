@@ -70,6 +70,8 @@ void Player::Update() {
 			playerCollider_.collider.isActive = true;
 		}
 	}
+
+	parameter_.Update();
 }
 
 void Player::DecreaseHP() {
