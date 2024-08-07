@@ -1,5 +1,8 @@
 #pragma once
 #include <scene/IScene.h>
+#include "../../Object/Player/Player.h"
+#include "../../Object/Enemy/Normal/NormalEnemy.h"
+#include "../../Object/FollowCamera/FollowCamera.h"
 //#include "../../SceneTransition/SceneTransition.h"
 
 class TestScene final
@@ -23,4 +26,7 @@ private: //*** これより先に必要な処理や変数を記述 ***//
 public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
+	Player player_;
+	FollowCamera followCamera_;
+	NormalEnemy enemy_;
 };

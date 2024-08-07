@@ -9,6 +9,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 #else
 	LWP::Window::ChangeFullScreenMode();
 #endif
-	LWP::System::Run(new GamePlayScene());
+	LWP::System::Run(new TestScene());
 	return 0;
 }

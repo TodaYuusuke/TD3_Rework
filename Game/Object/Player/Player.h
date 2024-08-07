@@ -26,6 +26,11 @@ public: // ** メンバ関数 ** //
 	PlayerParameter& GetPlayerParameter() {
 		return parameter_;
 	}
+	/// <summary>
+	/// ワールドトランスフォーム
+	/// </summary>
+	/// <returns></returns>
+	const LWP::Object::TransformQuat* GetWorldTransform() { return &model_.worldTF; }
 
 private: //*** サブクラス ***//
 

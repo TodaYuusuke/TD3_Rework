@@ -156,6 +156,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Object\FollowCamera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Enemy\IEnemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Maneger\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Enemy\Normal\NormalEnemy.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Object\FollowCamera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Enemy\IEnemy.h" />
     <ClInclude Include="Game\Object\Enemy\Maneger\EnemyManager.h" />
     <ClInclude Include="Game\Object\Enemy\Normal\NormalEnemy.h" />
