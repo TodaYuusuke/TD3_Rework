@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Normal/NormalEnemy.h"
+#include "../Boss/DashBoss.h"
 
 class Player;
 class EnemyManager

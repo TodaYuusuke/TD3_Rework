@@ -63,7 +63,7 @@ public:
 	const float kDeadFlame_;
 #pragma endregion 定数
 
-private://関数
+protected://関数
 
 
 	lwp::Vector3 GetDirectVel();

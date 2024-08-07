@@ -6,6 +6,12 @@ void EnemyManager::Init(){
 	enemy->Init();
 	enemy->SetTarget(player_);
 	enemys_.push_back(enemy);
+
+	// 突進するボス
+	DashBoss* dashBoss = new DashBoss();
+	dashBoss->Init();
+	dashBoss->SetTarget(player_);
+	enemys_.push_back(dashBoss);
 }
 
 void EnemyManager::Update(){
