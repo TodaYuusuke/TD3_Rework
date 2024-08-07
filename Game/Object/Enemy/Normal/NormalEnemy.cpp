@@ -17,9 +17,9 @@ void NormalEnemy::Update()
 {
 	if (CheckAttackRange())
 	{
-		IsAttack_ = false;
+		isAttack_ = true;
 	}
-	if (IsAttack_)
+	if (isAttack_)
 	{
 		// 攻撃処理
 		Attack();
@@ -44,7 +44,7 @@ void NormalEnemy::Attack()
 		atackWork = AtackWork::End;
 	}
 	else if (atackWork == AtackWork::End) {
-		IsAttack_ = false;
+		isAttack_ = false;
 	}
 	//貯める
 
