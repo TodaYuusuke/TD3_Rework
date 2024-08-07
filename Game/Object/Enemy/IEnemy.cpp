@@ -28,11 +28,11 @@ void IEnemy::LockPlayer()
 void IEnemy::Dying()
 {
 	DyingAnimation();
-	deadFlame_--;
-	if (deadFlame_ <= kDeadFlame_) {
-		IsDead_ = true;
+	deadFrame_--;
+	if (deadFrame_ <= kDeadFlame_) {
+		isDead_ = true;
 	}
-	if (IsDead_) {
+	if (isDead_) {
 		Dead();
 	}
 }

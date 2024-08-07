@@ -41,7 +41,7 @@ public:
 	void Dead();
 	//
 	bool GetIsDead() {
-		return IsDead_;
+		return isDead_;
 	}
 #pragma endregion 死亡処理関連
 
@@ -83,13 +83,13 @@ protected://変数
 	float attackWaitTime_;
 
 	//hpが0になってからの経過フレーム
-	int deadFlame_ = 0;
+	int deadFrame_ = 0;
 	//生きているかどうか
 	//HPが0になったタイミングでtrueになる
-	bool IsDying_ = false;
+	bool isDying_ = false;
 	//HPが0になった後、deadFlame_の値がkDeadFlame()より小さくなったらtrue
-	bool IsDead_ = false;
+	bool isDead_ = false;
 	//攻撃できるかどうか
 	//trueなら攻撃可能
-	bool IsAttack_ = false;
+	bool isAttack_ = false;
 };
