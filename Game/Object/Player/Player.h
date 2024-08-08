@@ -1,6 +1,7 @@
 #pragma once
 #include <Adapter.h>
 #include "PlayerParameter.h"
+#include "Object/FollowCamera/FollowCamera.h"
 
 /// <summary>
 /// プレイヤークラス
@@ -11,7 +12,7 @@ public: // ** メンバ関数 ** //
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	void Init(LWP::Object::Camera* pCamera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -75,6 +76,9 @@ private: //*** メンバ変数 ***//
 	// モデル
 	LWP::Resource::RigidModel model_;
 
+	// フォローカメラ
+	FollowCamera followCamera_;
+
 	// 今の状態を格納
 	Behavior behavior_ = Behavior::Idle;
 	// 状態が変わった時に値が入る
@@ -94,7 +98,11 @@ private: //*** 細かく設定される変数 ***//
 	// 操作があった時に向く方向を決定している
 	LWP::Math::Vector3 destinate_ = { 0.0f,0.0f,1.0f };
 
+	// 移動速度(量)
+	float movement_ = 0.0f;
+
 	// プレイヤーの速度を格納
+	// カメラ方向も計算している
 	LWP::Math::Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 
 	// まとめられたフラグ

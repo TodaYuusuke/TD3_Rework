@@ -7,7 +7,7 @@ using namespace LWP::Math;
 using namespace LWP::Utility;
 using namespace LWP::Object;
 
-void Player::Init() {
+void Player::Init(LWP::Object::Camera* pCamera) {
 	// モデルを読み込む
 	// 一時的にキューブ
 	model_.LoadCube();
@@ -18,6 +18,10 @@ void Player::Init() {
 	parameter_.Init();
 	//当たり判定を初期化
 	InitColliders();
+
+	// フォローカメラを初期化
+	followCamera_.Init(&model_.worldTF, pCamera);
+
 }
 
 void Player::Update() {
@@ -61,6 +65,10 @@ void Player::Update() {
 	// 参照なので当たり判定に反映される
 	playerCollider_.capsule.end = model_.worldTF.translation;
 
+	// カメラの位置を更新
+	followCamera_.Update();
+
+	// フラグを元に戻す処理
 	// 無敵時間中の時
 	if (0.0f < times_.invincibleTime) {
 		times_.invincibleTime -= Info::GetDeltaTimeF();
@@ -219,8 +227,14 @@ void Player::InitAttack() {
 	// 経過時間を初期化
 	times_.behaviorTime = 0.0f;
 	// 速度を設定
-	// 移動速度は固定し、デルタタイムは後で計算する
-	velocity_ = destinate_ * parameter_.moveSpeed.attackSpeed;
+	// 移動量は固定し、デルタタイムは後で計算する
+	movement_ = parameter_.moveSpeed.attackSpeed;
+	// カメラの正面ベクトルへ修正
+	velocity_ = destinate_ * followCamera_.GetTransformQuat().rotation;
+	// y 情報を消す
+	// 正規化した情報に移動量を掛ける
+	velocity_ = Vector3(velocity_.x, 0.0f, velocity_.z).Normalize() * movement_;
+
 	// 攻撃を有効化
 	attackCollider_.collider.isActive = true;
 	// 攻撃の判定を設定する
@@ -271,8 +285,13 @@ void Player::UpdateIdle() {
 void Player::UpdateMove() {
 	// 移動入力されている時
 	if (flags_.isInputMove) {
-		// 速度を代入する
-		velocity_ = destinate_ * parameter_.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
+		// 速度量を代入する
+		movement_ = parameter_.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
+		// カメラの正面ベクトルへ修正
+		velocity_ = destinate_ * followCamera_.GetTransformQuat().rotation;
+		// y 情報を消す
+		// 正規化した情報に移動量を掛ける
+		velocity_ = Vector3(velocity_.x, 0.0f, velocity_.z).Normalize() * movement_;
 	}
 	// 入力をやめた時
 	else {
@@ -378,7 +397,7 @@ void Player::DebugWindow() {
 		ImGui::Text("Damage");
 		break;
 	default:
-		ImGui::Text("%d",(int)behavior_);
+		ImGui::Text("%d", (int)behavior_);
 		break;
 	}
 	ImGui::Separator();

@@ -23,7 +23,7 @@ void GamePlayScene::Initialize() {
 	sun_.radius = 105.0f;
 	sun_.decay = 0.58f;
 
-	player_.Init();
+	player_.Init(&mainCamera);
 	enemyManager_.Init();
 }
 
