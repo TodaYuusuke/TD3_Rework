@@ -2,8 +2,7 @@
 #include "../Adapter/Adapter.h"
 
 class Player;
-class FollowCamera
-{
+class FollowCamera {
 public:
 	/// 
 	/// Default Method
@@ -30,6 +29,13 @@ public:
 
 	// 向きをリセットする
 	void ResetAngle();
+
+public: /// ゲッター
+
+	/// <summary>
+	/// カメラのクォータニオンを取得
+	/// </summary>
+	LWP::Object::TransformQuat GetTransformQuat() const { return pCamera_->transform; }
 
 private:/// プライベートな関数
 	// キーボード,ゲームパッドの入力処理
