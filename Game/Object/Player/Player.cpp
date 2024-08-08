@@ -273,6 +273,8 @@ void Player::UpdateIdle() {
 void Player::UpdateMove() {
 	// 移動入力されている時
 	if (flags_.isInputMove) {
+
+
 		// 速度を代入する
 		velocity_ = destinate_ * parameter_.upgrade.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
 	}
