@@ -23,6 +23,11 @@ public: // ** メンバ関数 ** //
 	/// <returns></returns>
 	LWP::Math::Vector3 GetWorldPosition() { return model_.worldTF.GetWorldPosition(); }
 
+	/// <summary>
+	/// ワールドトランスフォーム
+	/// </summary>
+	/// <returns></returns>
+	const LWP::Object::TransformQuat* GetWorldTransform() { return &model_.worldTF; }
 
 private: //*** サブクラス ***//
 
