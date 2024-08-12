@@ -156,6 +156,8 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game\Object\Enemy\Arrow\Arrow.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Boss\ArrowBoss.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\DashBoss.cpp" />
     <ClCompile Include="Game\Object\Enemy\IEnemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Maneger\EnemyManager.cpp" />
@@ -168,9 +170,12 @@
     <ClCompile Include="Game\Scenes\GamePlay\GamePlayScene.cpp" />
     <ClCompile Include="Game\Scenes\Test\TestScene.cpp" />
     <ClCompile Include="Game\Scenes\Title\TitleScene.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Arrow\HomingArrow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\Object\Enemy\Arrow\Arrow.h" />
+    <ClInclude Include="Game\Object\Enemy\Boss\ArrowBoss.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\DashBoss.h" />
     <ClInclude Include="Game\Object\Enemy\IEnemy.h" />
     <ClInclude Include="Game\Object\Enemy\Maneger\EnemyManager.h" />
@@ -188,6 +193,7 @@
     <ClInclude Include="Game\Scenes\GamePlay\GamePlayScene.h" />
     <ClInclude Include="Game\Scenes\Test\TestScene.h" />
     <ClInclude Include="Game\Scenes\Title\TitleScene.h" />
+    <ClInclude Include="Game\Object\Enemy\Arrow\HomingArrow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
