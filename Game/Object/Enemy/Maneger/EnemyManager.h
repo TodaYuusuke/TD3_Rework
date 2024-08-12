@@ -2,6 +2,7 @@
 
 #include "../Normal/NormalEnemy.h"
 #include "../Boss/DashBoss.h"
+#include "../Boss/ArrowBoss.h"
 
 class Player;
 class EnemyManager

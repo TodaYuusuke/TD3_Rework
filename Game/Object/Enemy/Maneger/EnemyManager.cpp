@@ -2,16 +2,21 @@
 #include "Object/Player/Player.h"
 
 void EnemyManager::Init(){
-	NormalEnemy* enemy = new NormalEnemy();
-	enemy->Init();
-	enemy->SetTarget(player_);
-	enemys_.push_back(enemy);
+	//NormalEnemy* enemy = new NormalEnemy();
+	//enemy->Init();
+	//enemy->SetTarget(player_);
+	//enemys_.push_back(enemy);
+	//
+	//// 突進するボス
+	//DashBoss* dashBoss = new DashBoss();
+	//dashBoss->Init();
+	//dashBoss->SetTarget(player_);
+	//enemys_.push_back(dashBoss);
 
-	// 突進するボス
-	DashBoss* dashBoss = new DashBoss();
-	dashBoss->Init();
-	dashBoss->SetTarget(player_);
-	enemys_.push_back(dashBoss);
+	ArrowBoss* arrowBoss = new ArrowBoss();
+	arrowBoss->Init();
+	arrowBoss->SetTarget(player_);
+	enemys_.push_back(arrowBoss);
 }
 
 void EnemyManager::Update(){
@@ -44,7 +49,7 @@ void EnemyManager::Update(){
 		int spawn = distribution(randomEngine);
 		for (int It = 0; It < spawn; It++)
 		{
-			EnemySpawn();
+			//EnemySpawn();
 		}
 		currentFrame_ = 0;
 	}

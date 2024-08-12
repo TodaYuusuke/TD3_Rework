@@ -19,7 +19,7 @@ public:
 	/// 純粋仮想関数
 	/// 
 
-	DashBoss() : IEnemy(60.0f, kAttackRange, 1.0f) {};
+	DashBoss() : IEnemy(60.0f, 20.0f, 1.0f) {};
 	~DashBoss()override;
 
 	/// <summary>
@@ -69,9 +69,6 @@ private:
 #pragma endregion
 
 private:// 定数
-	// 攻撃する範囲
-	const float kAttackRange = 20.0f;
-
 	// 突進速度の係数
 	const float kDashSpeedCoefficient = 2.0f;
 

@@ -1,105 +1,107 @@
 #pragma once
-#include "Object/Enemy/IEnemy.h"
+#include "../IEnemy.h"
+#include "Object/Enemy/Arrow/Arrow.h"
+#include "Object/Enemy/Arrow/HomingArrow.h"
 
 class ArrowBoss : public IEnemy
 {
-private:// \‘¢‘Ì
-	// U‚é‚Ü‚¢
+private:// æ§‹é€ ä½“
+	// æŒ¯ã‚‹ã¾ã„
 	enum class Behavior {
-		kRoot,	 // ’Êíó‘Ô
-		kAiming, // ©‹@‚ğ‘_‚¤
-		kNormalShot,   // ”­Ë
-		kHomingShot  // ƒz[ƒ~ƒ“ƒO’e
+		kRoot,	 // é€šå¸¸çŠ¶æ…‹
+		kAiming, // è‡ªæ©Ÿã‚’ç‹™ã†
+		kNormalShot,   // ç™ºå°„
+		kHomingShot  // ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾
 	};
 
-public:// ƒpƒuƒŠƒbƒN‚Èƒƒ“ƒoŠÖ”
-	//*** ƒˆ‰¼‘zŠÖ” ***//
+public:// ãƒ‘ãƒ–ãƒªãƒƒã‚¯ãªãƒ¡ãƒ³ãƒé–¢æ•°
+	//*** ç´”ç²‹ä»®æƒ³é–¢æ•° ***//
+	ArrowBoss() : IEnemy(60.0f, 60.0f, 1.0f) {};
 	~ArrowBoss() override;
 	void Init()override;
 	void Update()override;
 
-private:// ƒvƒ‰ƒCƒx[ƒg‚Èƒƒ“ƒoŠÖ”
-	//*** ƒˆ‰¼‘zŠÖ” ***//
-	// UŒ‚
+private:// ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆãªãƒ¡ãƒ³ãƒé–¢æ•°
+	//*** ç´”ç²‹ä»®æƒ³é–¢æ•° ***//
+	// æ”»æ’ƒ
 	void Attack()override;
+	//å€’ã•ã‚ŒãŸæ™‚ã®æ¼”å‡º
+	void DyingAnimation()override {};
 
-	// ‘S‚Ä‚Ì’e‚ÌXVˆ—
+	// å…¨ã¦ã®å¼¾ã®æ›´æ–°å‡¦ç†
 	void ArrowsUpdate();
 
-	// ’e‚Ì”­ËŠp‚ğƒ‰ƒ“ƒ_ƒ€‚É‚·‚é
+	// å¼¾ã®ç™ºå°„è§’ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«ã™ã‚‹
 	LWP::Math::Vector3 RandomShootingAngle();
 
-#pragma region U‚é‚Ü‚¢
-	// ’Êíó‘Ô‚Ì‰Šú‰»
+#pragma region æŒ¯ã‚‹ã¾ã„
+	// é€šå¸¸çŠ¶æ…‹ã®åˆæœŸåŒ–
 	void B_RootInit();
-	// ’Êíó‘Ô‚ÌXVˆ—
+	// é€šå¸¸çŠ¶æ…‹ã®æ›´æ–°å‡¦ç†
 	void B_RootUpdate();
 
-	// ©‹@‚ğ‘_‚¤ó‘Ô‚Ì‰Šú‰»
+	// è‡ªæ©Ÿã‚’ç‹™ã†çŠ¶æ…‹ã®åˆæœŸåŒ–
 	void B_AimingInit();
-	// ©‹@‚ğ‘_‚¤ó‘Ô‚ÌXVˆ—
+	// è‡ªæ©Ÿã‚’ç‹™ã†çŠ¶æ…‹ã®æ›´æ–°å‡¦ç†
 	void B_AimingUpdate();
 
-	// ËŒ‚ó‘Ô‚Ì‰Šú‰»
+	// å°„æ’ƒçŠ¶æ…‹ã®åˆæœŸåŒ–
 	void B_NormalShotInit();
-	// ËŒ‚ó‘Ô‚ÌXVˆ—
+	// å°„æ’ƒçŠ¶æ…‹ã®æ›´æ–°å‡¦ç†
 	void B_NormalShotUpdate();
 
-	// ƒz[ƒ~ƒ“ƒOËŒ‚ó‘Ô‚Ì‰Šú‰»
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å°„æ’ƒçŠ¶æ…‹ã®åˆæœŸåŒ–
 	void B_HomingShotInit();
-	// ƒz[ƒ~ƒ“ƒOËŒ‚ó‘Ô‚ÌXVˆ—
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å°„æ’ƒçŠ¶æ…‹ã®æ›´æ–°å‡¦ç†
 	void B_HomingShotUpdate();
 #pragma endregion
 
-private:// ’è”
-#pragma region s“®‚ÌƒtƒŒ[ƒ€î•ñ
-	// ‰½‚à‚µ‚È‚¢ó‘Ô‚Ì‘S‘ÌƒtƒŒ[ƒ€
+private:// å®šæ•°
+#pragma region è¡Œå‹•ã®ãƒ•ãƒ¬ãƒ¼ãƒ æƒ…å ±
+	// ä½•ã‚‚ã—ãªã„çŠ¶æ…‹ã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	const float kStunAllFrame = 120;
-	// ©‹@‘_‚¢ó‘Ô‚Ì‘S‘ÌƒtƒŒ[ƒ€
+	// è‡ªæ©Ÿç‹™ã„çŠ¶æ…‹ã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	const float kAimAllFrame = 120;
-	// ’ÊíËŒ‚ó‘Ô‚Ì‘S‘ÌƒtƒŒ[ƒ€
+	// é€šå¸¸å°„æ’ƒçŠ¶æ…‹ã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	const float kNormalShotAllFrame = 180;
-	// ƒz[ƒ~ƒ“ƒOËŒ‚‚Ì‘S‘ÌƒtƒŒ[ƒ€
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å°„æ’ƒã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	const float kHomingShotAllFrame = 180;
 
-	// ’Êí’e‚Ì˜AË‘¬“x(Ÿ‚Ì’e‚ğŒ‚‚Â‚Ü‚Å‚ÌŠÔ)
+	// é€šå¸¸å¼¾ã®é€£å°„é€Ÿåº¦(æ¬¡ã®å¼¾ã‚’æ’ƒã¤ã¾ã§ã®æ™‚é–“)
 	const float kNormalShotDelayFrame = 0;
-	// ƒz[ƒ~ƒ“ƒO’e‚Ì˜AË‘¬“x(Ÿ‚Ì’e‚ğŒ‚‚Â‚Ü‚Å‚ÌŠÔ)
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾ã®é€£å°„é€Ÿåº¦(æ¬¡ã®å¼¾ã‚’æ’ƒã¤ã¾ã§ã®æ™‚é–“)
 	const float kHomingShotDelayFrame = 6;
 #pragma endregion
 
-	// ’Êí’e”
+	// é€šå¸¸å¼¾æ•°
 	const int kMaxNormalShotCount = 4;
-	// ƒz[ƒ~ƒ“ƒO’e”
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾æ•°
 	const int kMaxHomingShotCount = 9;
 
-	// UŒ‚‚·‚é”ÍˆÍ
-	const float kAttackRange = 60.0f;
-
-	// ‘å‹Z‚ğs‚¤‚Æ‚«‚ÌƒJƒƒ‰‚Ì‹–ìŠp
+	// å¤§æŠ€ã‚’è¡Œã†ã¨ãã®ã‚«ãƒ¡ãƒ©ã®è¦–é‡è§’
 	const float kEffectFov = 120;
 
-private:// ƒvƒ‰ƒCƒx[ƒg‚È•Ï”
-	// ‰½‚à‚µ‚È‚¢ó‘Ô‚ÌŒo‰ßƒtƒŒ[ƒ€
+private:// ãƒ—ãƒ©ã‚¤ãƒ™ãƒ¼ãƒˆãªå¤‰æ•°
+	// ä½•ã‚‚ã—ãªã„çŠ¶æ…‹ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ 
 	float stunFrame_;
-	// ’ÊíËŒ‚ó‘Ô‚ÌŒo‰ßƒtƒŒ[ƒ€
+	// é€šå¸¸å°„æ’ƒçŠ¶æ…‹ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ 
 	float shotFrame_;
 
-	// ËŒ‚‚ÌƒfƒBƒŒƒC
+	// å°„æ’ƒã®ãƒ‡ã‚£ãƒ¬ã‚¤
 	float shotDelay_;
-	// ËŒ‚‰ñ”
+	// å°„æ’ƒå›æ•°
 	int shotCount_;
 
-	// ©‹@‚ğ‘_‚¤ó‘Ô‚É‚È‚é‚©
+	// è‡ªæ©Ÿã‚’ç‹™ã†çŠ¶æ…‹ã«ãªã‚‹ã‹
 	bool isAiming_;
 
-	// Œ»İ‚ÌU‚é‚Ü‚¢
+	// ç¾åœ¨ã®æŒ¯ã‚‹ã¾ã„
 	Behavior behavior_ = Behavior::kRoot;
-	// Ÿ‚ÌU‚é‚Ü‚¢ƒŠƒNƒGƒXƒg
+	// æ¬¡ã®æŒ¯ã‚‹ã¾ã„ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
-	// ’Êí’e
-	//std::list<Arrow*> normalArrows_;
-	// ƒz[ƒ~ƒ“ƒO’e
-	//std::list<HomingArrow*> homingArrows_;
+	// é€šå¸¸å¼¾
+	std::list<Arrow*> normalArrows_;
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾
+	std::list<HomingArrow*> homingArrows_;
 };

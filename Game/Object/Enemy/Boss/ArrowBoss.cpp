@@ -6,28 +6,29 @@ using namespace LWP::Utility;
 using namespace LWP::Object::Collider;
 
 ArrowBoss::~ArrowBoss() {
-	/*for (Arrow* arrow : normalArrows_) {
+	for (Arrow* arrow : normalArrows_) {
 		delete arrow;
 	}
-
+	
 	for (HomingArrow* arrow : homingArrows_) {
 		delete arrow;
 	}
 
 	normalArrows_.clear();
-	homingArrows_.clear();*/
+	homingArrows_.clear();
 }
 
 void ArrowBoss::Init()
 {
-	// “–‚½‚è”»’è‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	// å½“ãŸã‚Šåˆ¤å®šã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	models_.reserve(1);
 	models_.emplace_back();
 	models_[0].LoadCube();
 	models_[0].materials[1].enableLighting = false;
 
-	// ‘å‚«‚³
+	// å¤§ãã•
 	models_[0].worldTF.scale = { 2,3,2 };
+	models_[0].worldTF.translation = { 0,0,60 };
 
 	shotCount_ = 0;
 
@@ -36,148 +37,154 @@ void ArrowBoss::Init()
 
 void ArrowBoss::Update()
 {
-	// €–SƒAƒjƒ[ƒVƒ‡ƒ“
-	// €‚ñ‚¾‚©‚Ç‚¤‚©‚Í‚·‚®‚É”»•Ê
+	// æ­»äº¡æ™‚ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³
+	// æ­»ã‚“ã ã‹ã©ã†ã‹ã¯ã™ãã«åˆ¤åˆ¥
 	if (IsDead_) {
 		Dying();
 		DyingAnimation();
 		return;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (behaviorRequest_) {
-		//  U‚é‚Ü‚¢‚ğ•ÏX
+		//  æŒ¯ã‚‹ã¾ã„ã‚’å¤‰æ›´
 		behavior_ = behaviorRequest_.value();
 		switch (behavior_) {
 		case Behavior::kRoot:
-		default:
 			B_RootInit();
 			break;
-			// ©‹@‚ğ‘_‚¤
+			// è‡ªæ©Ÿã‚’ç‹™ã†
 		case Behavior::kAiming:
 			B_AimingInit();
 			break;
-			// Œ‚‚Â
+			// æ’ƒã¤
 		case Behavior::kNormalShot:
 			B_NormalShotInit();
 			break;
-			// ƒz[ƒ~ƒ“ƒO’e
+			// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾
 		case Behavior::kHomingShot:
 			B_HomingShotInit();
+			break;
 		}
-		// U‚é‚Ü‚¢ƒŠƒNƒGƒXƒg‚ğƒŠƒZƒbƒg
+		// æŒ¯ã‚‹ã¾ã„ãƒªã‚¯ã‚¨ã‚¹ãƒˆã‚’ãƒªã‚»ãƒƒãƒˆ
 		behaviorRequest_ = std::nullopt;
 	}
-	// XVˆ—
+	// æ›´æ–°å‡¦ç†
 	switch (behavior_) {
 	case Behavior::kRoot:
-	default:
 		B_RootUpdate();
 		break;
-		// ©‹@‚ğ‘_‚¤
+		// è‡ªæ©Ÿã‚’ç‹™ã†
 	case Behavior::kAiming:
 		B_AimingUpdate();
 		break;
-		// ’ÊíËŒ‚
+		// é€šå¸¸å°„æ’ƒ
 	case Behavior::kNormalShot:
 		B_NormalShotUpdate();
-		// ƒz[ƒ~ƒ“ƒO’e
+		break;
+		// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾
 	case Behavior::kHomingShot:
 		B_HomingShotUpdate();
 		break;
 	}
 
-	// ‘S‚Ä‚Ì’e‚ÌXVˆ—
+	// å…¨ã¦ã®å¼¾ã®æ›´æ–°å‡¦ç†
 	ArrowsUpdate();
 }
 
 void ArrowBoss::Attack()
 {
-	// ©‹@‚ğ‘_‚¤
-	LockPlayer();
-#pragma region ’Êí’e
+#pragma region é€šå¸¸å¼¾
 	if (behavior_ == Behavior::kNormalShot) {
-		// ‰E‚É”ò‚ñ‚Å‚¢‚­’e
+		//Arrow* arrow = new Arrow();
+		//arrow->Init(models_[0].worldTF);
+		//arrow->SetPlayer(player_);
+		//normalArrows_.push_back(arrow);
+		// å³ã«é£›ã‚“ã§ã„ãå¼¾
 		for (int i = 0; i < 2; i++) {
-			// ’e‚ğ¶¬
-			//HomingArrow* homingArrow = new HomingArrow(
-			//	[this](Math::Vector3 pos) {
-			//		// À•W‚ğ•ÏX‚µ‚Äƒp[ƒeƒBƒNƒ‹‚ğˆê‚Â¶¬
-			//		*missileContrail_.Transform() = pos;
-			//		missileContrail_.Add(1);
-			//	}
-			//);
-			//// ã‚É’e‚ğŒ‚‚Â(x,y²‚ğƒ‰ƒ“ƒ_ƒ€‚Å­‚µ‰ñ“])
-			//LWP::Math::Vector3 rotate = { -M_PI / 10.0f * (i + 1), 2.0f * M_PI / 3.0f, 0 };
-			//homingArrow->SetShootingAngle(rotate);
-			//// ƒz[ƒ~ƒ“ƒOŠJnŠÔ
-			//homingArrow->SetHomingStartFrame(30);
+			// å¼¾ã‚’ç”Ÿæˆ
+			HomingArrow* homingArrow = new HomingArrow(
+				//[this](Math::Vector3 pos) {
+				//	// åº§æ¨™ã‚’å¤‰æ›´ã—ã¦ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’ä¸€ã¤ç”Ÿæˆ
+				//	*missileContrail_.Transform() = pos;
+				//	missileContrail_.Add(1);
+				//}
+			);
+			// ä¸Šã«å¼¾ã‚’æ’ƒã¤(x,yè»¸ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§å°‘ã—å›è»¢)
+			LWP::Math::Vector3 rotate = { -(float)M_PI / 10.0f * (i + 1), 2.0f * (float)M_PI / 3.0f, 0 };
+			homingArrow->SetShootingAngle(rotate);
+			// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°é–‹å§‹æ™‚é–“
+			homingArrow->SetHomingStartFrame(30);
 
-			//// ©‹@‚ÌƒAƒhƒŒƒX‚ğİ’è
-			//homingArrow->SetPlayer(player_);
+			// è‡ªæ©Ÿã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š
+			homingArrow->SetPlayer(player_);
 
-			//// ‰Šú‰»
-			//homingArrow->Init(models_[0].transform);
+			// åˆæœŸåŒ–
+			homingArrow->Init(models_[0].worldTF);
 
-			//homingArrows_.push_back(homingArrow);
+			homingArrows_.push_back(homingArrow);
 		}
 
-		// ¶‚É”ò‚ñ‚Å‚¢‚­’e
+		// å·¦ã«é£›ã‚“ã§ã„ãå¼¾
 		for (int i = 0; i < 2; i++) {
-			// ’e‚ğ¶¬
-			//HomingArrow* homingArrow = new HomingArrow(
-			//	[this](Math::Vector3 pos) {
-			//		// À•W‚ğ•ÏX‚µ‚Äƒp[ƒeƒBƒNƒ‹‚ğˆê‚Â¶¬
-			//		*missileContrail_.Transform() = pos;
-			//		missileContrail_.Add(1);
-			//	}
-			//);
-			//// ã‚É’e‚ğŒ‚‚Â(x,y²‚ğƒ‰ƒ“ƒ_ƒ€‚Å­‚µ‰ñ“])
-			//LWP::Math::Vector3 rotate = { -M_PI / 10.0f * (i + 1), -2.0f * M_PI / 3.0f, 0 };
-			//homingArrow->SetShootingAngle(rotate);
-			//// ƒz[ƒ~ƒ“ƒOŠJnŠÔ
-			//homingArrow->SetHomingStartFrame(30);
+			// å¼¾ã‚’ç”Ÿæˆ
+			HomingArrow* homingArrow = new HomingArrow(
+				//[this](Math::Vector3 pos) {
+				//	// åº§æ¨™ã‚’å¤‰æ›´ã—ã¦ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’ä¸€ã¤ç”Ÿæˆ
+				//	*missileContrail_.Transform() = pos;
+				//	missileContrail_.Add(1);
+				//}
+			);
+			// ä¸Šã«å¼¾ã‚’æ’ƒã¤(x,yè»¸ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§å°‘ã—å›è»¢)
+			LWP::Math::Vector3 rotate = { -(float)M_PI / 10.0f * (i + 1), -2.0f * (float)M_PI / 3.0f, 0 };
+			homingArrow->SetShootingAngle(rotate);
+			// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°é–‹å§‹æ™‚é–“
+			homingArrow->SetHomingStartFrame(30);
 
-			//// ©‹@‚ÌƒAƒhƒŒƒX‚ğİ’è
-			//homingArrow->SetPlayer(player_);
+			// è‡ªæ©Ÿã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š
+			homingArrow->SetPlayer(player_);
 
-			//// ‰Šú‰»
-			//homingArrow->Init(models_[0].transform);
+			// åˆæœŸåŒ–
+			homingArrow->Init(models_[0].worldTF);
 
-			//homingArrows_.push_back(homingArrow);
+			homingArrows_.push_back(homingArrow);
 		}
 	}
 #pragma endregion
 
-#pragma region ƒz[ƒ~ƒ“ƒO’e
+#pragma region ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾
 	else if (behavior_ == Behavior::kHomingShot) {
-		// ’e‚ğ¶¬
-		//HomingArrow* homingArrow = new HomingArrow(
-		//	[this](Math::Vector3 pos) {
-		//		// À•W‚ğ•ÏX‚µ‚Äƒp[ƒeƒBƒNƒ‹‚ğˆê‚Â¶¬
-		//		*missileContrail_.Transform() = pos;
-		//		missileContrail_.Add(1);
-		//	}
-		//);
-		//// ã‚É’e‚ğŒ‚‚Â(x,y²‚ğƒ‰ƒ“ƒ_ƒ€‚Å­‚µ‰ñ“])
-		//LWP::Math::Vector3 rotate = RandomShootingAngle();
-		//homingArrow->SetShootingAngle(rotate);
+		//Arrow* arrow = new Arrow();
+		//arrow->Init(models_[0].worldTF);
+		//arrow->SetPlayer(player_);
+		//normalArrows_.push_back(arrow);
+		// å¼¾ã‚’ç”Ÿæˆ
+		HomingArrow* homingArrow = new HomingArrow(
+			//[this](Math::Vector3 pos) {
+			//	// åº§æ¨™ã‚’å¤‰æ›´ã—ã¦ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚’ä¸€ã¤ç”Ÿæˆ
+			//	*missileContrail_.Transform() = pos;
+			//	missileContrail_.Add(1);
+			//}
+		);
+		// ä¸Šã«å¼¾ã‚’æ’ƒã¤(x,yè»¸ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã§å°‘ã—å›è»¢)
+		LWP::Math::Vector3 rotate = RandomShootingAngle();
+		homingArrow->SetShootingAngle(rotate);
 
-		//// ©‹@‚ÌƒAƒhƒŒƒX‚ğİ’è
-		//homingArrow->SetPlayer(player_);
+		// è‡ªæ©Ÿã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š
+		homingArrow->SetPlayer(player_);
 
-		//// ‰Šú‰»
-		//homingArrow->Init(models_[0].transform);
+		// åˆæœŸåŒ–
+		homingArrow->Init(models_[0].worldTF);
 
-		//homingArrows_.push_back(homingArrow);
+		homingArrows_.push_back(homingArrow);
 	}
 #pragma endregion 
 	IsAttack_ = false;
 }
 
 void ArrowBoss::ArrowsUpdate() {
-	// ’Êí’e‚ÌXVˆ—
-	/*for (Arrow* arrow : normalArrows_) {
+	// é€šå¸¸å¼¾ã®æ›´æ–°å‡¦ç†
+	for (Arrow* arrow : normalArrows_) {
 		arrow->Update();
 	}
 	normalArrows_.remove_if([](Arrow* arrow) {
@@ -188,13 +195,13 @@ void ArrowBoss::ArrowsUpdate() {
 			return true;
 		}
 		return false;
-		});*/
+		});
 
-	// ƒz[ƒ~ƒ“ƒO’e‚ÌXVˆ—
-	/*for (HomingArrow* arrow : homingArrows_) {
+	// ãƒ›ãƒ¼ãƒŸãƒ³ã‚°å¼¾ã®æ›´æ–°å‡¦ç†
+	for (HomingArrow* arrow : homingArrows_) {
 		arrow->Update();
 	}
-	homingArrows_.remove_if([](HomingArrow* arrow) {
+	/*homingArrows_.remove_if([](HomingArrow* arrow) {
 		if (!arrow->GetIsAlive())
 		{
 			arrow->Death();
@@ -206,85 +213,87 @@ void ArrowBoss::ArrowsUpdate() {
 }
 
 LWP::Math::Vector3 ArrowBoss::RandomShootingAngle() {
-	//ƒ‰ƒ“ƒ_ƒ€¶¬—p
+	//ãƒ©ãƒ³ãƒ€ãƒ ç”Ÿæˆç”¨
 	std::random_device seedGenerator;
 	std::mt19937 randomEngine(seedGenerator());
-	// x,y²‚ğƒ‰ƒ“ƒ_ƒ€‚É‰ñ“]
-	std::uniform_real_distribution<float> distributionX(M_PI / 2.5f, 1.5f * M_PI / 2.5f);// 45~135“x
-	std::uniform_real_distribution<float> distributionY(0, 2 * M_PI);				   // 0~360“x
+	// x,yè»¸ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«å›è»¢
+	std::uniform_real_distribution<float> distributionX((float)M_PI / 2.5f, 1.5f * (float)M_PI / 2.5f);// 45~135åº¦
+	std::uniform_real_distribution<float> distributionY(0, 2 * (float)M_PI);				   // 0~360åº¦
 	LWP::Math::Vector3 rotate = { -distributionX(randomEngine), distributionY(randomEngine), 0 };
 
 	return rotate;
 }
 
-/// BehaviorŠÖ”‚±‚±‚©‚ç«
+/// Behavioré–¢æ•°ã“ã“ã‹ã‚‰â†“
 void ArrowBoss::B_RootInit() {
-	// UŒ‚ó‘Ô‰ğœ
+	// æ”»æ’ƒçŠ¶æ…‹è§£é™¤
 	IsAttack_ = false;
-	// ©‹@‘_‚¢ó‘Ô‚ÌƒN[ƒ‹ƒ^ƒCƒ€
+	// è‡ªæ©Ÿç‹™ã„çŠ¶æ…‹ã®ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ 
 	stunFrame_ = kStunAllFrame;
 
 	//followCamera_->EndEffectFov();
 }
 void ArrowBoss::B_RootUpdate() {
-	// UŒ‚‚Ì‘Ò‚¿ŠÔ
+	// æ”»æ’ƒã®å¾…ã¡æ™‚é–“
 	if (stunFrame_ <= 0) {
 		isAiming_ = true;
 	}
 
-	// UŒ‚”ÍˆÍ“à‚É‚¢‚é‚©
+	// æ”»æ’ƒç¯„å›²å†…ã«ã„ã‚‹ã‹
 	if (CheckAttackRange()) {
-		// UŒ‚‰Â”\ó‘Ô‚©
+		// æ”»æ’ƒå¯èƒ½çŠ¶æ…‹ã‹
 		if (isAiming_) {
 			behaviorRequest_ = Behavior::kAiming;
 		}
 	}
 	else {
-		// ˆÚ“®ˆ—
+		// ç§»å‹•å‡¦ç†
 		Move();
+		// è‡ªæ©Ÿã®æ–¹å‘ã«èº«ä½“ã‚’å‘ã‘ã‚‹
+		LockPlayer();
 	}
 
 	stunFrame_--;
 }
 
 void ArrowBoss::B_AimingInit() {
-	// ©‹@‘_‚¢ó‘ÔŠJn
+	// è‡ªæ©Ÿç‹™ã„çŠ¶æ…‹é–‹å§‹
 	isAiming_ = true;
-	attackWaitTime_ = (int)kAimAllFrame;
+	attackWaitTime_ = kAimAllFrame;
 }
 void ArrowBoss::B_AimingUpdate() {
-	// ‘Ì‚ğ©‹@‚ÉŒü‚¯‚é
+	// ä½“ã‚’è‡ªæ©Ÿã«å‘ã‘ã‚‹
 	LockPlayer();
 
-	// Šù’è‚ÌŠÔ‚ğ‰ß‚¬‚½‚çs“®ŠJn
+	// æ—¢å®šã®æ™‚é–“ã‚’éããŸã‚‰è¡Œå‹•é–‹å§‹
 	if (attackWaitTime_ <= 0) {
-		int randomBehavior = GenerateRandamNum(2, 3);
-		behaviorRequest_ = static_cast<Behavior>(randomBehavior);//Behavior::kNormalShot;
+		int randomBehavior = GenerateRandamNum(2, 2);
+		behaviorRequest_ = static_cast<Behavior>(randomBehavior);
 	}
 
 	attackWaitTime_--;
 }
 
 void ArrowBoss::B_NormalShotInit() {
-	// ©‹@‘_‚¢ó‘Ô‰ğœ
+	// è‡ªæ©Ÿç‹™ã„çŠ¶æ…‹è§£é™¤
 	isAiming_ = false;
-	// UŒ‚ŠJn
+	// æ”»æ’ƒé–‹å§‹
 	IsAttack_ = true;
-	// ËŒ‚‚Ì‘S‘ÌƒtƒŒ[ƒ€
+	// å°„æ’ƒã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	shotFrame_ = kNormalShotAllFrame;
-	// ËŒ‚‚ÌƒfƒBƒŒƒC
+	// å°„æ’ƒã®ãƒ‡ã‚£ãƒ¬ã‚¤
 	shotDelay_ = kNormalShotDelayFrame;
-	// ËŒ‚‰ñ”
+	// å°„æ’ƒå›æ•°
 	shotCount_ = kMaxNormalShotCount;
 }
 void ArrowBoss::B_NormalShotUpdate() {
-	// ËŒ‚ŠÔŠu
+	// å°„æ’ƒé–“éš”
 	if (shotDelay_ <= 0 && shotCount_ >= 1) {
 		Attack();
 		shotDelay_ = kNormalShotDelayFrame;
 		shotCount_--;
 	}
-	// Šù’è‚ÌŠÔ‚ğ‰ß‚¬‚½‚çUŒ‚I—¹
+	// æ—¢å®šã®æ™‚é–“ã‚’éããŸã‚‰æ”»æ’ƒçµ‚äº†
 	if (shotFrame_ <= 0) {
 		behaviorRequest_ = Behavior::kRoot;
 	}
@@ -294,28 +303,28 @@ void ArrowBoss::B_NormalShotUpdate() {
 }
 
 void ArrowBoss::B_HomingShotInit() {
-	// ©‹@‘_‚¢ó‘Ô‰ğœ
+	// è‡ªæ©Ÿç‹™ã„çŠ¶æ…‹è§£é™¤
 	isAiming_ = false;
-	// UŒ‚ŠJn
+	// æ”»æ’ƒé–‹å§‹
 	IsAttack_ = true;
-	// ËŒ‚‚Ì‘S‘ÌƒtƒŒ[ƒ€
+	// å°„æ’ƒã®å…¨ä½“ãƒ•ãƒ¬ãƒ¼ãƒ 
 	shotFrame_ = kHomingShotAllFrame;
-	// ËŒ‚‚ÌƒfƒBƒŒƒC
+	// å°„æ’ƒã®ãƒ‡ã‚£ãƒ¬ã‚¤
 	shotDelay_ = kNormalShotDelayFrame;
-	// ËŒ‚‰ñ”
+	// å°„æ’ƒå›æ•°
 	shotCount_ = kMaxHomingShotCount;
 
-	// ‹–ìŠp‚ğ‚‚­‚·‚é
+	// è¦–é‡è§’ã‚’é«˜ãã™ã‚‹
 	//followCamera_->StartEffectFov(kEffectFov);
 }
 void ArrowBoss::B_HomingShotUpdate() {
-	// ËŒ‚ŠÔŠu
+	// å°„æ’ƒé–“éš”
 	if (shotDelay_ <= 0 && shotCount_ >= 1) {
 		Attack();
 		shotDelay_ = kHomingShotDelayFrame;
 		shotCount_--;
 	}
-	// Šù’è‚ÌŠÔ‚ğ‰ß‚¬‚½‚çUŒ‚I—¹
+	// æ—¢å®šã®æ™‚é–“ã‚’éããŸã‚‰æ”»æ’ƒçµ‚äº†
 	if (shotFrame_ <= 0) {
 		behaviorRequest_ = Behavior::kRoot;
 	}

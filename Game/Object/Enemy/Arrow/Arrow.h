@@ -13,43 +13,42 @@ public:
 	void Update();
 	void Attack();
 
-	// ƒz[ƒ~ƒ“ƒO‚ÌXVˆ—
-	void HomingUpdate();
-
 	//*** Getter ***//
-
+	bool GetIsAlive() { return isAlive_; }
 
 	//*** Setter ***//
 	void SetIsCollision(bool isActive) { aabb_.isActive = isActive; }
-	// Œü‚«‚ğİ’è
+	// å‘ãã‚’è¨­å®š
 	void SetRotate(LWP::Math::Vector3 rotate) { model_.worldTF.rotation = rotate; }
-	// ‘¬“x‚ğİ’è
+	// é€Ÿåº¦ã‚’è¨­å®š
 	void SetVelocity(LWP::Math::Vector3 velocity) { velocity_ = velocity; }
-	// ©‹@‚ÌƒAƒhƒŒƒX‚ğİ’è
+	// è‡ªæ©Ÿã®ã‚¢ãƒ‰ãƒ¬ã‚¹ã‚’è¨­å®š
 	void SetPlayer(Player* player) { player_ = player; }
 
 public:
 	void Death();
 
-private:// ’è”
-	// ’e‚Ìõ–½
+private:// å®šæ•°
+	// å¼¾ã®å¯¿å‘½
 	const float kLifeTime = 600;
 
-	// ’Êí’e‚Ì‘¬“x
+	// é€šå¸¸å¼¾ã®é€Ÿåº¦
 	const float kNormalSpeed = 10.0f;
 
 private:
-	//ƒ‚ƒfƒ‹ƒCƒ“ƒXƒ^ƒ“ƒX
+	//ãƒ¢ãƒ‡ãƒ«ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	LWP::Resource::RigidModel model_;
-	// ©‹@‚ÌƒAƒhƒŒƒX
+	// è‡ªæ©Ÿã®ã‚¢ãƒ‰ãƒ¬ã‚¹
 	Player* player_;
 
-	// AABB”»’è
+	// AABBåˆ¤å®š
 	AABB aabb_;
 
-	// ’e‚Ìõ–½
+	// å¼¾ã®å¯¿å‘½
 	float deadTimer_;
 
-	// •ûŒüƒxƒNƒgƒ‹
+	// æ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	LWP::Math::Vector3 velocity_;
+
+	bool isAlive_;
 };

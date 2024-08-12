@@ -2,74 +2,34 @@
 
 void Arrow::Init(lwp::TransformQuat transform)
 {
-	// ƒ‚ƒfƒ‹‚Ìì¬
-	//model_.LoadFile("Arrow/Arrow.obj");
+	// ãƒ¢ãƒ‡ãƒ«ã®ä½œæˆ
 	model_.LoadCube();
 	model_.worldTF.translation = transform.translation;
 	model_.worldTF.rotation = transform.rotation;
 	model_.materials[1].enableLighting = true;
-
-	// “–‚½‚è”»’è‚ğİ’è
-	//aabb_ = new LWP::Object::Collider::AABB();
-	//aabb_.CreateFromPrimitive(&model_);
-	//aabb_.mask.SetBelongFrag(GameMask::EnemyAttack());
-	//aabb_.mask.SetHitFrag(GameMask::Player() | GameMask::Weapon());
-	//aabb_.SetOnCollisionLambda([this](lwp::Collider::HitData data) {
-	//	data;
-	//	if (!(data.state == OnCollisionState::None) &&
-	//		data.hit &&
-	//		(data.hit->mask.GetBelongFrag() & data.self->mask.GetHitFrag()))
-	//	{
-	//		Death();
-	//	}
-	//	});
-
-	//aabb_.isActive = true;
+	isAlive_ = true;
 }
 
 void Arrow::Update()
 {
-	// ˆÚ“®ˆ—
+	// ç§»å‹•å‡¦ç†
 	Attack();
 
-	// ’e‚ª¶‘¶ŠÔ‚ğ‰z‚¦‚Ä‚¢‚½‚ç€‚Ê
+	// å¼¾ãŒç”Ÿå­˜æ™‚é–“ã‚’è¶Šãˆã¦ã„ãŸã‚‰æ­»ã¬
 	if (deadTimer_ >= kLifeTime)
 	{
 		Death();
 	}
-	// õ–½‚ği‚ß‚é
+	// å¯¿å‘½ã‚’é€²ã‚ã‚‹
 	deadTimer_++;
 }
 
-void Arrow::Attack()
-{
-	//// ’e‚ªŒü‚¢‚Ä‚¢‚é•ûŒü‚É“®‚­ˆ—
-	//LWP::Math::Vector3 velocity = { 0,0,1 };
-	//LWP::Math::Matrix4x4 rotateMatrix = LWP::Math::Matrix4x4::CreateRotateXYZMatrix(model_.worldTF.rotation);
-	//velocity = velocity * rotateMatrix;
-	//velocity_ = velocity.Normalize();
-	//velocity_ *= kNormalSpeed;
-
-	// ©‹@‚ÉŒü‚©‚¤ƒxƒNƒgƒ‹
-	LWP::Math::Vector3 targetVel = (player_->GetWorldPosition() - model_.worldTF.translation).Normalize();
-	// ‘_‚¤‘ÎÛ‚Ég‘Ì‚ğŒü‚¯‚é
-	lwp::Vector3 sub = targetVel - model_.worldTF.translation;
-
-	//ƒvƒŒƒCƒ„[‚ÌŒ»İ‚ÌŒü‚«
-	sub = sub.Normalize();
-
-	lwp::Vector3 cross = lwp::Vector3::Cross({ 0.0f,0.0f,1.0f }, sub).Normalize();
-	float dot = lwp::Vector3::Dot({ 0.0f,0.0f,1.0f }, sub);
-
-	//s‚«‚½‚¢•ûŒü‚ÌQuaternion‚Ìì¬
-	model_.worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
-
-
-
-	// ‰ÁZ
-	//model_.worldTF.translation += velocity_ * LWP::Info::GetDeltaTime();
+void Arrow::Attack() {
+	const LWP::Math::Vector3 vel = { 0,0,1 };
+	// åº§æ¨™ã‚’æ±ºå®š
+	model_.worldTF.translation += vel * LWP::Math::Matrix4x4::CreateRotateXYZMatrix(model_.worldTF.rotation);
 }
 
 void Arrow::Death() {
-	
+	isAlive_ = false;
 }

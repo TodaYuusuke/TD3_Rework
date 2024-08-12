@@ -99,7 +99,7 @@ void DashBoss::DyingAnimation() {
 bool DashBoss::CheckAttackRange() {
 	// 自機との距離
 	float distance = (models_[0].worldTF.translation - player_->GetWorldPosition()).Length();
-	if (distance <= kAttackRange) {
+	if (distance <= kAttackRange_) {
 		return true;
 	}
 	return false;
