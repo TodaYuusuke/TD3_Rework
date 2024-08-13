@@ -67,5 +67,6 @@
     <ClInclude Include="Game\Object\Enemy\Boss\ArrowBoss.h" />
     <ClInclude Include="Game\Object\Enemy\Arrow\Arrow.h" />
     <ClInclude Include="Game\Object\Enemy\Arrow\HomingArrow.h" />
+    <ClInclude Include="Game\Object\Particle\SummonParticle.h" />
   </ItemGroup>
 </Project>

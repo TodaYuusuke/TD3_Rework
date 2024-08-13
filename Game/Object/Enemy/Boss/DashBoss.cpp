@@ -33,10 +33,15 @@ void DashBoss::Init()
 
 	// HPを設定
 	hp_ = 60;
+
+	accumulateParticle_.model.LoadCube();
+	accumulateParticle_.model.materials[1].enableLighting = false;
+
+	deadParticle_.model.LoadCube();
 }
 
 void DashBoss::Update()
-{
+{	
 	// 死亡時アニメーション
 	// 死んだかどうかはすぐに判別
 	if (IsDead_) {
@@ -139,7 +144,8 @@ void DashBoss::B_PreDashUpdate() {
 	// パーティクルを出す時間
 	if (currentFrame_ <= 60 && isActive_) {
 		if (currentFrame_ % 2 == 0) {
-			//accumulateEffect_(16, models_[0].transform.translation);
+			accumulateParticle_.model.worldTF.translation = models_[0].worldTF.translation;
+			accumulateParticle_.Add(16);
 		}
 	}
 

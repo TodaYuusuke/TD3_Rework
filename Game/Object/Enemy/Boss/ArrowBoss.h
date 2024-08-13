@@ -1,6 +1,5 @@
 #pragma once
 #include "../IEnemy.h"
-#include "Object/Enemy/Arrow/Arrow.h"
 #include "Object/Enemy/Arrow/HomingArrow.h"
 
 class ArrowBoss : public IEnemy
@@ -68,7 +67,7 @@ private:// 定数
 	const float kHomingShotAllFrame = 180;
 
 	// 通常弾の連射速度(次の弾を撃つまでの時間)
-	const float kNormalShotDelayFrame = 0;
+	const float kNormalShotDelayFrame = 6;
 	// ホーミング弾の連射速度(次の弾を撃つまでの時間)
 	const float kHomingShotDelayFrame = 6;
 #pragma endregion
@@ -100,8 +99,6 @@ private:// プライベートな変数
 	// 次の振るまいリクエスト
 	std::optional<Behavior> behaviorRequest_ = std::nullopt;
 
-	// 通常弾
-	std::list<Arrow*> normalArrows_;
 	// ホーミング弾
 	std::list<HomingArrow*> homingArrows_;
 };

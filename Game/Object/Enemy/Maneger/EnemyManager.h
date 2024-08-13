@@ -3,6 +3,7 @@
 #include "../Normal/NormalEnemy.h"
 #include "../Boss/DashBoss.h"
 #include "../Boss/ArrowBoss.h"
+#include "../../Particle/DeadParticle.h"
 
 class Player;
 class EnemyManager
@@ -31,6 +32,9 @@ private:// 関数
 	void ArrowEnemySpawn(lwp::Vector3 pos);
 	void ShieldEnemySpawn(lwp::Vector3 pos);
 
+	// 死亡パーティクルの生成
+	void CreateDeadParticle(lwp::Vector3 pos);
+
 private:// 定数
 
 	// 敵発生頻度
@@ -46,4 +50,6 @@ private:// 変数
 	// 自機
 	Player* player_;
 
+	// 死亡パーティクル
+	std::vector<DeadParticle*> deadParticle_;
 };

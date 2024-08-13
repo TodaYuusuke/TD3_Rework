@@ -6,15 +6,9 @@ using namespace LWP::Utility;
 using namespace LWP::Object::Collider;
 
 ArrowBoss::~ArrowBoss() {
-	for (Arrow* arrow : normalArrows_) {
-		delete arrow;
-	}
-	
 	for (HomingArrow* arrow : homingArrows_) {
 		delete arrow;
 	}
-
-	normalArrows_.clear();
 	homingArrows_.clear();
 }
 
@@ -96,31 +90,19 @@ void ArrowBoss::Attack()
 {
 #pragma region 通常弾
 	if (behavior_ == Behavior::kNormalShot) {
-		//Arrow* arrow = new Arrow();
-		//arrow->Init(models_[0].worldTF);
-		//arrow->SetPlayer(player_);
-		//normalArrows_.push_back(arrow);
 		// 右に飛んでいく弾
 		for (int i = 0; i < 2; i++) {
 			// 弾を生成
-			HomingArrow* homingArrow = new HomingArrow(
-				//[this](Math::Vector3 pos) {
-				//	// 座標を変更してパーティクルを一つ生成
-				//	*missileContrail_.Transform() = pos;
-				//	missileContrail_.Add(1);
-				//}
-			);
+			HomingArrow* homingArrow = new HomingArrow();
+			// 初期化
+			homingArrow->Init(models_[0].worldTF);
+			// 自機のアドレスを設定
+			homingArrow->SetPlayer(player_);
 			// 上に弾を撃つ(x,y軸をランダムで少し回転)
 			LWP::Math::Vector3 rotate = { -(float)M_PI / 10.0f * (i + 1), 2.0f * (float)M_PI / 3.0f, 0 };
 			homingArrow->SetShootingAngle(rotate);
 			// ホーミング開始時間
 			homingArrow->SetHomingStartFrame(30);
-
-			// 自機のアドレスを設定
-			homingArrow->SetPlayer(player_);
-
-			// 初期化
-			homingArrow->Init(models_[0].worldTF);
 
 			homingArrows_.push_back(homingArrow);
 		}
@@ -128,24 +110,16 @@ void ArrowBoss::Attack()
 		// 左に飛んでいく弾
 		for (int i = 0; i < 2; i++) {
 			// 弾を生成
-			HomingArrow* homingArrow = new HomingArrow(
-				//[this](Math::Vector3 pos) {
-				//	// 座標を変更してパーティクルを一つ生成
-				//	*missileContrail_.Transform() = pos;
-				//	missileContrail_.Add(1);
-				//}
-			);
+			HomingArrow* homingArrow = new HomingArrow();
+			// 初期化
+			homingArrow->Init(models_[0].worldTF);
+			// 自機のアドレスを設定
+			homingArrow->SetPlayer(player_);
 			// 上に弾を撃つ(x,y軸をランダムで少し回転)
 			LWP::Math::Vector3 rotate = { -(float)M_PI / 10.0f * (i + 1), -2.0f * (float)M_PI / 3.0f, 0 };
 			homingArrow->SetShootingAngle(rotate);
 			// ホーミング開始時間
 			homingArrow->SetHomingStartFrame(30);
-
-			// 自機のアドレスを設定
-			homingArrow->SetPlayer(player_);
-
-			// 初期化
-			homingArrow->Init(models_[0].worldTF);
 
 			homingArrows_.push_back(homingArrow);
 		}
@@ -154,27 +128,15 @@ void ArrowBoss::Attack()
 
 #pragma region ホーミング弾
 	else if (behavior_ == Behavior::kHomingShot) {
-		//Arrow* arrow = new Arrow();
-		//arrow->Init(models_[0].worldTF);
-		//arrow->SetPlayer(player_);
-		//normalArrows_.push_back(arrow);
 		// 弾を生成
-		HomingArrow* homingArrow = new HomingArrow(
-			//[this](Math::Vector3 pos) {
-			//	// 座標を変更してパーティクルを一つ生成
-			//	*missileContrail_.Transform() = pos;
-			//	missileContrail_.Add(1);
-			//}
-		);
+		HomingArrow* homingArrow = new HomingArrow();
+		// 初期化
+		homingArrow->Init(models_[0].worldTF);
+		// 自機のアドレスを設定
+		homingArrow->SetPlayer(player_);
 		// 上に弾を撃つ(x,y軸をランダムで少し回転)
 		LWP::Math::Vector3 rotate = RandomShootingAngle();
 		homingArrow->SetShootingAngle(rotate);
-
-		// 自機のアドレスを設定
-		homingArrow->SetPlayer(player_);
-
-		// 初期化
-		homingArrow->Init(models_[0].worldTF);
 
 		homingArrows_.push_back(homingArrow);
 	}
@@ -183,11 +145,11 @@ void ArrowBoss::Attack()
 }
 
 void ArrowBoss::ArrowsUpdate() {
-	// 通常弾の更新処理
-	for (Arrow* arrow : normalArrows_) {
+	// ホーミング弾の更新処理
+	for (HomingArrow* arrow : homingArrows_) {
 		arrow->Update();
 	}
-	normalArrows_.remove_if([](Arrow* arrow) {
+	homingArrows_.remove_if([](HomingArrow* arrow) {
 		if (!arrow->GetIsAlive())
 		{
 			arrow->Death();
@@ -196,20 +158,6 @@ void ArrowBoss::ArrowsUpdate() {
 		}
 		return false;
 		});
-
-	// ホーミング弾の更新処理
-	for (HomingArrow* arrow : homingArrows_) {
-		arrow->Update();
-	}
-	/*homingArrows_.remove_if([](HomingArrow* arrow) {
-		if (!arrow->GetIsAlive())
-		{
-			arrow->Death();
-			delete arrow;
-			return true;
-		}
-		return false;
-		});*/
 }
 
 LWP::Math::Vector3 ArrowBoss::RandomShootingAngle() {
@@ -267,7 +215,7 @@ void ArrowBoss::B_AimingUpdate() {
 
 	// 既定の時間を過ぎたら行動開始
 	if (attackWaitTime_ <= 0) {
-		int randomBehavior = GenerateRandamNum(2, 2);
+		int randomBehavior = GenerateRandamNum(2, 3);
 		behaviorRequest_ = static_cast<Behavior>(randomBehavior);
 	}
 

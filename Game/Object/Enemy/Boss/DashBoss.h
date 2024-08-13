@@ -1,5 +1,7 @@
 #pragma once
 #include "../IEnemy.h"
+#include "../../Particle/AccumulateParticle.h"
+#include "../../Particle/DeadParticle.h"
 
 /// <summary>
 /// 突進タイプのボスキャラ
@@ -96,4 +98,7 @@ private:// プライベートな変数
 	LWP::Resource::Motion preAttackMotion_;
 
 	bool isActive_;
+
+	AccumulateParticle accumulateParticle_;
+	DeadParticle deadParticle_;
 };

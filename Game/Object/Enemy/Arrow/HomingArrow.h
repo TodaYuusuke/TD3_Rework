@@ -1,6 +1,7 @@
 #pragma once
 #include <Adapter.h>
 #include "../IEnemy.h"
+#include "../../Particle/SummonParticle.h"
 
 using namespace LWP::Object::Collider;
 
@@ -22,7 +23,7 @@ public:
 
 	//*** Getter ***//
 	// 生きているかの取得
-	//bool GetIsAlive() { return attackWork.flag; }
+	bool GetIsAlive() { return isAlive_; }
 
 	//*** Setter ***//
 	// 当たり判定の設定
@@ -32,7 +33,16 @@ public:
 	/// 発射角を設定
 	/// </summary>
 	/// <param name="angle">発射角</param>
-	void SetShootingAngle(LWP::Math::Vector3 angle) { shootingAngle_ = angle; }
+	void SetShootingAngle(LWP::Math::Vector3 angle) {
+		//// 任意軸を生成
+		if (std::abs(angle.x) >= 0.4f) {
+			model_.worldTF.rotation = model_.worldTF.rotation * LWP::Math::Quaternion::CreateFromAxisAngle(lwp::Vector3{ 1,0,0 }, angle.x);
+		}
+		// Y軸は常に上を向くように固定
+		if (std::abs(angle.y) >= 0.4f) {
+			model_.worldTF.rotation = LWP::Math::Quaternion::CreateFromAxisAngle(lwp::Vector3{ 0,1,0 }, angle.y) * model_.worldTF.rotation;
+		}
+	}
 
 	// ホーミング開始時間を設定
 	void SetHomingStartFrame(float homingStartFrame) { homingStartFrame_ = homingStartFrame; }
@@ -81,19 +91,20 @@ private:
 
 	// 弾の寿命
 	float deadTimer_;
+	// 生存フラグ
+	bool isAlive_;
 
 	// ホーミング弾の経過時間
 	float homingFrame_;
 	// ホーミング開始時間
 	float homingStartFrame_;
-
 	// ホーミング機能
 	bool isHoming_;
 	// ホーミング精度
 	float homingAccuracy_;
 
 	// 発射角
-	LWP::Math::Vector3 shootingAngle_;
+	LWP::Math::Quaternion shootingAngle_;
 	// 方向ベクトル
 	LWP::Math::Vector3 velocity_;
 
@@ -103,5 +114,5 @@ private:
 	LWP::Math::Vector3 endEaseVel_;
 
 	// ミサイル起動パーティクル生成関数
-	std::function<void(LWP::Math::Vector3)> summonContrail_ = nullptr;
+	SummonParticle summonParticle_;
 };

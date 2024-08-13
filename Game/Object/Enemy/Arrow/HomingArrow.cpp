@@ -45,14 +45,15 @@ void HomingArrow::Init(lwp::TransformQuat transform) {
 	isHoming_ = false;
 	// ホーミング精度
 	homingAccuracy_ = kLongDistHomingAccuracy;
-
-	// 撃ちだす方向にモデルを回転
-	//model_.worldTF.rotation += shootingAngle_;
+	// 生存フラグ
+	isAlive_ = true;
 
 	// イージング開始時のベクトル
 	LWP::Math::Vector3 velocity = { 0,0,1 };
 	startEaseVel_ = (velocity * LWP::Math::Matrix4x4::CreateRotateXYZMatrix(model_.worldTF.rotation));
-	startEaseVel_ = startEaseVel_.Normalize() * 30;
+	startEaseVel_ = startEaseVel_.Normalize() * kSpeed;
+
+	summonParticle_.model.LoadCube();
 }
 
 void HomingArrow::Update() {
@@ -66,7 +67,8 @@ void HomingArrow::Update() {
 	}
 
 	if (static_cast<int>(deadTimer_) % 1 == 0) {
-		//summonContrail_(model_.worldTF.GetWorldPosition());
+		summonParticle_.model.worldTF.translation = model_.worldTF.translation;
+		summonParticle_.Add(1);
 	}
 
 	// 寿命を進める
@@ -90,7 +92,7 @@ void HomingArrow::Attack() {
 		// ホーミングの処理
 		HomingUpdate();
 
-		// 弾の向きを自機に向ける
+		// 弾の向きを自機に向ける時は速度を0にする
 		if (homingFrame_ >= kHomingEndFrame - homingStartFrame_ - kNormal2HomingFrame) {
 			velocity_ = { 0,0,0 };
 		}
@@ -102,12 +104,16 @@ void HomingArrow::Attack() {
 		// 回転行列の生成(発射角を含み計算)
 		LWP::Math::Matrix4x4 rotateMatrix = LWP::Math::Matrix4x4::CreateRotateXYZMatrix(model_.worldTF.rotation);
 		velocity = velocity * rotateMatrix;
-		velocity_ = velocity.Normalize();
+		velocity_ = velocity.Normalize() * kSpeed;
+
+		if (deadTimer_ <= 0) {
+			startEaseVel_ = velocity_;
+		}
 
 		// 発射された弾はだんだん遅くなり止まる
 		if (homingFrame_ >= kHomingEndFrame - homingStartFrame_) {
-			LWP::Math::Vector3 endEaseVel = { 0,0,0 };
-			velocity_ = LWP::Math::Vector3::Slerp(startEaseVel_, endEaseVel, deadTimer_ / homingStartFrame_);
+			LWP::Math::Vector3 endVel = { 0,0,0 };
+			velocity_ = LWP::Math::Vector3::Slerp(startEaseVel_, endVel, deadTimer_ / homingStartFrame_);
 		}
 	}
 
@@ -121,7 +127,7 @@ void HomingArrow::Attack() {
 }
 
 void HomingArrow::Death() {
-	
+	isAlive_ = false;
 }
 
 void HomingArrow::HomingUpdate() {
@@ -136,17 +142,15 @@ void HomingArrow::HomingUpdate() {
 
 	// 球面線形保管により、今の速度と自キャラへのベクトルを内挿し、新たな速度とする
 	velocity_ = LWP::Math::Vector3::Slerp(velocity_, toPlayer, homingAccuracy_);
-
 	velocity_ *= kSpeed;
 
 #pragma region 弾の角度
-	// Y軸周り角度(θy)
-	//model_.worldTF.rotation.y = std::atan2(velocity_.x, velocity_.z);
-	//// 横軸方向の長さを求める
-	//float velocityXZ;
-	//velocityXZ = sqrt(velocity_.x * velocity_.x + velocity_.z * velocity_.z);
-	//// X軸周りの角度(θx)
-	//model_.transform.rotation.x = std::atan2(-velocity_.y, velocityXZ);
+	// 速度自体は変わってほしくないので計算時のみvelocityを正規化する
+	lwp::Vector3 cross = lwp::Vector3::Cross({ 0.0f,0.0f,1.0f }, velocity_.Normalize()).Normalize();
+	float dot = lwp::Vector3::Dot({ 0.0f,0.0f,1.0f }, velocity_.Normalize());
+
+	//行きたい方向のQuaternionの作成
+	model_.worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
 #pragma endregion
 }
 

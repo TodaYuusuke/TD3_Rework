@@ -7,16 +7,16 @@ void EnemyManager::Init(){
 	//enemy->SetTarget(player_);
 	//enemys_.push_back(enemy);
 	//
-	//// 突進するボス
-	//DashBoss* dashBoss = new DashBoss();
-	//dashBoss->Init();
-	//dashBoss->SetTarget(player_);
-	//enemys_.push_back(dashBoss);
-
-	ArrowBoss* arrowBoss = new ArrowBoss();
-	arrowBoss->Init();
-	arrowBoss->SetTarget(player_);
-	enemys_.push_back(arrowBoss);
+	// 突進するボス
+	DashBoss* dashBoss = new DashBoss();
+	dashBoss->Init();
+	dashBoss->SetTarget(player_);
+	enemys_.push_back(dashBoss);
+	//
+	//ArrowBoss* arrowBoss = new ArrowBoss();
+	//arrowBoss->Init();
+	//arrowBoss->SetTarget(player_);
+	//enemys_.push_back(arrowBoss);
 }
 
 void EnemyManager::Update(){
@@ -25,6 +25,8 @@ void EnemyManager::Update(){
 	enemys_.remove_if([this](IEnemy* enemy){
 		if (enemy->GetIsDead())
 		{
+			// 死亡パーティクル発生
+			CreateDeadParticle(enemy->GetWorldPosition());
 			delete enemy;
 			return true;
 		}
@@ -148,4 +150,12 @@ void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 	enemy->SetTarget(player_);
 
 	enemys_.push_back(enemy);
+}
+
+void EnemyManager::CreateDeadParticle(lwp::Vector3 pos) {
+	DeadParticle* deadParticle = new DeadParticle();
+	deadParticle->model.LoadCube();
+	deadParticle->model.worldTF.translation = pos;
+	deadParticle->Add(64);
+	deadParticle_.push_back(deadParticle);
 }
