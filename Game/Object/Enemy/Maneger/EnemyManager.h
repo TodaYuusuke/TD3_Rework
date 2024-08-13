@@ -17,6 +17,7 @@ public:
 		{
 			delete enemy;
 		}
+		deadParticles_.clear();
 	};
 
 	void Init();
@@ -51,5 +52,5 @@ private:// 変数
 	Player* player_;
 
 	// 死亡パーティクル
-	std::vector<DeadParticle*> deadParticle_;
+	std::vector<DeadParticle*> deadParticles_;
 };

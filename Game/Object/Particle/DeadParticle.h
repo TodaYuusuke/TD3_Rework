@@ -64,12 +64,14 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 		// 速度が極端に遅くなったら終了フェーズ
 		if (data.elapsedFrame > 25 &&
 			data.velocity.y <= 0.01f && -0.01f <= data.velocity.y &&
-			data.m.worldTF.translation.y <= 0.15f && data.m.worldTF.translation.y >= -0.15f)
-		{
+			data.m.worldTF.translation.y <= 0.15f && data.m.worldTF.translation.y >= -0.15f) {
 			data.velocity = { 0.0f,0.0f,0.0f };
 			data.m.worldTF.scale *= 0.9f;
 			// もし完全に小さくなったなら終了
-			if (data.m.worldTF.scale.x <= 0.001f) { return true; }
+			if (data.m.worldTF.scale.x <= 0.001f) { 
+				isActive = false;
+				return true; 
+			}
 		}
 
 		return false;

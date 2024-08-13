@@ -41,7 +41,7 @@ void DashBoss::Init()
 }
 
 void DashBoss::Update()
-{	
+{
 	// 死亡時アニメーション
 	// 死んだかどうかはすぐに判別
 	if (IsDead_) {

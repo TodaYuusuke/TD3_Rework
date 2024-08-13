@@ -8,10 +8,10 @@ void EnemyManager::Init(){
 	//enemys_.push_back(enemy);
 	//
 	// 突進するボス
-	DashBoss* dashBoss = new DashBoss();
-	dashBoss->Init();
-	dashBoss->SetTarget(player_);
-	enemys_.push_back(dashBoss);
+	//DashBoss* dashBoss = new DashBoss();
+	//dashBoss->Init();
+	//dashBoss->SetTarget(player_);
+	//enemys_.push_back(dashBoss);
 	//
 	//ArrowBoss* arrowBoss = new ArrowBoss();
 	//arrowBoss->Init();
@@ -23,8 +23,7 @@ void EnemyManager::Update(){
 
 	//敵キャラのIsDeadがtrueなら削除
 	enemys_.remove_if([this](IEnemy* enemy){
-		if (enemy->GetIsDead())
-		{
+		if (enemy->GetIsDead())	{
 			// 死亡パーティクル発生
 			CreateDeadParticle(enemy->GetWorldPosition());
 			delete enemy;
@@ -32,7 +31,6 @@ void EnemyManager::Update(){
 		}
 		return false;
 	});
-
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
@@ -42,20 +40,17 @@ void EnemyManager::Update(){
 	currentFrame_++;
 
 	// 通常敵の出現
-	if (currentFrame_ >= kSpawnFrequency)
-	{
+	if (currentFrame_ >= kSpawnFrequency) {
 		//ランダム生成用
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 		std::uniform_int_distribution<int> distribution(1, 3);
 		int spawn = distribution(randomEngine);
-		for (int It = 0; It < spawn; It++)
-		{
-			//EnemySpawn();
+		for (int It = 0; It < spawn; It++) {
+			EnemySpawn();
 		}
 		currentFrame_ = 0;
 	}
-
 }
 
 void EnemyManager::EnemySpawn()
@@ -157,5 +152,5 @@ void EnemyManager::CreateDeadParticle(lwp::Vector3 pos) {
 	deadParticle->model.LoadCube();
 	deadParticle->model.worldTF.translation = pos;
 	deadParticle->Add(64);
-	deadParticle_.push_back(deadParticle);
+	deadParticles_.push_back(deadParticle);
 }
