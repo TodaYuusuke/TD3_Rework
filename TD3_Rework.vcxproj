@@ -159,6 +159,7 @@
     <ClCompile Include="Game\Object\Enemy\Arrow\Arrow.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\ArrowBoss.cpp" />
     <ClCompile Include="Game\Object\Enemy\Boss\DashBoss.cpp" />
+    <ClCompile Include="Game\Object\FollowCamera\FollowCamera.cpp" />
     <ClCompile Include="Game\Object\Enemy\IEnemy.cpp" />
     <ClCompile Include="Game\Object\Enemy\Maneger\EnemyManager.cpp" />
     <ClCompile Include="Game\Object\Enemy\Normal\NormalEnemy.cpp" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Game\Object\Enemy\Arrow\Arrow.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\ArrowBoss.h" />
     <ClInclude Include="Game\Object\Enemy\Boss\DashBoss.h" />
+    <ClInclude Include="Game\Object\FollowCamera\FollowCamera.h" />
     <ClInclude Include="Game\Object\Enemy\IEnemy.h" />
     <ClInclude Include="Game\Object\Enemy\Maneger\EnemyManager.h" />
     <ClInclude Include="Game\Object\Enemy\Normal\NormalEnemy.h" />

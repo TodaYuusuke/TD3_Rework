@@ -1,22 +1,26 @@
 #include "EnemyManager.h"
 #include "Object/Player/Player.h"
 
-void EnemyManager::Init(){
+void EnemyManager::Init(FollowCamera* followCamera){
+	// 追従カメラのアドレスを設定
+	followCamera_ = followCamera;
+
 	//NormalEnemy* enemy = new NormalEnemy();
 	//enemy->Init();
 	//enemy->SetTarget(player_);
 	//enemys_.push_back(enemy);
 	//
 	// 突進するボス
-	//DashBoss* dashBoss = new DashBoss();
-	//dashBoss->Init();
-	//dashBoss->SetTarget(player_);
-	//enemys_.push_back(dashBoss);
-	//
-	//ArrowBoss* arrowBoss = new ArrowBoss();
-	//arrowBoss->Init();
-	//arrowBoss->SetTarget(player_);
-	//enemys_.push_back(arrowBoss);
+	DashBoss* dashBoss = new DashBoss();
+	dashBoss->Init();
+	dashBoss->SetTarget(player_);
+	enemys_.push_back(dashBoss);
+	
+	ArrowBoss* arrowBoss = new ArrowBoss();
+	arrowBoss->Init();
+	arrowBoss->SetFollowCamera(followCamera_);
+	arrowBoss->SetTarget(player_);
+	enemys_.push_back(arrowBoss);
 }
 
 void EnemyManager::Update(){

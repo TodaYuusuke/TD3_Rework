@@ -4,6 +4,7 @@
 #include "Object/Player/Player.h"
 #include "Object/Enemy/Maneger/EnemyManager.h"
 #include "Object/Enemy/Normal/NormalEnemy.h"
+#include "Object/FollowCamera/FollowCamera.h"
 
 class GamePlayScene final : public IScene{
 public:
@@ -26,6 +27,8 @@ public: //*** 関数群 ***//
 private: //*** 変数群 ***//
 	Player player_;
 	EnemyManager enemyManager_;
+	// 追従カメラ
+	FollowCamera followCamera_;
 
 	// 太陽
 	LWP::Object::PointLight sun_;

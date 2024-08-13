@@ -179,7 +179,8 @@ void ArrowBoss::B_RootInit() {
 	// 自機狙い状態のクールタイム
 	stunFrame_ = kStunAllFrame;
 
-	//followCamera_->EndEffectFov();
+	// カメラのfovを戻す
+	followCamera_->EndFovDirection();
 }
 void ArrowBoss::B_RootUpdate() {
 	// 攻撃の待ち時間
@@ -263,7 +264,7 @@ void ArrowBoss::B_HomingShotInit() {
 	shotCount_ = kMaxHomingShotCount;
 
 	// 視野角を高くする
-	//followCamera_->StartEffectFov(kEffectFov);
+	followCamera_->StartFovDirection(kEffectFov);
 }
 void ArrowBoss::B_HomingShotUpdate() {
 	// 射撃間隔

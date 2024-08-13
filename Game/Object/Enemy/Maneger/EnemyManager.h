@@ -4,14 +4,13 @@
 #include "../Boss/DashBoss.h"
 #include "../Boss/ArrowBoss.h"
 #include "../../Particle/DeadParticle.h"
+#include "../../FollowCamera/FollowCamera.h"
 
 class Player;
 class EnemyManager
 {
 public:
-	EnemyManager(Player* player) {
-		player_ = player;
-	};
+	EnemyManager(Player* player) { player_ = player; };
 	~EnemyManager() {
 		for (IEnemy* enemy : enemys_)
 		{
@@ -20,7 +19,7 @@ public:
 		deadParticles_.clear();
 	};
 
-	void Init();
+	void Init(FollowCamera* followCamera);
 	void Update();
 
 private:// 関数
@@ -42,9 +41,8 @@ private:// 定数
 	const int kSpawnFrequency = 120;
 
 private:// 変数
-
-	// 現在のフレーム
-	int currentFrame_ = 0;
+	// 追従カメラのアドレス
+	FollowCamera* followCamera_;
 
 	// ボスも含めたすべての敵
 	std::list<IEnemy*> enemys_;
@@ -53,4 +51,7 @@ private:// 変数
 
 	// 死亡パーティクル
 	std::vector<DeadParticle*> deadParticles_;
+
+	// 現在のフレーム
+	int currentFrame_ = 0;
 };

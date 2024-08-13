@@ -1,6 +1,7 @@
 #pragma once
 #include "../IEnemy.h"
 #include "Object/Enemy/Arrow/HomingArrow.h"
+#include "../../FollowCamera/FollowCamera.h"
 
 class ArrowBoss : public IEnemy
 {
@@ -19,6 +20,11 @@ public:// パブリックなメンバ関数
 	~ArrowBoss() override;
 	void Init()override;
 	void Update()override;
+
+#pragma region Setter
+	// 追従カメラのアドレスを設定
+	void SetFollowCamera(FollowCamera* followCamera) { followCamera_ = followCamera; }
+#pragma endregion
 
 private:// プライベートなメンバ関数
 	//*** 純粋仮想関数 ***//
@@ -81,6 +87,17 @@ private:// 定数
 	const float kEffectFov = 120;
 
 private:// プライベートな変数
+	// 現在の振るまい
+	Behavior behavior_ = Behavior::kRoot;
+	// 次の振るまいリクエスト
+	std::optional<Behavior> behaviorRequest_ = std::nullopt;
+
+	// ホーミング弾
+	std::list<HomingArrow*> homingArrows_;
+
+	// 追従カメラのアドレス
+	FollowCamera* followCamera_;
+
 	// 何もしない状態の経過フレーム
 	float stunFrame_;
 	// 通常射撃状態の経過フレーム
@@ -93,12 +110,4 @@ private:// プライベートな変数
 
 	// 自機を狙う状態になるか
 	bool isAiming_;
-
-	// 現在の振るまい
-	Behavior behavior_ = Behavior::kRoot;
-	// 次の振るまいリクエスト
-	std::optional<Behavior> behaviorRequest_ = std::nullopt;
-
-	// ホーミング弾
-	std::list<HomingArrow*> homingArrows_;
 };

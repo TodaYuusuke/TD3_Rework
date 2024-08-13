@@ -7,6 +7,15 @@ using namespace LWP::Math;
 using namespace LWP::Utility;
 
 
-void TestScene::Initialize() {}
+void TestScene::Initialize() {
+	// 自機の生成
+	//player_.Init(&mainCamera);
 
-void TestScene::Update() {}
+	// 敵
+	enemy_.Init();
+}
+
+void TestScene::Update() {
+	// 自機
+	//player_.Update();
+}
