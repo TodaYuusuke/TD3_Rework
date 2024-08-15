@@ -36,7 +36,7 @@ public:
 	//倒された後の処理をまとめた関数
 	void Dying();
 	//倒された時の演出
-	virtual void DyingAnimation() = 0;
+	virtual void DyingAnimation();
 	//死亡時の処理
 	void Dead();
 	//
@@ -92,4 +92,20 @@ protected://変数
 	//攻撃できるかどうか
 	//trueなら攻撃可能
 	bool isAttack_ = false;
+
+protected://パーティクル
+	//// ダメージを受けたとき
+	//static std::function<void(int, lwp::Vector3)> damageEffect_;
+	//// 死ぬとき
+	//static std::function<void(int, lwp::Vector3)> deadEffect_;
+	//// 出現したときのパーティクル
+	//static std::function<void(int, lwp::Vector3)> spawnEffect_;
+
+	//// 突進攻撃前のエフェクト
+	//static std::function<void(int, lwp::Vector3)> accumulateEffect_;
+
+	//// 出現時の光の柱
+	//LWP::Primitive::Billboard2D lightPillar_;
+	//LWP::Resource::Motion lightPillarMotion_;
+
 };

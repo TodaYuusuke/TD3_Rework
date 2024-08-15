@@ -13,7 +13,6 @@ public:
 	void Init()override;
 	void Update()override;
 	void Attack();
-	void DyingAnimation()override;
 
 private:
 	AtackWork atackWork;

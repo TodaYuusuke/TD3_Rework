@@ -162,6 +162,7 @@
     <ClCompile Include="Game\Object\Player\Player.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
+    <ClCompile Include="Game\Object\Player\Skill\test\test.cpp" />
     <ClCompile Include="Game\Object\Upgrade\Manager\UpgradeManager.cpp" />
     <ClCompile Include="Game\Scenes\GameClear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOver\GameOverScene.cpp" />
@@ -182,10 +183,13 @@
     <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
     <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
+    <ClInclude Include="Game\Object\Player\Skill\ISkill.h" />
+    <ClInclude Include="Game\Object\Player\Skill\test\test.h" />
     <ClInclude Include="Game\Object\Upgrade\IUpgrade.h" />
     <ClInclude Include="Game\Object\Upgrade\Manager\UpgradeManager.h" />
-    <ClInclude Include="Game\Object\Upgrade\Skill\AttackUp.h" />
-    <ClInclude Include="Game\Object\Upgrade\Skill\HPUp.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\AttackUp.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\HPUp.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\TestSkill.h" />
     <ClInclude Include="Game\Scenes\GameClear\GameClearScene.h" />
     <ClInclude Include="Game\Scenes\GameOver\GameOverScene.h" />
     <ClInclude Include="Game\Scenes\GamePlay\GamePlayScene.h" />

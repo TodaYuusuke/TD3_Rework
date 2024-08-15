@@ -50,7 +50,3 @@ void NormalEnemy::Attack()
 
 	//突進
 }
-
-void NormalEnemy::DyingAnimation()
-{
-}

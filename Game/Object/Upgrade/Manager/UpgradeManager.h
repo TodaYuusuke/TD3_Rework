@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
 #include "Game/Object/Upgrade/IUpgrade.h"
-#include "Game/Object/Upgrade/Skill/AttackUp.h"
-#include "Game/Object/Upgrade/Skill/HPUp.h"
+#include "Game/Object/Upgrade/Upgrade/AttackUp.h"
+#include "Game/Object/Upgrade/Upgrade/HPUp.h"
+#include "Game/Object/Upgrade/Upgrade/TestSkill.h"
 
 class UpgradeManager
 {
@@ -24,6 +25,14 @@ private:
 
 	void RandomUpgrade();
 
+	void Apply();
+
+	void ImGui();
+
+private://定数
+	// 表示するアップグレードの数
+	const int kUpgradNum_ = 2;
+
 private:
 	//ImGui用
 	std::vector<std::string> SelectUpgradeName;
@@ -36,4 +45,10 @@ private:
 	// ランダムで選択したアップグレード
 	std::vector<int> select_;
 	PlayerParameter* parameter_;
+
+	// カーソルを合わせているアップグレード(何番目か)
+	int cursorIndex_ = 0;
+
+	// 選択しているアップグレード
+	int choiceIndex_ = 0;
 };

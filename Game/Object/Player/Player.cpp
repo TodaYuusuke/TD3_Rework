@@ -23,7 +23,7 @@ void Player::Init() {
 void Player::Update() {
 
 	// 死んでいる時
-	if (flags_.isDead) {
+	if (parameter_.flags_.isDead) {
 		// デバッグ情報を入力、処理前に確認する
 		DebugWindow();
 		// デバッグ表示用
@@ -80,7 +80,7 @@ void Player::DecreaseHP() {
 	// 体力が 0 以下になった時
 	if (parameter_.upgrade.countGage.hpCount <= 0) {
 		// 死ぬ
-		flags_.isDead = true;
+		parameter_.flags_.isDead = true;
 	}
 }
 
@@ -107,11 +107,11 @@ void Player::CheckInputMove() {
 
 
 	// そもそも移動入力が無かったらフラグを立てない
-	flags_.isInputMove = !(direct.x == 0 && direct.y == 0);
+	parameter_.flags_.isInputMove = !(direct.x == 0 && direct.y == 0);
 
 	// 移動入力があった時に方向を更新する
 	// 方向をゼロにしない
-	if (flags_.isInputMove) {
+	if (parameter_.flags_.isInputMove) {
 		// ここで三次元空間に変換
 		destinate_.x = direct.x;
 		destinate_.z = direct.y;
@@ -122,10 +122,10 @@ void Player::CheckInputAttack() {
 	// 攻撃ボタンが押された時
 	if (Input::Keyboard::GetTrigger(DIK_SPACE) ||
 		Input::Pad::GetTrigger(0, XINPUT_GAMEPAD_A)) {
-		flags_.isInputAttack = true;
+		parameter_.flags_.isInputAttack = true;
 	}
 	else {
-		flags_.isInputAttack = false;
+		parameter_.flags_.isInputAttack = false;
 	}
 }
 
@@ -261,18 +261,18 @@ void Player::InitDamage() {
 
 void Player::UpdateIdle() {
 	// 移動入力がされている時
-	if (flags_.isInputMove) {
+	if (parameter_.flags_.isInputMove) {
 		reqBehavior_ = Behavior::Move;
 	}
 	// 攻撃入力がされている時
-	if (flags_.isInputAttack) {
+	if (parameter_.flags_.isInputAttack) {
 		reqBehavior_ = Behavior::Attack;
 	}
 }
 
 void Player::UpdateMove() {
 	// 移動入力されている時
-	if (flags_.isInputMove) {
+	if (parameter_.flags_.isInputMove) {
 		// 速度を代入する
 		velocity_ = destinate_ * parameter_.upgrade.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
 	}
@@ -286,7 +286,7 @@ void Player::UpdateMove() {
 
 	// 攻撃入力がされている時
 	// 移動後に攻撃へ移行
-	if (flags_.isInputAttack) {
+	if (parameter_.flags_.isInputAttack) {
 		reqBehavior_ = Behavior::Attack;
 	}
 }
@@ -318,7 +318,7 @@ void Player::UpdateMoment() {
 	// 一定時間経たないと移動入力は反映されない
 	if (parameter_.upgrade.progressTime.momentTime * parameter_.upgrade.collectionRatio.momentStuckRatio <= times_.behaviorTime) {
 		// 移動入力されている時
-		if (flags_.isInputMove) {
+		if (parameter_.flags_.isInputMove) {
 			// 速度を代入する
 			velocity_ = destinate_ * parameter_.upgrade.moveSpeed.momentSpeed * Info::GetDeltaTimeF();
 		}
@@ -335,7 +335,7 @@ void Player::UpdateMoment() {
 	}
 
 	// 攻撃入力されていて、まだ攻撃できるとき
-	if (flags_.isInputAttack && 0 < parameter_.upgrade.countGage.attackCount) {
+	if (parameter_.flags_.isInputAttack && 0 < parameter_.upgrade.countGage.attackCount) {
 		reqBehavior_ = Behavior::Attack;
 	}
 }
@@ -391,7 +391,7 @@ void Player::DebugWindow() {
 	// 体力やフラグをリセットする
 	if (ImGui::Button("ResetHP")) {
 		parameter_.upgrade.countGage.hpCount = parameter_.upgrade.countGage.MaxHpCount;
-		flags_.isDead = false;
+		parameter_.flags_.isDead = false;
 	}
 
 	ImGui::Separator();

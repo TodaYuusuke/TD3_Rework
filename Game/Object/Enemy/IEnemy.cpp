@@ -37,6 +37,11 @@ void IEnemy::Dying()
 	}
 }
 
+void IEnemy::DyingAnimation()
+{
+
+}
+
 void IEnemy::Dead()
 {
 	//IsDead_ = true;

@@ -1,5 +1,4 @@
 #include "PlayerParameter.h"
-
 #include <Adapter.h>
 
 void PlayerParameter::Init() {
@@ -26,7 +25,12 @@ void PlayerParameter::Update(){
 	}
 	ImGui::End();
 #endif
+	for (ISkill* skill : upgrade.skill) {
+		if (flags_.isInputAttack) {
+			skill->Update();
+		}
 
+	}
 }
 
 bool PlayerParameter::GetLevelUpSignal(){

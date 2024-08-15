@@ -40,12 +40,7 @@ private: //*** サブクラス ***//
 		_Count,	// 状態最大数
 	};
 
-	// フラグをまとめた構造体
-	struct Flags {
-		bool isInputMove = false;	// 移動入力されたか
-		bool isInputAttack = false;	// 攻撃入力されたか
-		bool isDead = false;		// 死んでいるか
-	};
+
 
 	// 処理中の時間をまとめた構造体
 	struct Times {
@@ -94,9 +89,6 @@ private: //*** 細かく設定される変数 ***//
 
 	// プレイヤーの速度を格納
 	LWP::Math::Vector3 velocity_ = { 0.0f,0.0f,0.0f };
-
-	// まとめられたフラグ
-	Flags flags_;
 
 	// まとめられた時間
 	Times times_;

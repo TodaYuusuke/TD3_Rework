@@ -39,6 +39,8 @@
     <ClCompile Include="Game\Scenes\GameClear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOver\GameOverScene.cpp" />
     <ClCompile Include="Game\Scenes\GamePlay\GamePlayScene.cpp" />
+    <ClCompile Include="Game\Object\Upgrade\Manager\UpgradeManager.cpp" />
+    <ClCompile Include="Game\Object\Player\Skill\test\test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scenes\Title\TitleScene.h">
@@ -59,5 +61,12 @@
     <ClInclude Include="Game\Object\Particle\DeadParticle.h" />
     <ClInclude Include="Game\Object\Particle\SoilParticle.h" />
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
+    <ClInclude Include="Game\Object\Player\Skill\ISkill.h" />
+    <ClInclude Include="Game\Object\Upgrade\IUpgrade.h" />
+    <ClInclude Include="Game\Object\Upgrade\Manager\UpgradeManager.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\AttackUp.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\HPUp.h" />
+    <ClInclude Include="Game\Object\Player\Skill\test\test.h" />
+    <ClInclude Include="Game\Object\Upgrade\Upgrade\TestSkill.h" />
   </ItemGroup>
 </Project>
