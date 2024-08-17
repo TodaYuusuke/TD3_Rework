@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <numbers>
 #include "Game/Object/Upgrade/IUpgrade.h"
 #include "Game/Object/Upgrade/Upgrade/AttackUp.h"
 #include "Game/Object/Upgrade/Upgrade/HPUp.h"
@@ -15,20 +16,24 @@ public:
 
 	void SelectUpgrade();
 
-	void LevelUp();
-
 	bool GetUpgradeFlag() {return UpgradeFlag;};
 
 private:
+	//レベルアップ時に呼び出す関数
+	void LevelUp();
 	//抽選をする関数
 	int Choose(bool select);
 	//抽選をまとめた関数
 	void RandomUpgrade();
+	//カーソルで選択をする
+	void Select();
 	//選択したアップグレードを適応する
 	void Apply();
 	//UIを非表示にする
 	void UIoff();
-
+	//長押ししている間に動く関数
+	void KeyHoldAction();
+	//デバッグ用関数
 	void ImGui();
 
 private://定数
@@ -54,21 +59,20 @@ private:
 	// 選択しているアップグレード
 	int choiceIndex_ = 0;
 
+#pragma region
 	bool isPress_ = false;
-
+	// 長押しした時間
+	float pressTime_ = 0.0f;
+	// 決定に必要な時間
+	const float kPressTime_ = 1.0f;
+#pragma endregion 長押し
 #pragma region
 	// 選択場所のわかるUI
 	LWP::Primitive::Sprite sprite_;
 
 	lwp::Vector3 cursorPos = { LWP::Info::GetWindowWidth() / float(kUpgradNum_ + 2),240.0f };
-
-	// 長押し用のフラグ
-	bool isPress_ = false;
-
-	// 長押しした時間
-	float pressTime_ = 0.0f;
-	// 決定に必要な時間
-	const float kPressTime_ = 1.0f;
+	//カーソルのアニメーション
+	float cursorAnimFrame_;
 #pragma endregion 選択カーソル
 #pragma region
 	lwp::Vector2 UIpos[2] = {
