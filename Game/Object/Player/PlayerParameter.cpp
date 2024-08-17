@@ -48,6 +48,7 @@ bool PlayerParameter::GetLevelUpSignal(){
 void PlayerParameter::LevelUp(){
 	IsUpGradeFlag = true;
 	//TODO:レベルアップした時の処理を色々する
+	status.level.level_++;
 }
 
 #pragma region

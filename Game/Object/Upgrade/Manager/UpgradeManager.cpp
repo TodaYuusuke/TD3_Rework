@@ -78,7 +78,7 @@ void UpgradeManager::SelectUpgrade()
 
 void UpgradeManager::LevelUp()
 {
-	if (parameter_->status.level.level_ > attackUpgrade_.size()) {
+	if (parameter_->status.level.level_ > attackUpgrade_.size() + 1) {
 		return;
 	}
 
