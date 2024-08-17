@@ -5,6 +5,7 @@
 #include "Object/Enemy/Maneger/EnemyManager.h"
 #include "Object/Enemy/Normal/NormalEnemy.h"
 #include "Object/Upgrade/Manager/UpgradeManager.h"
+#include "../../Object/FollowCamera/FollowCamera.h"
 
 class GamePlayScene final : public IScene{
 public:
@@ -30,4 +31,6 @@ private: //*** 変数群 ***//
 	UpgradeManager upgradeManager_;
 	// 太陽
 	LWP::Object::PointLight sun_;
+
+	FollowCamera followCamera_;
 };

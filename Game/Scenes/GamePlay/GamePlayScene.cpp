@@ -26,6 +26,8 @@ void GamePlayScene::Initialize() {
 	player_.Init();
 	enemyManager_.Init();
 	upgradeManager_.Init(player_.GetPlayerParameter());
+
+	followCamera_.Init(player_.GetWorldTransform(), &mainCamera);
 }
 
 void GamePlayScene::Update()
