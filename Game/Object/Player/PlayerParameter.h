@@ -39,7 +39,7 @@ public: //*** メンバ変数 ***//
 	// 基本的な設定
 	PlayerConfig config;
 	
-	Upgrade upgrade;
+	Upgrade status;
 
 	// まとめられたフラグ
 	Flags flags_;
@@ -61,6 +61,8 @@ private: //*** 関数群 ***//
 	void InitCollectionRatio();
 	// 回数やゲージを初期化
 	void InitCountGage();
+	//レベルとスキルの初期化
+	void InitLevelANDSkill();
 
 	// 移動値のデバッグ表示
 	void DebugTreeMoveSpeed();

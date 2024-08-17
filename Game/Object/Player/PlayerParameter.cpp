@@ -15,6 +15,8 @@ void PlayerParameter::Init() {
 	InitCollectionRatio();
 	// 回数やゲージを初期化
 	InitCountGage();
+	// レベルとスキルを初期化
+	InitLevelANDSkill();
 }
 
 void PlayerParameter::Update(){
@@ -25,7 +27,7 @@ void PlayerParameter::Update(){
 	}
 	ImGui::End();
 #endif
-	for (ISkill* skill : upgrade.skill) {
+	for (ISkill* skill : status.skill) {
 		if (flags_.isInputAttack) {
 			skill->Update();
 		}
@@ -51,34 +53,42 @@ void PlayerParameter::LevelUp(){
 #pragma region
 
 void PlayerParameter::InitMoveSpeed() {
-	upgrade.moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
-	upgrade.moveSpeed.attackSpeed = config.moveSpeed.attackSpeed;
-	upgrade.moveSpeed.momentSpeed = config.moveSpeed.momentSpeed;
+	status.moveSpeed.moveSpeed = config.moveSpeed.moveSpeed;
+	status.moveSpeed.attackSpeed = config.moveSpeed.attackSpeed;
+	status.moveSpeed.momentSpeed = config.moveSpeed.momentSpeed;
 }
 
 void PlayerParameter::InitProgressTime() {
-	upgrade.progressTime.attackTime = config.progressTime.attackTime;
-	upgrade.progressTime.momentTime = config.progressTime.momentTime;
-	upgrade.progressTime.damageTime = config.progressTime.damageTime;
-	upgrade.progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
+	status.progressTime.attackTime = config.progressTime.attackTime;
+	status.progressTime.momentTime = config.progressTime.momentTime;
+	status.progressTime.damageTime = config.progressTime.damageTime;
+	status.progressTime.damageInvincibleTime = config.progressTime.damageInvincibleTime;
 }
 
 void PlayerParameter::InitLengthRadius() {
-	upgrade.lengthRadius.playerRadius = config.lengthRadius.playerRadius;
-	upgrade.lengthRadius.attackRadius = config.lengthRadius.attackRadius;
+	status.lengthRadius.playerRadius = config.lengthRadius.playerRadius;
+	status.lengthRadius.attackRadius = config.lengthRadius.attackRadius;
 }
 
 void PlayerParameter::InitCollectionRatio() {
-	upgrade.collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
-	upgrade.collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
-	upgrade.collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
+	status.collectionRatio.attackReduceStart = config.collectionRatio.attackReduceStart;
+	status.collectionRatio.attackExtendEnd = config.collectionRatio.attackExtendEnd;
+	status.collectionRatio.momentStuckRatio = config.collectionRatio.momentStuckRatio;
 }
 
 void PlayerParameter::InitCountGage() {
-	upgrade.countGage.MaxAttackCount = 1;
-	upgrade.countGage.attackCount = upgrade.countGage.MaxAttackCount;
-	upgrade.countGage.MaxHpCount = 3;
-	upgrade.countGage.hpCount = upgrade.countGage.MaxHpCount;
+	status.countGage.MaxAttackCount = 1;
+	status.countGage.attackCount = status.countGage.MaxAttackCount;
+	status.countGage.MaxHpCount = 3;
+	status.countGage.hpCount = status.countGage.MaxHpCount;
+}
+
+void PlayerParameter::InitLevelANDSkill()
+{
+	status.level.level_ = 1;
+	status.level.exp_ = 0;
+	status.skill.clear();
+	
 }
 
 #pragma endregion Init
@@ -121,9 +131,9 @@ void PlayerParameter::DebugTree() {
 void PlayerParameter::DebugTreeMoveSpeed() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("MoveSpeed")) {
-		ImGui::SliderFloat("moveSpeed", &upgrade.moveSpeed.moveSpeed, 0.0f, 50.0f);
-		ImGui::SliderFloat("attackSpeed", &upgrade.moveSpeed.attackSpeed, 0.0f, 1000.0f);
-		ImGui::SliderFloat("momentSpeed", &upgrade.moveSpeed.momentSpeed, 0.0f, 30.0f);
+		ImGui::SliderFloat("moveSpeed", &status.moveSpeed.moveSpeed, 0.0f, 50.0f);
+		ImGui::SliderFloat("attackSpeed", &status.moveSpeed.attackSpeed, 0.0f, 1000.0f);
+		ImGui::SliderFloat("momentSpeed", &status.moveSpeed.momentSpeed, 0.0f, 30.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -135,10 +145,10 @@ void PlayerParameter::DebugTreeMoveSpeed() {
 void PlayerParameter::DebugTreeProgressTime() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("ProgressTime")) {
-		ImGui::SliderFloat("attackTime", &upgrade.progressTime.attackTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("momentTime", &upgrade.progressTime.momentTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("damageTime", &upgrade.progressTime.damageTime, 0.0f, 5.0f);
-		ImGui::SliderFloat("damageInvincigleTime", &upgrade.progressTime.damageInvincibleTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("attackTime", &status.progressTime.attackTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("momentTime", &status.progressTime.momentTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageTime", &status.progressTime.damageTime, 0.0f, 5.0f);
+		ImGui::SliderFloat("damageInvincigleTime", &status.progressTime.damageInvincibleTime, 0.0f, 5.0f);
 		
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -150,8 +160,8 @@ void PlayerParameter::DebugTreeProgressTime() {
 void PlayerParameter::DebugTreeLengthRadius() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("LengthRadius")) {
-		ImGui::SliderFloat("playerRadius", &upgrade.lengthRadius.playerRadius, 0.01f, 5.0f);
-		ImGui::SliderFloat("attackRadius", &upgrade.lengthRadius.attackRadius, 0.01f, 5.0f);
+		ImGui::SliderFloat("playerRadius", &status.lengthRadius.playerRadius, 0.01f, 5.0f);
+		ImGui::SliderFloat("attackRadius", &status.lengthRadius.attackRadius, 0.01f, 5.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -163,9 +173,9 @@ void PlayerParameter::DebugTreeLengthRadius() {
 void PlayerParameter::DebugTreeCollectionRatio() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("CollectionRatio")) {
-		ImGui::SliderFloat("attackReduceStart", &upgrade.collectionRatio.attackReduceStart, -2.0f, 2.0f);
-		ImGui::SliderFloat("attackExtendEnd", &upgrade.collectionRatio.attackExtendEnd, -2.0f, 2.0f);
-		ImGui::SliderFloat("momentStuckRatio", &upgrade.collectionRatio.momentStuckRatio, 0.0f, 1.0f);
+		ImGui::SliderFloat("attackReduceStart", &status.collectionRatio.attackReduceStart, -2.0f, 2.0f);
+		ImGui::SliderFloat("attackExtendEnd", &status.collectionRatio.attackExtendEnd, -2.0f, 2.0f);
+		ImGui::SliderFloat("momentStuckRatio", &status.collectionRatio.momentStuckRatio, 0.0f, 1.0f);
 
 		// Tree を閉じる
 		ImGui::TreePop();
@@ -178,13 +188,13 @@ void PlayerParameter::DebugTreeCountGage() {
 	// 更に Tree でまとめる
 	if (ImGui::TreeNode("CountGage")) {
 		// 最大値が変わった時、攻撃可能回数も変更
-		if(ImGui::SliderInt("MaxAttackCount", &upgrade.countGage.MaxAttackCount, 1, 10))
-			upgrade.countGage.attackCount = upgrade.countGage.MaxAttackCount;
-		ImGui::SliderInt("attackCount", &upgrade.countGage.attackCount, 0, upgrade.countGage.MaxAttackCount);
+		if(ImGui::SliderInt("MaxAttackCount", &status.countGage.MaxAttackCount, 1, 10))
+			status.countGage.attackCount = status.countGage.MaxAttackCount;
+		ImGui::SliderInt("attackCount", &status.countGage.attackCount, 0, status.countGage.MaxAttackCount);
 		// 最大値が変わった時、HPも変更
-		if(ImGui::SliderInt("MaxHpCount", &upgrade.countGage.MaxHpCount, 3, 10))
-			upgrade.countGage.hpCount = upgrade.countGage.MaxHpCount;
-		ImGui::SliderInt("hpCount", &upgrade.countGage.hpCount, 0, upgrade.countGage.MaxHpCount);
+		if(ImGui::SliderInt("MaxHpCount", &status.countGage.MaxHpCount, 3, 10))
+			status.countGage.hpCount = status.countGage.MaxHpCount;
+		ImGui::SliderInt("hpCount", &status.countGage.hpCount, 0, status.countGage.MaxHpCount);
 
 		// Tree を閉じる
 		ImGui::TreePop();

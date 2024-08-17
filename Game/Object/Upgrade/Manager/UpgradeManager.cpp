@@ -42,13 +42,8 @@ void UpgradeManager::Update()
 void UpgradeManager::SelectUpgrade()
 {
 
-	// カーソルUI
-	sprite_.isActive = true;
 	sprite_.worldTF.translation.x = 640.0f * (cursorIndex_ + 1);
 
-	//UIを表示
-	attackUpgrade_[select_[0]]->SetUIPos(UIpos[0]);
-	escapeUpgrade_[select_[1]]->SetUIPos(UIpos[1]);
 	// カーソルのスプライトを上下に揺らす
 	cursorAnimFrame_ += lwp::GetDefaultDeltaTimeF() * 60;
 	sprite_.worldTF.translation.y += sinf(cursorAnimFrame_ * (float)std::numbers::pi / 20) * 0.4f;
@@ -71,15 +66,41 @@ void UpgradeManager::SelectUpgrade()
 		Select();
 		KeyReleaseAction();
 	}
-
+	//設定した後にアニメーションを付けるための時間
+	if (isSelected_) {
+		SelectedFlame_ += lwp::GetDefaultDeltaTimeF();
+		if (SelectedFlame_ > kSelectedFlame_) {
+			UpgradeFlag = false;
+		}
+	}
 
 }
 
 void UpgradeManager::LevelUp()
 {
+	if (parameter_->status.level.level_ > attackUpgrade_.size()) {
+		return;
+	}
+
 	//抽選を開始
 	RandomUpgrade();
 	UpgradeFlag = true;
+	//初期化
+	cursorIndex_ = 0;
+	choiceIndex_ = 0;
+
+	isSelected_ = false;
+	SelectedFlame_ = 0;
+
+	pressTime_ = 0;
+
+	cursorAnimFrame_ = 0;
+
+	//UIを表示
+	attackUpgrade_[select_[0]]->SetUIPos(UIpos[0]);
+	escapeUpgrade_[select_[1]]->SetUIPos(UIpos[1]);
+	// カーソルUIを表示
+	sprite_.isActive = true;
 }
 
 int UpgradeManager::Choose(bool select)
@@ -154,6 +175,10 @@ void UpgradeManager::Select()
 
 void UpgradeManager::Apply()
 {
+	if (isSelected_) {
+		return;
+	}
+
 	//selectの0番目にアタック用、1番目にエスケープ用の選択された番号が入っている
 	//右はアタック用
 	if (cursorIndex_ == 0) {
@@ -166,7 +191,7 @@ void UpgradeManager::Apply()
 		SelectUpgradeName.push_back(escapeUpgrade_[select_[1]]->GetUpgradeName());
 	}
 	UIoff();
-	UpgradeFlag = false;
+	isSelected_ = true;
 }
 
 void UpgradeManager::UIoff()

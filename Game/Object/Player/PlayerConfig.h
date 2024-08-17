@@ -41,7 +41,7 @@ struct CountGage {
 
 //　レベル関連
 struct Level {
-
+	int level_ = 1;
 	float exp_;//貯まっている経験値
 
 };
@@ -60,6 +60,8 @@ struct Upgrade {
 	CountGage countGage;
 	// スキル
 	std::list<ISkill*>skill;
+	//レベル関連
+	Level level;
 };
 
 // フラグをまとめた構造体

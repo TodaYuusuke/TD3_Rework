@@ -5,8 +5,8 @@ class HPUp : public IUpgrade {
 public:
 
 	void Upgrade(PlayerParameter* Input)override {
-		Input->upgrade.countGage.MaxHpCount += 1;
-		Input->upgrade.countGage.hpCount += 1;
+		Input->Status.countGage.MaxHpCount += 1;
+		Input->Status.countGage.hpCount += 1;
 	};
 
 	std::string GetTexturePass()override {

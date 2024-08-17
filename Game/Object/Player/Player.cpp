@@ -76,9 +76,9 @@ void Player::Update() {
 
 void Player::DecreaseHP() {
 	// 体力を減らす
-	parameter_.upgrade.countGage.hpCount--;
+	parameter_.Status.countGage.hpCount--;
 	// 体力が 0 以下になった時
-	if (parameter_.upgrade.countGage.hpCount <= 0) {
+	if (parameter_.Status.countGage.hpCount <= 0) {
 		// 死ぬ
 		parameter_.flags_.isDead = true;
 	}
@@ -157,7 +157,7 @@ void Player::InitColliders() {
 
 void Player::InitColliderPlayer() {
 	playerCollider_.collider.name = "Player";
-	playerCollider_.capsule.radius = parameter_.upgrade.lengthRadius.playerRadius;
+	playerCollider_.capsule.radius = parameter_.Status.lengthRadius.playerRadius;
 
 	// ヒットしたときの処理を設定
 	playerCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterPlayer(hitTarget); };
@@ -168,7 +168,7 @@ void Player::InitColliderPlayer() {
 void Player::InitColliderAttack() {
 	attackCollider_.collider.name = "PlayerAttack";
 	attackCollider_.collider.isActive = false;
-	attackCollider_.capsule.radius = parameter_.upgrade.lengthRadius.attackRadius;
+	attackCollider_.capsule.radius = parameter_.Status.lengthRadius.attackRadius;
 
 	// ヒットしたときの処理を設定
 	attackCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterAttack(hitTarget); };
@@ -211,7 +211,7 @@ void Player::ExitAttack(LWP::Object::Collider::Collider* hitTarget) {
 
 void Player::InitIdle() {
 	// 攻撃可能回数を元に戻す
-	parameter_.upgrade.countGage.attackCount = parameter_.upgrade.countGage.MaxAttackCount;
+	parameter_.Status.countGage.attackCount = parameter_.Status.countGage.MaxAttackCount;
 }
 
 void Player::InitMove() {
@@ -222,7 +222,7 @@ void Player::InitAttack() {
 	times_.behaviorTime = 0.0f;
 	// 速度を設定
 	// 移動速度は固定し、デルタタイムは後で計算する
-	velocity_ = destinate_ * parameter_.upgrade.moveSpeed.attackSpeed;
+	velocity_ = destinate_ * parameter_.Status.moveSpeed.attackSpeed;
 	// 攻撃を有効化
 	attackCollider_.collider.isActive = true;
 	// 攻撃の判定を設定する
@@ -230,9 +230,9 @@ void Player::InitAttack() {
 	attackCollider_.capsule.start = model_.worldTF.translation;
 	// 攻撃の範囲を設定する
 	// コンフィグではなくパラメータを使うことになる
-	attackCollider_.capsule.radius = parameter_.upgrade.lengthRadius.attackRadius;
+	attackCollider_.capsule.radius = parameter_.Status.lengthRadius.attackRadius;
 	// 攻撃回数を 1 減らす
-	parameter_.upgrade.countGage.attackCount--;
+	parameter_.Status.countGage.attackCount--;
 }
 
 void Player::InitMoment() {
@@ -248,7 +248,7 @@ void Player::InitDamage() {
 	// 経過時間を初期化
 	times_.behaviorTime = 0.0f;
 	// 無敵時間を設定する
-	times_.invincibleTime = parameter_.upgrade.progressTime.damageInvincibleTime;
+	times_.invincibleTime = parameter_.Status.progressTime.damageInvincibleTime;
 	// 当たり判定を消す
 	playerCollider_.collider.isActive = false;
 }
@@ -274,7 +274,7 @@ void Player::UpdateMove() {
 	// 移動入力されている時
 	if (parameter_.flags_.isInputMove) {
 		// 速度を代入する
-		velocity_ = destinate_ * parameter_.upgrade.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
+		velocity_ = destinate_ * parameter_.Status.moveSpeed.moveSpeed * Info::GetDeltaTimeF();
 	}
 	// 入力をやめた時
 	else {
@@ -299,14 +299,14 @@ void Player::UpdateAttack() {
 	model_.worldTF.translation += velocity_ * Info::GetDeltaTimeF();
 
 	// 攻撃を少しづつ短くする
-	attackCollider_.capsule.start += velocity_ * parameter_.upgrade.collectionRatio.attackReduceStart * Info::GetDeltaTimeF();
+	attackCollider_.capsule.start += velocity_ * parameter_.Status.collectionRatio.attackReduceStart * Info::GetDeltaTimeF();
 	// 攻撃は最初は進行方向に長くしたい
 	// 徐々に短くなっていくのがいい
 	// 進む速度分伸びる(速度を上げると前に伸びる)
-	attackCollider_.capsule.end = model_.worldTF.translation + velocity_ * parameter_.upgrade.collectionRatio.attackExtendEnd * Info::GetDeltaTimeF();
+	attackCollider_.capsule.end = model_.worldTF.translation + velocity_ * parameter_.Status.collectionRatio.attackExtendEnd * Info::GetDeltaTimeF();
 
 	// 一定時間経過した時
-	if (parameter_.upgrade.progressTime.attackTime <= times_.behaviorTime) {
+	if (parameter_.Status.progressTime.attackTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Moment;
 	}
 }
@@ -316,11 +316,11 @@ void Player::UpdateMoment() {
 	times_.behaviorTime += Info::GetDeltaTimeF();
 
 	// 一定時間経たないと移動入力は反映されない
-	if (parameter_.upgrade.progressTime.momentTime * parameter_.upgrade.collectionRatio.momentStuckRatio <= times_.behaviorTime) {
+	if (parameter_.Status.progressTime.momentTime * parameter_.Status.collectionRatio.momentStuckRatio <= times_.behaviorTime) {
 		// 移動入力されている時
 		if (parameter_.flags_.isInputMove) {
 			// 速度を代入する
-			velocity_ = destinate_ * parameter_.upgrade.moveSpeed.momentSpeed * Info::GetDeltaTimeF();
+			velocity_ = destinate_ * parameter_.Status.moveSpeed.momentSpeed * Info::GetDeltaTimeF();
 		}
 		// 入力をやめた時
 		else {
@@ -330,12 +330,12 @@ void Player::UpdateMoment() {
 		model_.worldTF.translation += velocity_;
 	}
 	// 一定時間経過した時
-	if (parameter_.upgrade.progressTime.momentTime <= times_.behaviorTime) {
+	if (parameter_.Status.progressTime.momentTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Idle;
 	}
 
 	// 攻撃入力されていて、まだ攻撃できるとき
-	if (parameter_.flags_.isInputAttack && 0 < parameter_.upgrade.countGage.attackCount) {
+	if (parameter_.flags_.isInputAttack && 0 < parameter_.Status.countGage.attackCount) {
 		reqBehavior_ = Behavior::Attack;
 	}
 }
@@ -345,7 +345,7 @@ void Player::UpdateDamage() {
 	times_.behaviorTime += Info::GetDeltaTimeF();
 
 	// 一定時間経過した時
-	if (parameter_.upgrade.progressTime.damageTime <= times_.behaviorTime) {
+	if (parameter_.Status.progressTime.damageTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Idle;
 	}
 }
@@ -387,10 +387,10 @@ void Player::DebugWindow() {
 
 	// 今の体力を表示
 	ImGui::Text("HpCount(Now/Max)");
-	ImGui::Text("%d / %d", parameter_.upgrade.countGage.hpCount, parameter_.upgrade.countGage.MaxHpCount);
+	ImGui::Text("%d / %d", parameter_.Status.countGage.hpCount, parameter_.Status.countGage.MaxHpCount);
 	// 体力やフラグをリセットする
 	if (ImGui::Button("ResetHP")) {
-		parameter_.upgrade.countGage.hpCount = parameter_.upgrade.countGage.MaxHpCount;
+		parameter_.Status.countGage.hpCount = parameter_.Status.countGage.MaxHpCount;
 		parameter_.flags_.isDead = false;
 	}
 
@@ -405,7 +405,7 @@ void Player::DebugWindow() {
 
 	// 攻撃回数を表示
 	ImGui::Text("AttackCount(Now/Max)");
-	ImGui::Text("%d / %d", parameter_.upgrade.countGage.attackCount, parameter_.upgrade.countGage.MaxAttackCount);
+	ImGui::Text("%d / %d", parameter_.Status.countGage.attackCount, parameter_.Status.countGage.MaxAttackCount);
 	ImGui::Separator();
 
 	// 設定を表示

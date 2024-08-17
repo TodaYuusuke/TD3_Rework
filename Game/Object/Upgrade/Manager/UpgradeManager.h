@@ -60,7 +60,10 @@ private:
 
 	// 選択しているアップグレード
 	int choiceIndex_ = 0;
-
+	//選択が完了したかどうか
+	bool isSelected_;
+	float SelectedFlame_;
+	const float kSelectedFlame_ = 1.0f;
 #pragma region
 	bool isPress_ = false;
 	// 長押しした時間

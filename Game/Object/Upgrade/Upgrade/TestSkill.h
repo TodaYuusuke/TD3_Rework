@@ -6,7 +6,7 @@ class TestSkill : public IUpgrade {
 public:
 
 	void Upgrade(PlayerParameter* Input)override {
-		Input->upgrade.skill.push_back(new Test);
+		Input->Status.skill.push_back(new Test);
 	};
 
 	std::string GetTexturePass()override {

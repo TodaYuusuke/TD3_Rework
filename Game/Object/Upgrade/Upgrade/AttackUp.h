@@ -6,7 +6,7 @@ public:
 
 	void Upgrade(PlayerParameter* Input)override{
 		//TODO:攻撃力がないので仮
-		Input->upgrade.moveSpeed.moveSpeed += 10.0f;
+		Input->Status.moveSpeed.moveSpeed += 10.0f;
 	};
 
 	std::string GetTexturePass()override{
