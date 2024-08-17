@@ -6,6 +6,7 @@
 #include "Object/Enemy/Normal/NormalEnemy.h"
 #include "Object/FollowCamera/FollowCamera.h"
 #include "Object/Upgrade/Manager/UpgradeManager.h"
+#include "Game/Object/GameTimer/GameTimer.h"
 
 class GamePlayScene final : public IScene{
 public:
@@ -34,4 +35,7 @@ private: //*** 変数群 ***//
 	UpgradeManager upgradeManager_;
 	// 太陽
 	LWP::Object::PointLight sun_;
+
+	// ゲーム内タイマー
+	GameTimer* gameTimer_ = nullptr;
 };

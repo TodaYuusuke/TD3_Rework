@@ -5,6 +5,7 @@
 #include "../Boss/ArrowBoss.h"
 #include "../../Particle/DeadParticle.h"
 #include "../../FollowCamera/FollowCamera.h"
+#include "Game/Object/GameTimer/GameTimer.h"
 
 class Player;
 class EnemyManager
@@ -41,6 +42,8 @@ private:// 定数
 	const int kSpawnFrequency = 120;
 
 private:// 変数
+	// ゲームタイマー
+	GameTimer* gameTimer_;
 	// 追従カメラのアドレス
 	FollowCamera* followCamera_;
 

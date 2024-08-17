@@ -19,6 +19,10 @@ public: // ** メンバ関数 ** //
 	/// </summary>
 	void Update();
 
+	bool ClearAnime();
+
+	bool GameOverAnime();
+
 	/// <summary>
 	/// ワールド座標を取得
 	/// </summary>

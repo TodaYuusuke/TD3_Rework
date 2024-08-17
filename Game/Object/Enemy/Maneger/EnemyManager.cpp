@@ -2,6 +2,7 @@
 #include "Object/Player/Player.h"
 
 void EnemyManager::Init(FollowCamera* followCamera){
+	gameTimer_ = GameTimer::GetInstance();
 	// 追従カメラのアドレスを設定
 	followCamera_ = followCamera;
 	// 突進するボス

@@ -19,6 +19,14 @@ void GamePlayScene::Initialize() {
 
 	// 追従カメラの初期化
 	followCamera_.Init(&mainCamera);
+	// タイマー
+	gameTimer_ = GameTimer::GetInstance();
+	gameTimer_->Initialize();
+
+	// 秒数のセット
+	gameTimer_->Reset(180);
+	// ゲームが始まってから計測開始
+	gameTimer_->Start();
 
 	// 太陽初期化
 	sun_.transform.translation.y = 30.0f;
@@ -43,6 +51,61 @@ void GamePlayScene::Update()
 	if (upgradeManager_.GetUpgradeFlag()) {
 		return;
 	}
+
+	gameTimer_->Update();
+
+#pragma region
+	// タイマーのカウントが終了したとき
+	if (gameTimer_->isEnd_) {
+		//だんだん音が下がる
+		/*BGMt = (std::min)(BGMt + 0.002f, 1.0f);
+		BGMvolume = Lerp(BGMvolume, 0.0f, BGMt);
+		BGM->SetVolume(BGMvolume);*/
+		// プレイヤーが生きているとき
+		if (player_.GetPlayerParameter().flags_.isDead == false) {
+			// クリアしたときの処理
+			// 何か演出を出す
+
+			if (player_.ClearAnime()) {
+				// タイマーを消す
+				gameTimer_->isActive_ = false;
+				// 描画を消す
+				gameTimer_->Update();
+
+
+				// シーン遷移演出開始
+				/*sceneTransition_->Start();
+				if (sceneTransition_->GetIsSceneChange()) {
+					BGM->Stop();
+					nextSceneFunction = []() { return new ClearScene; };
+				}*/
+			}
+			return;
+		}
+		// プレイヤーが死んでいた時
+		else
+		{
+
+			// ゲームオーバーしたときの処理
+			if (player_.GameOverAnime()) {
+				// タイマーを消す
+				gameTimer_->isActive_ = false;
+
+				// 描画を消す
+				gameTimer_->Update();
+
+				// シーン遷移演出開始
+				//sceneTransition_->Start();
+
+				/*if (sceneTransition_->GetIsSceneChange()) {
+					BGM->Stop();
+					nextSceneFunction = []() { return new GameOverScene; };
+				}*/
+			}
+			return;
+		}
+	}
+#pragma endregion ゲームタイマーが止まった時
 
 	if (Keyboard::GetTrigger(DIK_N)){
 		nextSceneFunction = []() { return new GameClearScene; };

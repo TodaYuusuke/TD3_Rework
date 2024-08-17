@@ -83,6 +83,16 @@ void Player::Update() {
 	parameter_.Update();
 }
 
+bool Player::ClearAnime()
+{
+	return true;
+}
+
+bool Player::GameOverAnime()
+{
+	return true;
+}
+
 void Player::DecreaseHP() {
 	// 体力を減らす
 	parameter_.status.countGage.hpCount--;
