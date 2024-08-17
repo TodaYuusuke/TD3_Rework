@@ -32,6 +32,8 @@ void GamePlayScene::Initialize() {
 
 	// enemyManagerの初期化
 	enemyManager_.Init(&followCamera_);
+	
+	upgradeManager_.Init(player_.GetPlayerParameter());
 }
 
 void GamePlayScene::Update()

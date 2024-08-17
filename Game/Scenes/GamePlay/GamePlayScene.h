@@ -6,7 +6,6 @@
 #include "Object/Enemy/Normal/NormalEnemy.h"
 #include "Object/FollowCamera/FollowCamera.h"
 #include "Object/Upgrade/Manager/UpgradeManager.h"
-#include "../../Object/FollowCamera/FollowCamera.h"
 
 class GamePlayScene final : public IScene{
 public:

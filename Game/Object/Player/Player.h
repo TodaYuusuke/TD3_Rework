@@ -2,6 +2,7 @@
 #include <Adapter.h>
 #include "PlayerParameter.h"
 #include "Weapon.h"
+#include "Game/Object/FollowCamera/FollowCamera.h"
 
 /// <summary>
 /// プレイヤークラス

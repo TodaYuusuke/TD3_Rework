@@ -42,13 +42,6 @@ void DashBoss::Init()
 
 void DashBoss::Update()
 {
-	// 死亡時アニメーション
-	// 死んだかどうかはすぐに判別
-	if (IsDead_) {
-		Dying();
-		DyingAnimation();
-		return;
-	}
 
 	// 初期化
 	if (behaviorRequest_) {
@@ -126,11 +119,11 @@ void DashBoss::B_RootUpdate() {
 	else {
 		// 攻撃範囲にいるなら攻撃可能状態に移行する
 		if (CheckAttackRange()) {
-			IsAttack_ = true;
+			isAttack_ = true;
 		}
 	}
 
-	if (IsAttack_) {
+	if (isAttack_) {
 		behaviorRequest_ = Behavior::kPreDash;
 	}
 }
@@ -163,7 +156,7 @@ void DashBoss::B_PreDashUpdate() {
 
 void DashBoss::B_DashInit() {
 	currentFrame_ = 0;
-	IsAttack_ = false;
+	isAttack_ = false;
 	models_[0].worldTF.scale = { 2,3,2 };
 }
 

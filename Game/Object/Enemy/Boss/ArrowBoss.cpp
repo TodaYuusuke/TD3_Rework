@@ -31,13 +31,6 @@ void ArrowBoss::Init()
 
 void ArrowBoss::Update()
 {
-	// 死亡時アニメーション
-	// 死んだかどうかはすぐに判別
-	if (IsDead_) {
-		Dying();
-		DyingAnimation();
-		return;
-	}
 
 	// 初期化
 	if (behaviorRequest_) {
@@ -141,7 +134,7 @@ void ArrowBoss::Attack()
 		homingArrows_.push_back(homingArrow);
 	}
 #pragma endregion 
-	IsAttack_ = false;
+	isAttack_ = false;
 }
 
 void ArrowBoss::ArrowsUpdate() {
@@ -175,7 +168,7 @@ LWP::Math::Vector3 ArrowBoss::RandomShootingAngle() {
 /// Behavior関数ここから↓
 void ArrowBoss::B_RootInit() {
 	// 攻撃状態解除
-	IsAttack_ = false;
+	isAttack_ = false;
 	// 自機狙い状態のクールタイム
 	stunFrame_ = kStunAllFrame;
 
@@ -227,7 +220,7 @@ void ArrowBoss::B_NormalShotInit() {
 	// 自機狙い状態解除
 	isAiming_ = false;
 	// 攻撃開始
-	IsAttack_ = true;
+	isAttack_ = true;
 	// 射撃の全体フレーム
 	shotFrame_ = kNormalShotAllFrame;
 	// 射撃のディレイ
@@ -255,7 +248,7 @@ void ArrowBoss::B_HomingShotInit() {
 	// 自機狙い状態解除
 	isAiming_ = false;
 	// 攻撃開始
-	IsAttack_ = true;
+	isAttack_ = true;
 	// 射撃の全体フレーム
 	shotFrame_ = kHomingShotAllFrame;
 	// 射撃のディレイ

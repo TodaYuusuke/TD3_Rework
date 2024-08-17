@@ -117,7 +117,7 @@ void Player::CheckInputMove() {
 	destinate_.z = direct.y;
 
 	//回転行列を作る
-	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
+	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(followCamera_->pCamera_->transform.rotation);
 	//移動ベクトルをカメラの角度だけ回転
 	destinate_ = TransformNormal(destinate_, rotateMatrix);
 	destinate_.y = 0;
