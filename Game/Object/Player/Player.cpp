@@ -133,7 +133,7 @@ void Player::CheckInputMove() {
 void Player::CheckInputAttack() {
 	// 攻撃ボタンが押された時
 	if (Input::Keyboard::GetTrigger(DIK_SPACE) ||
-		Input::Pad::GetTrigger(0, XINPUT_GAMEPAD_A)) {
+		Input::Pad::GetTrigger(XINPUT_GAMEPAD_A, 0)) {
 		parameter_.flags_.isInputAttack = true;
 	}
 	else {
