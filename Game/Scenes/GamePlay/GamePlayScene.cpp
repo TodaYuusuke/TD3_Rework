@@ -17,18 +17,21 @@ void GamePlayScene::Initialize() {
 	mainCamera.transform.translation.z = -25.0f;
 	mainCamera.transform.translation.y = 4.0f;
 
+	// 追従カメラの初期化
+	followCamera_.Init(&mainCamera);
+
 	// 太陽初期化
 	sun_.transform.translation.y = 30.0f;
 	sun_.intensity = 2.0f;
 	sun_.radius = 105.0f;
 	sun_.decay = 0.58f;
 
-	player_.Init();
-	player_.SetCamera(&mainCamera);
-	enemyManager_.Init();
-	upgradeManager_.Init(player_.GetPlayerParameter());
+	// 自機の初期化
+	player_.Init(&followCamera_);
+	followCamera_.SetTarget(player_.GetWorldTransform());
 
-	followCamera_.Init(player_.GetWorldTransform(), &mainCamera);
+	// enemyManagerの初期化
+	enemyManager_.Init(&followCamera_);
 }
 
 void GamePlayScene::Update()
@@ -44,7 +47,8 @@ void GamePlayScene::Update()
 		nextSceneFunction = []() { return new GameClearScene; };
 	}
 	player_.Update();
-	followCamera_.Update();
-
 	enemyManager_.Update();
+
+	// カメラの位置を更新
+	followCamera_.Update();
 }

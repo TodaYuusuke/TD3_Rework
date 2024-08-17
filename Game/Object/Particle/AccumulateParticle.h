@@ -16,7 +16,7 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 		newData.m.worldTF.translation = lwp::Vector3{ 0.0f,-0.5f,0.0f } + model.worldTF.GetWorldPosition();
 		newData.m.worldTF.rotation = model.worldTF.rotation;
 		// 大きさをランダムにする
-		newData.m.worldTF.scale = { 0.5f,0.5f, 0.0f };
+		newData.m.worldTF.scale = { 0.1f,0.1f, 0.1f };
 
 		// 速度ベクトルを生成
 		int dir1 = LWP::Utility::GenerateRandamNum<int>(-10, 10);
@@ -47,7 +47,6 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 
 		// 速度ベクトルを加算
 		data.m.worldTF.translation += data.velocity;
-		data.m.worldTF.rotation += data.velocity;
 
 		return data.elapsedFrame > 120 ? true : false;
 	};

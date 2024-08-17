@@ -18,7 +18,7 @@ public:
 	/// <param name="target">追従対象</param>
 	/// <param name="pCamera">メインカメラのアドレス</param>
 	/// <param name="player">自機</param>
-	void Init(const LWP::Object::TransformQuat* target, lwp::Camera* pCamera);
+	void Init(lwp::Camera* pCamera);
 
 	// 更新処理
 	void Update();
@@ -27,15 +27,32 @@ public:
 	/// User Method
 	/// 
 
+	/// <summary>
+	/// fovの演出開始
+	/// </summary>
+	/// <param name="goalFov">fovの最終的な値</param>
+	void StartFovDirection(float goalFov) { goalFov_ = goalFov; }
+
+	// fovの演出終了
+	void EndFovDirection() { goalFov_ = 90; }
+
 	// 向きをリセットする
 	void ResetAngle();
 
-public: /// ゲッター
-
+#pragma region Getter
 	/// <summary>
 	/// カメラのクォータニオンを取得
 	/// </summary>
 	LWP::Object::TransformQuat GetTransformQuat() const { return pCamera_->transform; }
+#pragma endregion
+
+#pragma region Setter
+	/// <summary>
+	/// 追従対象を設定
+	/// </summary>
+	/// <param name="target">追従対象</param>
+	void SetTarget(const LWP::Object::TransformQuat* target) { target_ = target; }
+#pragma endregion
 
 private:/// プライベートな関数
 	// キーボード,ゲームパッドの入力処理
@@ -45,8 +62,8 @@ private:/// プライベートな関数
 	/// 数学関数
 	///
 
-	// 返り値がfloatの線形補間
-	float Lerp(const float& v1, const float& v2, float t);
+	// 指数補間
+	float ExponentialInterpolate(const float& current, const float& target, float damping, float deltaTime);
 	// オフセットの計算
 	LWP::Math::Vector3 CalcOffset() const;
 
@@ -91,4 +108,7 @@ private:/// プライベートな変数
 
 	// 後追いのレート
 	float followRate_;
+
+	// 目標のfov
+	float goalFov_;
 };

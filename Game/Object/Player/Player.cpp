@@ -7,7 +7,7 @@ using namespace LWP::Math;
 using namespace LWP::Utility;
 using namespace LWP::Object;
 
-void Player::Init() {
+void Player::Init(FollowCamera* followCamera) {
 	// モデルを読み込む
 	// 一時的にキューブ
 	model_.LoadShortPath("player/player.obj");
@@ -19,6 +19,8 @@ void Player::Init() {
 	//当たり判定を初期化
 	InitColliders();
 
+	// 追従カメラのアドレスを設定
+	followCamera_ = followCamera;
 	// 武器を作成
 	weapon_.reset(new Weapon);
 	weapon_->Initialize();

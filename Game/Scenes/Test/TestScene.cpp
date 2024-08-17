@@ -9,7 +9,7 @@ using namespace LWP::Utility;
 
 void TestScene::Initialize() {
 	// 自機の生成
-	player_.Init();
+	//player_.Init(&mainCamera);
 
 	// 敵
 	enemy_.Init();
@@ -17,5 +17,5 @@ void TestScene::Initialize() {
 
 void TestScene::Update() {
 	// 自機
-	player_.Update();
+	//player_.Update();
 }

@@ -12,7 +12,7 @@ public: // ** メンバ関数 ** //
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	void Init(FollowCamera* followCamera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -32,10 +32,6 @@ public: // ** メンバ関数 ** //
 	/// </summary>
 	/// <returns></returns>
 	const LWP::Object::TransformQuat* GetWorldTransform() { return &model_.worldTF; }
-
-	void SetCamera(lwp::Camera* pCamera) {
-		pCamera_ = pCamera;
-	}
 
 private: //*** サブクラス ***//
 
@@ -74,8 +70,9 @@ private: //*** メンバ変数 ***//
 
 	// モデル
 	LWP::Resource::RigidModel model_;
-	// カメラ
-	LWP::Object::Camera* pCamera_;
+
+	// フォローカメラ
+	FollowCamera* followCamera_;
 
 	// 今の状態を格納
 	Behavior behavior_ = Behavior::Idle;

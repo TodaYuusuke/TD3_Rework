@@ -41,6 +41,7 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 
 		data.m.worldTF.translation += data.velocity;    // 速度ベクトルを加算
 		data.m.worldTF.rotation += data.velocity;    // ついでに回転させとく
+		data.m.worldTF.rotation = data.m.worldTF.rotation.Normalize();
 
 		// 20フレーム以降から重力を加算
 		if (data.elapsedFrame > 20)

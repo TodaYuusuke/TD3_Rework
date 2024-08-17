@@ -19,16 +19,19 @@ public:
 	virtual void Init() = 0;
 	virtual void Update() = 0;
 
+	//移動する
+	void Move();
+	//　プレイヤーを向く
+	void LockPlayer();
+
+	// ワールド座標を取得
+	lwp::Vector3 GetWorldPosition() { return models_[0].worldTF.GetWorldPosition(); }
+
 	// 位置を指定して移動する
 	void SetPosition(lwp::Vector3 Pos) {
 		models_[0].worldTF.translation.x = Pos.x;
 		models_[0].worldTF.translation.z = Pos.z;
 	};
-
-	//移動する
-	void Move();
-	//　プレイヤーを向く
-	void LockPlayer();
 	// 狙う対象をセット(今回は自機をセットする)
 	void SetTarget(Player* player) { player_ = player; }
 
@@ -63,7 +66,7 @@ public:
 	const float kDeadFlame_;
 #pragma endregion 定数
 
-private://関数
+protected://関数
 
 
 	lwp::Vector3 GetDirectVel();

@@ -1,25 +1,40 @@
 #include "EnemyManager.h"
 #include "Object/Player/Player.h"
 
-void EnemyManager::Init(){
-	NormalEnemy* enemy = new NormalEnemy();
-	enemy->Init();
-	enemy->SetTarget(player_);
-	enemys_.push_back(enemy);
+void EnemyManager::Init(FollowCamera* followCamera){
+	// 追従カメラのアドレスを設定
+	followCamera_ = followCamera;
+
+	//NormalEnemy* enemy = new NormalEnemy();
+	//enemy->Init();
+	//enemy->SetTarget(player_);
+	//enemys_.push_back(enemy);
+	//
+	// 突進するボス
+	DashBoss* dashBoss = new DashBoss();
+	dashBoss->Init();
+	dashBoss->SetTarget(player_);
+	enemys_.push_back(dashBoss);
+	
+	ArrowBoss* arrowBoss = new ArrowBoss();
+	arrowBoss->Init();
+	arrowBoss->SetFollowCamera(followCamera_);
+	arrowBoss->SetTarget(player_);
+	enemys_.push_back(arrowBoss);
 }
 
 void EnemyManager::Update(){
 
 	//敵キャラのIsDeadがtrueなら削除
 	enemys_.remove_if([this](IEnemy* enemy){
-		if (enemy->GetIsDead())
-		{
+		if (enemy->GetIsDead())	{
+			// 死亡パーティクル発生
+			CreateDeadParticle(enemy->GetWorldPosition());
 			delete enemy;
 			return true;
 		}
 		return false;
 	});
-
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
@@ -29,20 +44,17 @@ void EnemyManager::Update(){
 	currentFrame_++;
 
 	// 通常敵の出現
-	if (currentFrame_ >= kSpawnFrequency)
-	{
+	if (currentFrame_ >= kSpawnFrequency) {
 		//ランダム生成用
 		std::random_device seedGenerator;
 		std::mt19937 randomEngine(seedGenerator());
 		std::uniform_int_distribution<int> distribution(1, 3);
 		int spawn = distribution(randomEngine);
-		for (int It = 0; It < spawn; It++)
-		{
+		for (int It = 0; It < spawn; It++) {
 			EnemySpawn();
 		}
 		currentFrame_ = 0;
 	}
-
 }
 
 void EnemyManager::EnemySpawn()
@@ -137,4 +149,12 @@ void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 	enemy->SetTarget(player_);
 
 	enemys_.push_back(enemy);
+}
+
+void EnemyManager::CreateDeadParticle(lwp::Vector3 pos) {
+	DeadParticle* deadParticle = new DeadParticle();
+	deadParticle->model.LoadCube();
+	deadParticle->model.worldTF.translation = pos;
+	deadParticle->Add(64);
+	deadParticles_.push_back(deadParticle);
 }

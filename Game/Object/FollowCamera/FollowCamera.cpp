@@ -11,10 +11,9 @@ FollowCamera::FollowCamera() {
 	followRate_ = kFollowRate;
 }
 
-void FollowCamera::Init(const LWP::Object::TransformQuat* target, lwp::Camera* pCamera) {
-	target_ = target;
+void FollowCamera::Init(lwp::Camera* pCamera) {
 	pCamera_ = pCamera;
-	ResetAngle();
+	goalFov_ = pCamera_->fov;
 }
 
 void FollowCamera::Update() {
@@ -51,6 +50,9 @@ void FollowCamera::Update() {
 
 	// カメラの座標を決定
 	pCamera_->transform.translation = target_->GetWorldPosition() + kTargetDist * Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
+
+	// fovの設定
+	pCamera_->fov = ExponentialInterpolate(pCamera_->fov, goalFov_, 0.2f, 1.0f);
 }
 
 void FollowCamera::ResetAngle() {
@@ -98,9 +100,9 @@ void FollowCamera::InputAngle() {
 }
 
 #pragma region 数学関数
-float FollowCamera::Lerp(const float& v1, const float& v2, float t) {
-	float result = v1 + (v2 - v1) * t;
-	return result;
+float FollowCamera::ExponentialInterpolate(const float& current, const float& target, float damping, float deltaTime) {
+	float factor = 1.0f - std::exp(-damping * deltaTime);
+	return current + (target - current) * factor;
 }
 
 LWP::Math::Vector3 FollowCamera::CalcOffset() const {
