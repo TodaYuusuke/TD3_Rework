@@ -103,15 +103,6 @@ void Player::CheckInputMove() {
 	direct += LWP::Input::Controller::GetLStick();
 	direct = direct.Normalize();
 
-	destinate_.x = direct.x;
-	destinate_.z = direct.y;
-
-	//回転行列を作る
-	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
-	//移動ベクトルをカメラの角度だけ回転
-	destinate_ = TransformNormal(destinate_, rotateMatrix);
-	destinate_.y = 0;
-
 #pragma region
 	//移動ベクトルをカメラの角度だけ回転
 	//ロックオン座標
@@ -134,7 +125,14 @@ void Player::CheckInputMove() {
 	// 方向をゼロにしない
 	if (parameter_.flags_.isInputMove) {
 		// ここで三次元空間に変換
+		destinate_.x = direct.x;
+		destinate_.z = direct.y;
 
+		//回転行列を作る
+		lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
+		//移動ベクトルをカメラの角度だけ回転
+		destinate_ = TransformNormal(destinate_, rotateMatrix);
+		destinate_.y = 0;
 
 
 	}

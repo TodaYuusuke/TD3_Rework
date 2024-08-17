@@ -6,7 +6,7 @@ void NormalEnemy::Init()
 	models_.emplace_back();
 	models_[0].LoadShortPath("NormalEnemy/NormalEnemy.obj");
 	models_[0].materials[1].enableLighting = false;
-
+	models_[0].worldTF.translation.y = 0.5f;
 	attackWaitTime_ = kAttackWaitTime_;
 
 	// HP を設定
