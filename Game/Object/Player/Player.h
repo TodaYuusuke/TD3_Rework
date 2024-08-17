@@ -1,6 +1,7 @@
 #pragma once
 #include <Adapter.h>
 #include "PlayerParameter.h"
+#include "Weapon.h"
 
 /// <summary>
 /// プレイヤークラス
@@ -103,6 +104,8 @@ private: //*** メンバ変数 ***//
 	// まとめられた時間
 	Times times_;
 
+	// 武器
+	std::unique_ptr<Weapon> weapon_;
 
 	// 当たり判定は外部でまとめたい
 	// プレイヤーの当たり判定

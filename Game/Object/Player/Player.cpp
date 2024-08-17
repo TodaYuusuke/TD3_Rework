@@ -10,7 +10,7 @@ using namespace LWP::Object;
 void Player::Init() {
 	// モデルを読み込む
 	// 一時的にキューブ
-	model_.LoadShortPath("player/player.obj");;
+	model_.LoadShortPath("player/player.obj");
 	// 関数ポインタ配列を初期化
 	InitStateFunctions();
 
@@ -18,6 +18,11 @@ void Player::Init() {
 	parameter_.Init();
 	//当たり判定を初期化
 	InitColliders();
+
+	// 武器を作成
+	weapon_.reset(new Weapon);
+	weapon_->Initialize();
+	weapon_->SetParent(&model_.worldTF);
 }
 
 void Player::Update() {
@@ -42,6 +47,7 @@ void Player::Update() {
 	// 攻撃入力
 	CheckInputAttack();
 
+	weapon_->Update();
 
 	// デバッグ情報を入力、処理前に確認する
 	DebugWindow();
@@ -103,10 +109,19 @@ void Player::CheckInputMove() {
 	direct += LWP::Input::Controller::GetLStick();
 	direct = direct.Normalize();
 
+	// ここで三次元空間に変換
+	destinate_.x = direct.x;
+	destinate_.z = direct.y;
+
+	//回転行列を作る
+	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
+	//移動ベクトルをカメラの角度だけ回転
+	destinate_ = TransformNormal(destinate_, rotateMatrix);
+	destinate_.y = 0;
 #pragma region
 	//移動ベクトルをカメラの角度だけ回転
 	//ロックオン座標
-	lookPoint = { direct.x,0.0f,direct.y };
+	lookPoint = destinate_;
 
 	//プレイヤーの現在の向き
 	lookPoint = lookPoint.Normalize();
@@ -124,15 +139,7 @@ void Player::CheckInputMove() {
 	// 移動入力があった時に方向を更新する
 	// 方向をゼロにしない
 	if (parameter_.flags_.isInputMove) {
-		// ここで三次元空間に変換
-		destinate_.x = direct.x;
-		destinate_.z = direct.y;
 
-		//回転行列を作る
-		lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
-		//移動ベクトルをカメラの角度だけ回転
-		destinate_ = TransformNormal(destinate_, rotateMatrix);
-		destinate_.y = 0;
 
 
 	}

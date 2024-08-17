@@ -164,6 +164,7 @@
     <ClCompile Include="Game\Object\Player\PlayerConfig.cpp" />
     <ClCompile Include="Game\Object\Player\PlayerParameter.cpp" />
     <ClCompile Include="Game\Object\Player\Skill\test\test.cpp" />
+    <ClCompile Include="Game\Object\Player\Weapon.cpp" />
     <ClCompile Include="Game\Object\Upgrade\Manager\UpgradeManager.cpp" />
     <ClCompile Include="Game\Scenes\GameClear\GameClearScene.cpp" />
     <ClCompile Include="Game\Scenes\GameOver\GameOverScene.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Game\Object\Particle\SpawnParticle.h" />
     <ClInclude Include="Game\Object\Player\Skill\ISkill.h" />
     <ClInclude Include="Game\Object\Player\Skill\test\test.h" />
+    <ClInclude Include="Game\Object\Player\Weapon.h" />
     <ClInclude Include="Game\Object\Upgrade\IUpgrade.h" />
     <ClInclude Include="Game\Object\Upgrade\Manager\UpgradeManager.h" />
     <ClInclude Include="Game\Object\Upgrade\Upgrade\AttackUp.h" />
