@@ -1,5 +1,6 @@
 #pragma once
 #include "Game/Object/Player/Skill/ISkill.h"
+
 #pragma region
 
 // 移動時の値を格納
@@ -70,7 +71,7 @@ struct Flags {
 	bool isInputAttack = false;	// 攻撃入力されたか
 	bool isDead = false;		// 死んでいるか
 };
-#pragma endregion 
+#pragma endregion パラメーター構造体
 
 /// <summary>
 /// プレイヤーの基本的な設定を格納

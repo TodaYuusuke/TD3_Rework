@@ -24,6 +24,7 @@ void GamePlayScene::Initialize() {
 	sun_.decay = 0.58f;
 
 	player_.Init();
+	player_.SetCamera(&mainCamera);
 	enemyManager_.Init();
 	upgradeManager_.Init(player_.GetPlayerParameter());
 

@@ -40,7 +40,7 @@ void PlayerConfig::DebugTree() {
 }
 
 void PlayerConfig::InitMoveSpeed() {
-	moveSpeed.moveSpeed = 5.0f;
+	moveSpeed.moveSpeed = 10.0f;
 	moveSpeed.attackSpeed = 200.0f;
 	moveSpeed.momentSpeed = 1.0f;
 }

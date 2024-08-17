@@ -10,7 +10,7 @@ using namespace LWP::Object;
 void Player::Init() {
 	// モデルを読み込む
 	// 一時的にキューブ
-	model_.LoadCube();
+	model_.LoadShortPath("player/player.obj");;
 	// 関数ポインタ配列を初期化
 	InitStateFunctions();
 
@@ -103,6 +103,15 @@ void Player::CheckInputMove() {
 	direct += LWP::Input::Controller::GetLStick();
 	direct = direct.Normalize();
 
+	destinate_.x = direct.x;
+	destinate_.z = direct.y;
+
+	//回転行列を作る
+	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
+	//移動ベクトルをカメラの角度だけ回転
+	destinate_ = TransformNormal(destinate_, rotateMatrix);
+	destinate_.y = 0;
+
 #pragma region
 	//移動ベクトルをカメラの角度だけ回転
 	//ロックオン座標
@@ -125,8 +134,9 @@ void Player::CheckInputMove() {
 	// 方向をゼロにしない
 	if (parameter_.flags_.isInputMove) {
 		// ここで三次元空間に変換
-		destinate_.x = direct.x;
-		destinate_.z = direct.y;
+
+
+
 	}
 }
 
@@ -425,4 +435,12 @@ void Player::DebugWindow() {
 
 	ImGui::End();
 #endif // DEMO
+}
+
+lwp::Vector3 TransformNormal(const lwp::Vector3& v, const lwp::Matrix4x4& m) {
+	return lwp::Vector3(
+		v.x * m.m[0][0] + v.y * m.m[1][0] + v.z * m.m[2][0],
+		v.x * m.m[0][1] + v.y * m.m[1][1] + v.z * m.m[2][1],
+		v.x * m.m[0][2] + v.y * m.m[1][2] + v.z * m.m[2][2]
+	);
 }

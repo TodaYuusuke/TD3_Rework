@@ -32,6 +32,10 @@ public: // ** メンバ関数 ** //
 	/// <returns></returns>
 	const LWP::Object::TransformQuat* GetWorldTransform() { return &model_.worldTF; }
 
+	void SetCamera(lwp::Camera* pCamera) {
+		pCamera_ = pCamera;
+	}
+
 private: //*** サブクラス ***//
 
 	// 状態
@@ -69,6 +73,8 @@ private: //*** メンバ変数 ***//
 
 	// モデル
 	LWP::Resource::RigidModel model_;
+	// カメラ
+	LWP::Object::Camera* pCamera_;
 
 	// 今の状態を格納
 	Behavior behavior_ = Behavior::Idle;
@@ -83,8 +89,6 @@ private: //*** メンバ変数 ***//
 	// 各種パラメータを格納
 	PlayerParameter parameter_;
 
-private: //*** 細かく設定される変数 ***//
-
 	// 向いている方向
 	// 操作があった時に向く方向を決定している
 	LWP::Math::Vector3 destinate_ = { 0.0f,0.0f,1.0f };
@@ -98,6 +102,7 @@ private: //*** 細かく設定される変数 ***//
 
 	// まとめられた時間
 	Times times_;
+
 
 	// 当たり判定は外部でまとめたい
 	// プレイヤーの当たり判定
@@ -178,3 +183,5 @@ public: //*** デバッグ用の関数 ***//
 	/// </summary>
 	void DebugWindow();
 };
+
+lwp::Vector3 TransformNormal(const lwp::Vector3& v, const lwp::Matrix4x4& m);
