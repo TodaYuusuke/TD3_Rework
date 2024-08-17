@@ -44,7 +44,6 @@ void GamePlayScene::Update()
 		return;
 	}
 
-
 	if (Keyboard::GetTrigger(DIK_N)){
 		nextSceneFunction = []() { return new GameClearScene; };
 	}
