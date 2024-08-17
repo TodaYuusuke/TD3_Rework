@@ -103,8 +103,20 @@ void Player::CheckInputMove() {
 	direct += LWP::Input::Controller::GetLStick();
 	direct = direct.Normalize();
 
-	// TODO : カメラからの方向に変換する
+#pragma region
+	//移動ベクトルをカメラの角度だけ回転
+	//ロックオン座標
+	lookPoint = { direct.x,0.0f,direct.y };
 
+	//プレイヤーの現在の向き
+	lookPoint = lookPoint.Normalize();
+
+	Vector3 cross = Vector3::Cross({ 0.0f,0.0f,1.0f }, lookPoint).Normalize();
+	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, lookPoint);
+
+	//行きたい方向のQuaternionの作成
+	model_.worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
+#pragma endregion プレイヤーの移動方向を向く
 
 	// そもそも移動入力が無かったらフラグを立てない
 	parameter_.flags_.isInputMove = !(direct.x == 0 && direct.y == 0);
