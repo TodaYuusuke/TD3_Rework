@@ -11,7 +11,7 @@ public:
 
 	std::string GetTexturePass()override{
 		//テクスチャのファイルパス
-		return "";
+		return "Skill/PowerUp.png";
 	}
 
 	std::string GetUpgradeName()override{

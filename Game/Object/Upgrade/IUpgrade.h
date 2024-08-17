@@ -6,6 +6,13 @@
 class IUpgrade
 {
 public:
+	void Init() {
+		sprite_.material.texture = LWP::Resource::LoadTexture(GetTexturePass());
+		sprite_.isUI = true;
+		sprite_.isActive = false;
+		sprite_.anchorPoint = { 0.5f,0.5f };
+		sprite_.material.enableLighting = false;
+	};
 
 	//アップデートを適用する
 	void Apply(PlayerParameter* para) {
@@ -26,6 +33,18 @@ public:
 	virtual std::string GetUpgradeName() = 0;
 
 	bool GetIsAppliedFlag() { return isApplied; };
+
+	void SetUIPos(const LWP::Math::Vector2& pos) {
+		// スプライトを描画させる
+		sprite_.isActive = true;
+		sprite_.worldTF.translation.x = pos.x;
+		sprite_.worldTF.translation.y = pos.y;
+	}
+
+	void UIoff() {
+		sprite_.isActive = false;
+	}
+
 private:
 	bool isApplied = false;
 

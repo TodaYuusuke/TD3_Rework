@@ -17,15 +17,17 @@ public:
 
 	void LevelUp();
 
-	int Choose(bool select);
-
 	bool GetUpgradeFlag() {return UpgradeFlag;};
 
 private:
-
+	//抽選をする関数
+	int Choose(bool select);
+	//抽選をまとめた関数
 	void RandomUpgrade();
-
+	//選択したアップグレードを適応する
 	void Apply();
+	//UIを非表示にする
+	void UIoff();
 
 	void ImGui();
 
@@ -51,6 +53,9 @@ private:
 
 	// 選択しているアップグレード
 	int choiceIndex_ = 0;
+
+	bool isPress_ = false;
+
 #pragma region
 	// 選択場所のわかるUI
 	LWP::Primitive::Sprite sprite_;
@@ -65,4 +70,11 @@ private:
 	// 決定に必要な時間
 	const float kPressTime_ = 1.0f;
 #pragma endregion 選択カーソル
+#pragma region
+	lwp::Vector2 UIpos[2] = {
+		{640.0f,625.0f},
+		{1280.0f,625.0f},
+	};
+
+#pragma endregion UI
 };
