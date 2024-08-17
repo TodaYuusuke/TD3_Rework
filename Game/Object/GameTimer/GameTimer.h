@@ -94,6 +94,8 @@ private: //*** プライベート変数 ***//
 	GameCounter countM0_;
 	// 10
 	GameCounter countM1_;
+	// タイマーの後ろのスプライト
+	LWP::Primitive::Sprite backSprite_;
 
 
 private: //*** プライベート関数 ***//

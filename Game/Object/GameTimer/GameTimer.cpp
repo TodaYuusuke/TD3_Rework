@@ -22,8 +22,15 @@ void GameTimer::Initialize()
 	// タイマーの場所
 	timerPosition_ = { 1600.0f,100.f,0.0f };
 
-
-
+	backSprite_.material.texture = Resource::LoadTexture("white.png"); 
+	backSprite_.material.enableLighting = false;
+	backSprite_.isUI = true;
+	backSprite_.isActive = true;
+	backSprite_.anchorPoint = { 0.5f,0.5f };
+	backSprite_.worldTF.scale.x = 1.2f;
+	backSprite_.worldTF.scale.y = 0.5f;
+	backSprite_.worldTF.translation = { 1600.0f,100.f,0.0f };
+	backSprite_.material.color = 0xAAAAAAFF;
 
 	// タイマーを綺麗に表示する
 	countS0_.Initialize();
@@ -42,6 +49,7 @@ void GameTimer::Initialize()
 	countM1_.transform_.translation = timerPosition_;
 	countM1_.transform_.translation.x -= kPaddingCenter_ + kPaddingNumber_;
 	countM1_.isActive_ = true;
+
 
 
 	// 10 分生存
