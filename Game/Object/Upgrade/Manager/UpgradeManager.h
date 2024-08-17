@@ -51,4 +51,18 @@ private:
 
 	// 選択しているアップグレード
 	int choiceIndex_ = 0;
+#pragma region
+	// 選択場所のわかるUI
+	LWP::Primitive::Sprite sprite_;
+
+	lwp::Vector3 cursorPos = { LWP::Info::GetWindowWidth() / float(kUpgradNum_ + 2),240.0f };
+
+	// 長押し用のフラグ
+	bool isPress_ = false;
+
+	// 長押しした時間
+	float pressTime_ = 0.0f;
+	// 決定に必要な時間
+	const float kPressTime_ = 1.0f;
+#pragma endregion 選択カーソル
 };

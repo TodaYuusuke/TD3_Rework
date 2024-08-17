@@ -7,6 +7,12 @@ void UpgradeManager::Init(PlayerParameter& Input)
 	attackUpgrade_.push_back(new TestSkill);
 	escapeUpgrade_.push_back(new HPUp);
 	escapeUpgrade_.push_back(new AttackUp);
+
+	sprite_.material.texture = LWP::Resource::LoadTexture("cursor2.png");
+	sprite_.anchorPoint = { 0.5f,0.5f };
+	sprite_.worldTF.translation = cursorPos;
+	sprite_.isUI = true;
+	sprite_.isActive = false;
 }
 
 void UpgradeManager::Update()
@@ -28,6 +34,10 @@ void UpgradeManager::Update()
 void UpgradeManager::SelectUpgrade()
 {
 	lwp::Vector2 stick = LWP::Input::Controller::GetLStick();
+
+	sprite_.isActive = true;
+	// カーソルUI
+	sprite_.worldTF.translation.x = 640.0f * (cursorIndex_ + 1);
 
 	//右を選択(攻撃)
 	if (0 < cursorIndex_ &&
