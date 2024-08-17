@@ -43,5 +43,7 @@ void GamePlayScene::Update()
 		nextSceneFunction = []() { return new GameClearScene; };
 	}
 	player_.Update();
+	followCamera_.Update();
+
 	enemyManager_.Update();
 }
