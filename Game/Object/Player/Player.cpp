@@ -67,6 +67,10 @@ void Player::Update() {
 	// 参照なので当たり判定に反映される
 	playerCollider_.capsule.end = model_.worldTF.translation;
 
+	// カメラの位置を更新
+	followCamera_.Update();
+
+	// フラグを元に戻す処理
 	// 無敵時間中の時
 	if (0.0f < times_.invincibleTime) {
 		times_.invincibleTime -= Info::GetDeltaTimeF();
@@ -407,7 +411,7 @@ void Player::DebugWindow() {
 		ImGui::Text("Damage");
 		break;
 	default:
-		ImGui::Text("%d",(int)behavior_);
+		ImGui::Text("%d", (int)behavior_);
 		break;
 	}
 	ImGui::Separator();

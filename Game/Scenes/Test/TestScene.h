@@ -27,6 +27,5 @@ public: //*** 関数群 ***//
 
 private: //*** 変数群 ***//
 	Player player_;
-	FollowCamera followCamera_;
 	NormalEnemy enemy_;
 };

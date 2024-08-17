@@ -12,7 +12,7 @@ public: // ** メンバ関数 ** //
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init();
+	void Init(LWP::Object::Camera* pCamera);
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -77,6 +77,9 @@ private: //*** メンバ変数 ***//
 	// カメラ
 	LWP::Object::Camera* pCamera_;
 
+	// フォローカメラ
+	FollowCamera followCamera_;
+
 	// 今の状態を格納
 	Behavior behavior_ = Behavior::Idle;
 	// 状態が変わった時に値が入る
@@ -99,6 +102,7 @@ private: //*** メンバ変数 ***//
 #pragma endregion キャラの回転
 
 	// プレイヤーの速度を格納
+	// カメラ方向も計算している
 	LWP::Math::Vector3 velocity_ = { 0.0f,0.0f,0.0f };
 
 	// まとめられた時間
