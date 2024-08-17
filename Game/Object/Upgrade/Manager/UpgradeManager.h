@@ -33,6 +33,8 @@ private:
 	void UIoff();
 	//長押ししている間に動く関数
 	void KeyHoldAction();
+	//長押ししていない間に動く関数
+	void KeyReleaseAction();
 	//デバッグ用関数
 	void ImGui();
 

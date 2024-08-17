@@ -52,27 +52,26 @@ void UpgradeManager::SelectUpgrade()
 	// カーソルのスプライトを上下に揺らす
 	cursorAnimFrame_ += lwp::GetDefaultDeltaTimeF() * 60;
 	sprite_.worldTF.translation.y += sinf(cursorAnimFrame_ * (float)std::numbers::pi / 20) * 0.4f;
-
-	//決定ボタンが押されていた時
-	if (isPress_) {
-
-	}
-	//選択
-	else {
-		Select();
-
-	}
 	
 	//決定ボタンを押したら
 	if ((lwp::Keyboard::GetPress(DIK_SPACE) ||
 		lwp::Pad::GetPress(XINPUT_GAMEPAD_A))) {
 		isPress_ = true;
-
-		//Apply();
 	}
 	else {
 		isPress_ = false;
 	}
+
+	//決定ボタンが押されていた時
+	if (isPress_) {
+		KeyHoldAction();
+	}
+	//選択
+	else {
+		Select();
+		KeyReleaseAction();
+	}
+
 
 }
 
@@ -187,6 +186,17 @@ void UpgradeManager::KeyHoldAction()
 	// カーソルをつぶしたり伸ばしたりする
 	sprite_.worldTF.scale.y -= (sinf(pressTime_ * 60 * (float)std::numbers::pi / 10) * 0.05f);
 	sprite_.worldTF.scale.x += (sinf(pressTime_ * 60 * (float)std::numbers::pi / 10) * 0.05f);
+
+	if (pressTime_ > kPressTime_) {
+		Apply();
+	}
+}
+
+void UpgradeManager::KeyReleaseAction()
+{
+	pressTime_ = 0;
+	sprite_.worldTF.scale.y = 1.0f;
+	sprite_.worldTF.scale.x = 1.0f;
 }
 
 void UpgradeManager::ImGui()
