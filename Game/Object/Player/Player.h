@@ -12,7 +12,7 @@ public: // ** メンバ関数 ** //
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Init(LWP::Object::Camera* pCamera);
+	void Init();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -76,9 +76,6 @@ private: //*** メンバ変数 ***//
 	LWP::Resource::RigidModel model_;
 	// カメラ
 	LWP::Object::Camera* pCamera_;
-
-	// フォローカメラ
-	FollowCamera followCamera_;
 
 	// 今の状態を格納
 	Behavior behavior_ = Behavior::Idle;

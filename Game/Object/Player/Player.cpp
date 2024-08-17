@@ -67,9 +67,6 @@ void Player::Update() {
 	// 参照なので当たり判定に反映される
 	playerCollider_.capsule.end = model_.worldTF.translation;
 
-	// カメラの位置を更新
-	followCamera_.Update();
-
 	// フラグを元に戻す処理
 	// 無敵時間中の時
 	if (0.0f < times_.invincibleTime) {
@@ -139,14 +136,6 @@ void Player::CheckInputMove() {
 
 	// そもそも移動入力が無かったらフラグを立てない
 	parameter_.flags_.isInputMove = !(direct.x == 0 && direct.y == 0);
-
-	// 移動入力があった時に方向を更新する
-	// 方向をゼロにしない
-	if (parameter_.flags_.isInputMove) {
-
-
-
-	}
 }
 
 void Player::CheckInputAttack() {
