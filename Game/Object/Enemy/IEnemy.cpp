@@ -12,6 +12,7 @@ void IEnemy::LockPlayer()
 {
 	// 自機に向かうベクトル
 	LWP::Math::Vector3 targetVel = GetDirectVel();
+	targetVel.y = 0;
 	//プレイヤーの現在の向き
 	targetVel = targetVel.Normalize();
 
