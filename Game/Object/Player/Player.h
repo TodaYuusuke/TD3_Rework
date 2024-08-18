@@ -42,6 +42,7 @@ public: // ** メンバ関数 ** //
 
 private: //*** サブクラス ***//
 
+
 	// 状態
 	enum class Behavior : int {
 		Idle = 0,
@@ -52,6 +53,8 @@ private: //*** サブクラス ***//
 
 		_Count,	// 状態最大数
 	};
+
+#pragma region 
 
 	// 処理中の時間をまとめた構造体
 	struct Times {
@@ -85,6 +88,8 @@ private: //*** サブクラス ***//
 		SphereCollider() : sphere(collider.SetBroadShape(lwp::Collider::Sphere())) {
 		}
 	};
+#pragma endregion 構造体
+
 
 private: //*** メンバ変数 ***//
 
