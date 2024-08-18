@@ -73,6 +73,7 @@ void Player::Update() {
 	// 無敵時間中の時
 	if (0.0f < times_.invincibleTime) {
 		times_.invincibleTime -= Info::GetDeltaTimeF();
+		//点滅させる
 		model_.isActive = !model_.isActive;
 		// 無敵時間が切れた時
 		if (times_.invincibleTime <= 0.0f) {
@@ -262,6 +263,8 @@ void Player::InitAttack() {
 	velocity_ = destinate_ * parameter_.status.moveSpeed.attackSpeed;
 	// 攻撃を有効化
 	attackCollider_.collider.isActive = true;
+	//プレイヤーの当たり判定を無効化
+	playerCollider_.collider.isActive = false;
 	// 攻撃の判定を設定する
 	// 徐々に短くしたいから変数に入れるかも
 	attackCollider_.capsule.start = model_.worldTF.translation;
@@ -277,6 +280,8 @@ void Player::InitMoment() {
 	times_.behaviorTime = 0.0f;
 	// 攻撃を無効化
 	attackCollider_.collider.isActive = false;
+	//プレイヤーの判定を有効化
+	playerCollider_.collider.isActive = true;
 }
 
 void Player::InitDamage() {

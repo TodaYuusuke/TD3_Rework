@@ -66,6 +66,7 @@ void IEnemy::InitCollider()
 {
 	collider.SetBroadShape(lwp::Collider::AABB());
 	collider.SetFollowTarget(&models_[0].worldTF);
+	collider.mask.SetBelongFrag(ColMask0);
 	collider.name = "Enemy";
 	// ヒットしたときの処理を設定
 	collider.enterLambda = [this](lwp::Collider::Collider* hitTarget) { EnterEnemy(hitTarget); };
