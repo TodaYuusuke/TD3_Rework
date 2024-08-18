@@ -189,12 +189,14 @@ void Player::InitColliders() {
 	InitColliderPlayer();
 	// 攻撃の当たり判定を初期化
 	InitColliderAttack();
+	// EXP用当たり判定
+	InitColliderEXP();
 }
 
 void Player::InitColliderPlayer() {
 	playerCollider_.collider.name = "Player";
 	playerCollider_.capsule.radius = parameter_.status.lengthRadius.playerRadius;
-
+	//playerCollider_.collider.mask.SetHitFrag(MaskLayer::Player | MaskLayer::PAttack);
 	// ヒットしたときの処理を設定
 	playerCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterPlayer(hitTarget); };
 	playerCollider_.collider.stayLambda = [this](Collider::Collider* hitTarget) { StayPlayer(hitTarget); };
@@ -205,11 +207,22 @@ void Player::InitColliderAttack() {
 	attackCollider_.collider.name = "PlayerAttack";
 	attackCollider_.collider.isActive = false;
 	attackCollider_.capsule.radius = parameter_.status.lengthRadius.attackRadius;
-
+	attackCollider_.collider.mask.SetHitFrag(MaskLayer::Player);
 	// ヒットしたときの処理を設定
 	attackCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterAttack(hitTarget); };
 	attackCollider_.collider.stayLambda = [this](Collider::Collider* hitTarget) { StayAttack(hitTarget); };
 	attackCollider_.collider.exitLambda = [this](Collider::Collider* hitTarget) { ExitAttack(hitTarget); };
+}
+
+void Player::InitColliderEXP()
+{
+	EXPCollider_.collider.name = "EXPPull";
+	EXPCollider_.collider.isActive = true;
+	EXPCollider_.collider.SetFollowTarget(&model_.worldTF);
+	EXPCollider_.collider.mask.SetHitFrag(MaskLayer::Player | MaskLayer::PAttack | MaskLayer::Enemy);
+	EXPCollider_.sphere.radius = parameter_.status.lengthRadius.EXPpullRadius;
+	// ヒットしたときの処理を設定
+	EXPCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterEXP(hitTarget); };
 }
 
 #pragma region ヒット時処理
@@ -217,6 +230,9 @@ void Player::InitColliderAttack() {
 void Player::EnterPlayer(LWP::Object::Collider::Collider* hitTarget) {
 	if (hitTarget->name == "Enemy") {
 		parameter_.flags_.isDamage = true;
+	}
+	if (hitTarget->name == "EXP") {
+		parameter_.status.level.exp_++;
 	}
 }
 
@@ -238,6 +254,12 @@ void Player::StayAttack(LWP::Object::Collider::Collider* hitTarget) {
 
 void Player::ExitAttack(LWP::Object::Collider::Collider* hitTarget) {
 	hitTarget;
+}
+void Player::EnterEXP(LWP::Object::Collider::Collider* hitTarget)
+{
+	if (hitTarget->name == "EXP") {
+
+	}
 }
 // ヒット時処理
 #pragma endregion

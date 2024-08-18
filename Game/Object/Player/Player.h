@@ -70,6 +70,19 @@ private: //*** サブクラス ***//
 		CapsuleCollider() : capsule(collider.SetBroadShape(lwp::Collider::Capsule())) {
 		}
 	};
+	// コライダーと形状をまとめた構造体
+	// 形状はカプセル
+	struct SphereCollider {
+		LWP::Object::Collider::Collider collider;	// 当たり判定
+		LWP::Object::Collider::Sphere& sphere;	// 形状
+
+		/// <summary>
+		/// コンストラクタ
+		/// <para>参照変数のために用意</para>
+		/// </summary>
+		SphereCollider() : sphere(collider.SetBroadShape(lwp::Collider::Sphere())) {
+		}
+	};
 
 private: //*** メンバ変数 ***//
 
@@ -110,11 +123,7 @@ private: //*** メンバ変数 ***//
 	// 武器
 	std::unique_ptr<Weapon> weapon_;
 
-	// 当たり判定は外部でまとめたい
-	// プレイヤーの当たり判定
-	CapsuleCollider playerCollider_;
-	// 攻撃の当たり判定
-	CapsuleCollider attackCollider_;
+
 
 private: //*** メンバ関数 ***//
 
@@ -136,12 +145,23 @@ private: //*** メンバ関数 ***//
 
 private: //*** 各状態の関数群 ***//
 
+#pragma region
 	// 当たり判定の初期化
+
+	// 当たり判定は外部でまとめたい
+	// プレイヤーの当たり判定
+	CapsuleCollider playerCollider_;
+	// 攻撃の当たり判定
+	CapsuleCollider attackCollider_;
+	// 経験値をひきつける当たり判定
+	SphereCollider EXPCollider_;
 
 	// プレイヤー自体の当たり判定
 	void InitColliderPlayer();
 	// 攻撃の当たり判定
 	void InitColliderAttack();
+	// 経験値用の当たり判定
+	void InitColliderEXP();
 
 	// プレイヤーの当たり判定関数
 	void EnterPlayer(LWP::Object::Collider::Collider* hitTarget);
@@ -153,6 +173,8 @@ private: //*** 各状態の関数群 ***//
 	void StayAttack(LWP::Object::Collider::Collider* hitTarget);
 	void ExitAttack(LWP::Object::Collider::Collider* hitTarget);
 
+	void EnterEXP(LWP::Object::Collider::Collider* hitTarget);
+#pragma endregion 当たり判定
 
 	// 状態の初期化
 

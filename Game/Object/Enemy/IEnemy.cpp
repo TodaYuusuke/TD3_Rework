@@ -15,8 +15,6 @@ void IEnemy::ImGui()
 
 void IEnemy::CommonUpdate()
 {
-
-
 	Update();
 }
 
@@ -81,11 +79,16 @@ lwp::Vector3 IEnemy::GetDirectVel(){
 	return (player_->GetWorldPosition() - models_[0].worldTF.translation).Normalize();
 }
 
+void IEnemy::DecreaseHP()
+{
+	hp_ -= 10;
+}
+
 void IEnemy::InitCollider()
 {
 	collider.SetBroadShape(lwp::Collider::AABB());
 	collider.SetFollowTarget(&models_[0].worldTF);
-	collider.mask.SetBelongFrag(ColMask0);
+	//collider.mask.SetHitFrag(MaskLayer::Enemy | MaskLayer::EXPMask);
 	collider.name = "Enemy";
 	// ヒットしたときの処理を設定
 	collider.enterLambda = [this](lwp::Collider::Collider* hitTarget) { EnterEnemy(hitTarget); };
@@ -94,6 +97,6 @@ void IEnemy::InitCollider()
 void IEnemy::EnterEnemy(LWP::Object::Collider::Collider* hitTarget)
 {
 	if (hitTarget->name == "Player") {
-		
+		DecreaseHP();
 	}
 }

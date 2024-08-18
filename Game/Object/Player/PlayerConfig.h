@@ -23,6 +23,7 @@ struct ProgressTime {
 struct LengthRadius {
 	float playerRadius;	// プレイヤーの判定
 	float attackRadius;	// 攻撃の範囲
+	float EXPpullRadius;// 経験値吸収
 };
 
 // 補正や割合を格納

@@ -5,6 +5,7 @@ void EXP::Init(lwp::Vector3 position){
 
 	// モデル読み込み
 	model_.LoadShortPath("Exp/Exp.obj");
+	model_.materials[1].color = 0x7CFC00FF;
 	// 場所を設定
 	model_.worldTF.scale = lwp::Vector3(kSize_, kSize_, kSize_);
 }

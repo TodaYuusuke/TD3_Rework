@@ -101,7 +101,7 @@ protected://変数
 	bool isAttack_ = false;
 
 private:
-
+	void DecreaseHP();
 
 protected:
 #pragma region
