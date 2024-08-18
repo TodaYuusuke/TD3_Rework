@@ -1,12 +1,6 @@
 #include "EnemyManager.h"
 #include "Object/Player/Player.h"
 
-void EnemyManager::Init(){
-	NormalEnemy* enemy = new NormalEnemy();
-	enemy->Init();
-	enemy->SetTarget(player_);
-	enemy->SetEXPManager(expManager_);
-	enemys_.push_back(enemy);
 void EnemyManager::Init(FollowCamera* followCamera){
 	gameTimer_ = GameTimer::GetInstance();
 	// 追従カメラのアドレスを設定
@@ -17,11 +11,12 @@ void EnemyManager::Init(FollowCamera* followCamera){
 	//dashBoss->SetTarget(player_);
 	//enemys_.push_back(dashBoss);
 	
-	ArrowBoss* arrowBoss = new ArrowBoss();
-	arrowBoss->Init();
-	arrowBoss->SetFollowCamera(followCamera_);
-	arrowBoss->SetTarget(player_);
-	enemys_.push_back(arrowBoss);
+	//ArrowBoss* arrowBoss = new ArrowBoss();
+	//arrowBoss->Init();
+	//arrowBoss->SetFollowCamera(followCamera_);
+	//arrowBoss->SetTarget(player_);
+	//enemys_.push_back(arrowBoss);
+	NormalEnemySpawn({0.0f,0.0f,10.0f});
 }
 
 void EnemyManager::Update(){
@@ -73,17 +68,17 @@ void EnemyManager::EnemySpawn()
 
 	if (number <= 0.5f)
 	{
-		NormalEnemySpawn(pos);
+		//NormalEnemySpawn(pos);
 		//ArrowEnemySpawn(pos);
 	}
 	else if (number <= 0.8f)
 	{
-		NormalEnemySpawn(pos);
+		//NormalEnemySpawn(pos);
 		//ArrowEnemySpawn(pos);
 	}
 	else
 	{
-		NormalEnemySpawn(pos);
+		//NormalEnemySpawn(pos);
 		//ShieldEnemySpawn(pos);
 	}
 }

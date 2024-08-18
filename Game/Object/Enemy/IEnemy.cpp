@@ -17,7 +17,6 @@ void IEnemy::CommonUpdate()
 {
 
 
-
 	Update();
 }
 
@@ -62,10 +61,9 @@ void IEnemy::DyingAnimation()
 
 void IEnemy::Dead()
 {
-	//IsDead_ = true;
-	//collider_.isActive = false;
-	//// 経験値を生成
-	//manager_->Create(models_[0].transform.translation);
+	isDead_ = true;
+	collider.isActive = false;
+	// 経験値を生成
 	expManager_->AddEXP(models_[0].worldTF.translation);
 }
 
