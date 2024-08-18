@@ -17,10 +17,6 @@ void NormalEnemy::Init()
 
 void NormalEnemy::Update()
 {
-	if (hp_ == 0) {
-		Dying();
-		return;
-	}
 
 	if (CheckAttackRange())
 	{
@@ -42,8 +38,9 @@ void NormalEnemy::Update()
 
 void NormalEnemy::Attack()
 {
+	isAttack_ = false;
 	//後ろに移動
-	atackWork = AtackWork::Stert;
+	/*atackWork = AtackWork::Stert;
 	if (atackWork == AtackWork::Stert) {
 		atackWork = AtackWork::Interval;
 	}
@@ -52,7 +49,7 @@ void NormalEnemy::Attack()
 	}
 	else if (atackWork == AtackWork::End) {
 		isAttack_ = false;
-	}
+	}*/
 	//貯める
 
 	//突進

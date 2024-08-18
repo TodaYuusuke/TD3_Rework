@@ -5,6 +5,7 @@ void IEnemy::ImGui()
 {
 	ImGui::Begin("Enemy");
 	ImGui::DragFloat3("translate",&models_[0].worldTF.translation.x);
+	ImGui::InputInt("HP",&hp_);
 
 	if (ImGui::Button("HP")) {
 		hp_ = 0;
@@ -15,6 +16,10 @@ void IEnemy::ImGui()
 
 void IEnemy::CommonUpdate()
 {
+	if (hp_ <= 0) {
+		Dying();
+		return;
+	}
 	Update();
 }
 
@@ -62,7 +67,7 @@ void IEnemy::Dead()
 	isDead_ = true;
 	collider.isActive = false;
 	// 経験値を生成
-	expManager_->AddEXP(models_[0].worldTF.translation);
+	expManager_->AddEXP(models_[0].worldTF.translation, player_);
 }
 
 bool IEnemy::CheckAttackRange()
@@ -96,7 +101,7 @@ void IEnemy::InitCollider()
 
 void IEnemy::EnterEnemy(LWP::Object::Collider::Collider* hitTarget)
 {
-	if (hitTarget->name == "Player") {
+	if (hitTarget->name == "PlayerAttack") {
 		DecreaseHP();
 	}
 }

@@ -27,7 +27,9 @@ public: // ** メンバ関数 ** //
 	/// ワールド座標を取得
 	/// </summary>
 	/// <returns></returns>
-	LWP::Math::Vector3 GetWorldPosition() { return model_.worldTF.GetWorldPosition(); }
+	LWP::Math::Vector3 GetWorldPosition() { 
+		return model_.worldTF.GetWorldPosition();
+	}
 
 	PlayerParameter& GetPlayerParameter() {
 		return parameter_;

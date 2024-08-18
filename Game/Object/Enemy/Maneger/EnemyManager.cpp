@@ -34,9 +34,8 @@ void EnemyManager::Update(){
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
-		enemy->Update();
-		enemy->ImGui();
 		enemy->CommonUpdate();
+		enemy->ImGui();
 	}
 
 	currentFrame_++;

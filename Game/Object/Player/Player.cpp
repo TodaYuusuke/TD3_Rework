@@ -126,32 +126,35 @@ void Player::CheckInputMove() {
 	direct += LWP::Input::Controller::GetLStick();
 	direct = direct.Normalize();
 
-	// ここで三次元空間に変換
-	destinate_.x = direct.x;
-	destinate_.z = direct.y;
-
-	//回転行列を作る
-	lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(followCamera_->pCamera_->transform.rotation);
-	//移動ベクトルをカメラの角度だけ回転
-	destinate_ = TransformNormal(destinate_, rotateMatrix);
-	destinate_.y = 0;
-#pragma region
-	//移動ベクトルをカメラの角度だけ回転
-	//ロックオン座標
-	lookPoint = destinate_;
-
-	//プレイヤーの現在の向き
-	lookPoint = lookPoint.Normalize();
-
-	Vector3 cross = Vector3::Cross({ 0.0f,0.0f,1.0f }, lookPoint).Normalize();
-	float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, lookPoint);
-
-	//行きたい方向のQuaternionの作成
-	model_.worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
-#pragma endregion プレイヤーの移動方向を向く
-
 	// そもそも移動入力が無かったらフラグを立てない
 	parameter_.flags_.isInputMove = !(direct.x == 0 && direct.y == 0);
+
+	if (parameter_.flags_.isInputMove) {
+		// ここで三次元空間に変換
+		destinate_.x = direct.x;
+		destinate_.z = direct.y;
+
+		//回転行列を作る
+		lwp::Matrix4x4 rotateMatrix = lwp::Matrix4x4::CreateRotateXYZMatrix(followCamera_->pCamera_->transform.rotation);
+		//移動ベクトルをカメラの角度だけ回転
+		destinate_ = TransformNormal(destinate_, rotateMatrix);
+		destinate_.y = 0;
+#pragma region
+		//移動ベクトルをカメラの角度だけ回転
+		//ロックオン座標
+		lookPoint = destinate_;
+
+		//プレイヤーの現在の向き
+		lookPoint = lookPoint.Normalize();
+
+		Vector3 cross = Vector3::Cross({ 0.0f,0.0f,1.0f }, lookPoint).Normalize();
+		float dot = Vector3::Dot({ 0.0f,0.0f,1.0f }, lookPoint);
+
+		//行きたい方向のQuaternionの作成
+		model_.worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
+#pragma endregion プレイヤーの移動方向を向く
+	}
+
 }
 
 void Player::CheckInputAttack() {
@@ -196,7 +199,7 @@ void Player::InitColliders() {
 void Player::InitColliderPlayer() {
 	playerCollider_.collider.name = "Player";
 	playerCollider_.capsule.radius = parameter_.status.lengthRadius.playerRadius;
-	//playerCollider_.collider.mask.SetHitFrag(MaskLayer::Player | MaskLayer::PAttack);
+	playerCollider_.collider.mask.SetHitFrag(MaskLayer::PAttack);
 	// ヒットしたときの処理を設定
 	playerCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterPlayer(hitTarget); };
 	playerCollider_.collider.stayLambda = [this](Collider::Collider* hitTarget) { StayPlayer(hitTarget); };
@@ -217,10 +220,10 @@ void Player::InitColliderAttack() {
 void Player::InitColliderEXP()
 {
 	EXPCollider_.collider.name = "EXPPull";
+	EXPCollider_.sphere.radius = 
+		parameter_.status.lengthRadius.EXPpullRadius;
 	EXPCollider_.collider.isActive = true;
 	EXPCollider_.collider.SetFollowTarget(&model_.worldTF);
-	EXPCollider_.collider.mask.SetHitFrag(MaskLayer::Player | MaskLayer::PAttack | MaskLayer::Enemy);
-	EXPCollider_.sphere.radius = parameter_.status.lengthRadius.EXPpullRadius;
 	// ヒットしたときの処理を設定
 	EXPCollider_.collider.enterLambda = [this](Collider::Collider* hitTarget) { EnterEXP(hitTarget); };
 }
@@ -228,16 +231,16 @@ void Player::InitColliderEXP()
 #pragma region ヒット時処理
 
 void Player::EnterPlayer(LWP::Object::Collider::Collider* hitTarget) {
+	hitTarget;
+}
+
+void Player::StayPlayer(LWP::Object::Collider::Collider* hitTarget) {
 	if (hitTarget->name == "Enemy") {
 		parameter_.flags_.isDamage = true;
 	}
 	if (hitTarget->name == "EXP") {
 		parameter_.status.level.exp_++;
 	}
-}
-
-void Player::StayPlayer(LWP::Object::Collider::Collider* hitTarget) {
-	hitTarget;
 }
 
 void Player::ExitPlayer(LWP::Object::Collider::Collider* hitTarget) {
@@ -272,6 +275,7 @@ void Player::EnterEXP(LWP::Object::Collider::Collider* hitTarget)
 void Player::InitIdle() {
 	// 攻撃可能回数を元に戻す
 	parameter_.status.countGage.attackCount = parameter_.status.countGage.MaxAttackCount;
+	parameter_.flags_.isDamage = false;
 }
 
 void Player::InitMove() {
@@ -331,6 +335,9 @@ void Player::UpdateIdle() {
 	// 攻撃入力がされている時
 	if (parameter_.flags_.isInputAttack) {
 		reqBehavior_ = Behavior::Attack;
+	}
+	if (parameter_.flags_.isDamage) {
+		reqBehavior_ = Behavior::Damage;
 	}
 }
 

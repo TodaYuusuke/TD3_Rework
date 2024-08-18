@@ -7,8 +7,8 @@ class EXPManager
 public:
 	void Init();
 	void Update();
-	void AddEXP(lwp::Vector3 position);
+	void AddEXP(lwp::Vector3 position, Player* player);
 
 private:
-	std::vector<EXP*>exp_;
+	std::list<EXP*>exp_;
 };

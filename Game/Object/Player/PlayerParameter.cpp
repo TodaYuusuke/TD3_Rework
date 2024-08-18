@@ -69,6 +69,7 @@ void PlayerParameter::InitProgressTime() {
 void PlayerParameter::InitLengthRadius() {
 	status.lengthRadius.playerRadius = config.lengthRadius.playerRadius;
 	status.lengthRadius.attackRadius = config.lengthRadius.attackRadius;
+	status.lengthRadius.EXPpullRadius = config.lengthRadius.EXPpullRadius;
 }
 
 void PlayerParameter::InitCollectionRatio() {
