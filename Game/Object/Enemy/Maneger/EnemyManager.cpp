@@ -1,6 +1,12 @@
 #include "EnemyManager.h"
 #include "Object/Player/Player.h"
 
+void EnemyManager::Init(){
+	NormalEnemy* enemy = new NormalEnemy();
+	enemy->Init();
+	enemy->SetTarget(player_);
+	enemy->SetEXPManager(expManager_);
+	enemys_.push_back(enemy);
 void EnemyManager::Init(FollowCamera* followCamera){
 	gameTimer_ = GameTimer::GetInstance();
 	// 追従カメラのアドレスを設定
@@ -34,6 +40,8 @@ void EnemyManager::Update(){
 	for (IEnemy* enemy : enemys_)
 	{
 		enemy->Update();
+		enemy->ImGui();
+		enemy->CommonUpdate();
 	}
 
 	currentFrame_++;
@@ -122,7 +130,7 @@ void EnemyManager::NormalEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 //TODO: 生成する敵を指定のものに変更
@@ -132,7 +140,7 @@ void EnemyManager::ArrowEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 
@@ -142,7 +150,7 @@ void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
-
+	enemy->SetEXPManager(expManager_);
 	enemys_.push_back(enemy);
 }
 

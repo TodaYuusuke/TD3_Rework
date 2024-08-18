@@ -11,7 +11,10 @@ class Player;
 class EnemyManager
 {
 public:
-	EnemyManager(Player* player) { player_ = player; };
+	EnemyManager(Player* player,EXPManager* expManager) {
+		player_ = player;
+		expManager_ = expManager;
+	};
 	~EnemyManager() {
 		for (IEnemy* enemy : enemys_)
 		{
@@ -57,4 +60,5 @@ private:// 変数
 
 	// 現在のフレーム
 	int currentFrame_ = 0;
+	EXPManager* expManager_;
 };

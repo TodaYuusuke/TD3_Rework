@@ -33,6 +33,7 @@ private: //*** 変数群 ***//
 	FollowCamera followCamera_;
 
 	UpgradeManager upgradeManager_;
+	EXPManager expManager_;
 	// 太陽
 	LWP::Object::PointLight sun_;
 

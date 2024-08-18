@@ -1,6 +1,6 @@
 #pragma once
 #include <Adapter.h>
-
+#include "Game/Object/EXP/Manager/EXPManager.h"
 class Player;
 
 class IEnemy
@@ -18,6 +18,9 @@ public:
 
 	virtual void Init() = 0;
 	virtual void Update() = 0;
+	void CommonUpdate();
+
+	void ImGui();
 
 	//移動する
 	void Move();
@@ -34,7 +37,7 @@ public:
 	};
 	// 狙う対象をセット(今回は自機をセットする)
 	void SetTarget(Player* player) { player_ = player; }
-
+	void SetEXPManager(EXPManager* expManager) { expManager_ = expManager; }
 #pragma region
 	//倒された後の処理をまとめた関数
 	void Dying();
@@ -77,7 +80,7 @@ protected://変数
 	// プレイヤーのポインタ
 	Player* player_;
 
-
+	EXPManager* expManager_;
 	//移動の速さ
 	//いじると移動速度に掛ける倍率が変わります
 	float moveSpeed_ = 1.0f;

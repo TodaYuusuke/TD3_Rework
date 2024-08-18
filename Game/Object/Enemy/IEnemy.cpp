@@ -1,6 +1,26 @@
 #include "IEnemy.h"
 #include "Object/Player/Player.h"
 
+void IEnemy::ImGui()
+{
+	ImGui::Begin("Enemy");
+	ImGui::DragFloat3("translate",&models_[0].worldTF.translation.x);
+
+	if (ImGui::Button("HP")) {
+		hp_ = 0;
+	}
+	ImGui::End();
+
+}
+
+void IEnemy::CommonUpdate()
+{
+
+
+
+	Update();
+}
+
 void IEnemy::Move()
 {
 	lwp::Vector3 moveVec = GetDirectVel();
@@ -46,6 +66,7 @@ void IEnemy::Dead()
 	//collider_.isActive = false;
 	//// 経験値を生成
 	//manager_->Create(models_[0].transform.translation);
+	expManager_->AddEXP(models_[0].worldTF.translation);
 }
 
 bool IEnemy::CheckAttackRange()
