@@ -73,9 +73,11 @@ void Player::Update() {
 	// 無敵時間中の時
 	if (0.0f < times_.invincibleTime) {
 		times_.invincibleTime -= Info::GetDeltaTimeF();
+		model_.isActive = !model_.isActive;
 		// 無敵時間が切れた時
 		if (times_.invincibleTime <= 0.0f) {
 			// 判定を取るようにする
+			model_.isActive = true;
 			playerCollider_.collider.isActive = true;
 		}
 	}
@@ -96,6 +98,7 @@ bool Player::GameOverAnime()
 void Player::DecreaseHP() {
 	// 体力を減らす
 	parameter_.status.countGage.hpCount--;
+
 	// 体力が 0 以下になった時
 	if (parameter_.status.countGage.hpCount <= 0) {
 		// 死ぬ
@@ -211,7 +214,9 @@ void Player::InitColliderAttack() {
 #pragma region ヒット時処理
 
 void Player::EnterPlayer(LWP::Object::Collider::Collider* hitTarget) {
-	hitTarget;
+	if (hitTarget->name == "Enemy") {
+		parameter_.flags_.isDamage = true;
+	}
 }
 
 void Player::StayPlayer(LWP::Object::Collider::Collider* hitTarget) {
@@ -321,6 +326,9 @@ void Player::UpdateMove() {
 	if (parameter_.flags_.isInputAttack) {
 		reqBehavior_ = Behavior::Attack;
 	}
+	if (parameter_.flags_.isDamage) {
+		reqBehavior_ = Behavior::Damage;
+	}
 }
 
 void Player::UpdateAttack() {
@@ -379,6 +387,7 @@ void Player::UpdateDamage() {
 	// 一定時間経過した時
 	if (parameter_.status.progressTime.damageTime <= times_.behaviorTime) {
 		reqBehavior_ = Behavior::Idle;
+		parameter_.flags_.isDamage = false;
 	}
 }
 

@@ -11,6 +11,8 @@ void NormalEnemy::Init()
 
 	// HP を設定
 	hp_ = 40;
+
+	InitCollider();
 }
 
 void NormalEnemy::Update()

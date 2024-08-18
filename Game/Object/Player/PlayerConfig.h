@@ -69,6 +69,7 @@ struct Upgrade {
 struct Flags {
 	bool isInputMove = false;	// 移動入力されたか
 	bool isInputAttack = false;	// 攻撃入力されたか
+	bool isDamage = false;      // 攻撃を受けたか
 	bool isDead = false;		// 死んでいるか
 };
 #pragma endregion パラメーター構造体

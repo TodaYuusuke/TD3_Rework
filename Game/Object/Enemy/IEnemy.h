@@ -77,6 +77,7 @@ protected://変数
 	// プレイヤーのポインタ
 	Player* player_;
 
+
 	//移動の速さ
 	//いじると移動速度に掛ける倍率が変わります
 	float moveSpeed_ = 1.0f;
@@ -96,6 +97,19 @@ protected://変数
 	//trueなら攻撃可能
 	bool isAttack_ = false;
 
+private:
+
+
+protected:
+#pragma region
+	void InitCollider();
+
+	//当たり判定
+	LWP::Object::Collider::Collider collider;
+	// 敵の当たり判定関数
+	void EnterEnemy(LWP::Object::Collider::Collider* hitTarget);
+
+#pragma endregion 当たり判定
 protected://パーティクル
 	//// ダメージを受けたとき
 	//static std::function<void(int, lwp::Vector3)> damageEffect_;

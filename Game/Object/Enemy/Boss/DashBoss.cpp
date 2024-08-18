@@ -38,6 +38,8 @@ void DashBoss::Init()
 	accumulateParticle_.model.materials[1].enableLighting = false;
 
 	deadParticle_.model.LoadCube();
+
+	InitCollider();
 }
 
 void DashBoss::Update()

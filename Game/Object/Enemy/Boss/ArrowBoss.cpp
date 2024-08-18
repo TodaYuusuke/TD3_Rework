@@ -27,6 +27,8 @@ void ArrowBoss::Init()
 	shotCount_ = 0;
 
 	hp_ = 200;
+
+	InitCollider();
 }
 
 void ArrowBoss::Update()

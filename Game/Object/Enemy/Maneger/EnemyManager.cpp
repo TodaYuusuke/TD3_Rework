@@ -6,10 +6,10 @@ void EnemyManager::Init(FollowCamera* followCamera){
 	// 追従カメラのアドレスを設定
 	followCamera_ = followCamera;
 	// 突進するボス
-	DashBoss* dashBoss = new DashBoss();
-	dashBoss->Init();
-	dashBoss->SetTarget(player_);
-	enemys_.push_back(dashBoss);
+	//DashBoss* dashBoss = new DashBoss();
+	//dashBoss->Init();
+	//dashBoss->SetTarget(player_);
+	//enemys_.push_back(dashBoss);
 	
 	ArrowBoss* arrowBoss = new ArrowBoss();
 	arrowBoss->Init();
