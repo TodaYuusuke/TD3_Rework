@@ -45,7 +45,7 @@ struct CountGage {
 struct Level {
 	int level_ = 1;
 	int exp_;//貯まっている経験値
-	int levelUp
+	int levelUp;
 };
 class ISkill;
 
