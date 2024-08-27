@@ -5,7 +5,7 @@ void EnemyManager::Init(FollowCamera* followCamera) {
 	// 追従カメラのアドレスを設定
 	followCamera_ = followCamera;
 
-	NormalEnemySpawn(lwp::Vector3{ 0,0,10 });
+	//NormalEnemySpawn(lwp::Vector3{ 0,0,10 });
 
 	// 突進するボス
 	//DashBoss* dashBoss = new DashBoss();
@@ -87,17 +87,17 @@ void EnemyManager::EnemySpawn()
 
 	if (number <= 0.5f)
 	{
-		NormalEnemySpawn(pos);
+		ShieldEnemySpawn(pos);
 		//ArrowEnemySpawn(pos);
 	}
 	else if (number <= 0.8f)
 	{
-		NormalEnemySpawn(pos);
+		ShieldEnemySpawn(pos);
 		//ArrowEnemySpawn(pos);
 	}
 	else
 	{
-		NormalEnemySpawn(pos);
+		ShieldEnemySpawn(pos);
 		//ShieldEnemySpawn(pos);
 	}
 }
@@ -164,7 +164,7 @@ void EnemyManager::ArrowEnemySpawn(lwp::Vector3 pos)
 
 void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 {
-	NormalEnemy* enemy = new NormalEnemy();
+	ShieldEnemy* enemy = new ShieldEnemy();
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);

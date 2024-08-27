@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../Normal/NormalEnemy.h"
+#include "../Shield/ShieldEnemy.h"
 #include "../Boss/DashBoss.h"
 #include "../Boss/ArrowBoss.h"
 #include "../../Particle/DeadParticle.h"

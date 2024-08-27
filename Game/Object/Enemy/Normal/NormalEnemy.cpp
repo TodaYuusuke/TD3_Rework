@@ -30,8 +30,7 @@ void NormalEnemy::Update() {
 		Move();
 	}
 
-	if (attackWaitTime_ >= 0)
-	{
+	if (attackWaitTime_ >= 0) {
 		attackWaitTime_--;
 	}
 }

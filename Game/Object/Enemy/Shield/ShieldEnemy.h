@@ -11,5 +11,13 @@ public:
 	void DyingAnimation()override;
 
 private:
-	AtackWork atackWork;
+	MotionWork attackWork_ = {
+		.speed = 0.05f,
+	};
+	MotionWork attackStanbyWork_ = {
+		.speed = 0.05f,
+	};
+	MotionWork attackEndWork_ = {
+		.speed = 0.1f,
+	};
 };
