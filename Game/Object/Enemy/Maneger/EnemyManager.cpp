@@ -87,18 +87,18 @@ void EnemyManager::EnemySpawn()
 
 	if (number <= 0.5f)
 	{
-		ShieldEnemySpawn(pos);
-		//ArrowEnemySpawn(pos);
+		//ShieldEnemySpawn(pos);
+		ArrowEnemySpawn(pos);
 	}
 	else if (number <= 0.8f)
 	{
-		ShieldEnemySpawn(pos);
-		//ArrowEnemySpawn(pos);
+		//ShieldEnemySpawn(pos);
+		ArrowEnemySpawn(pos);
 	}
 	else
 	{
-		ShieldEnemySpawn(pos);
 		//ShieldEnemySpawn(pos);
+		ShieldEnemySpawn(pos);
 	}
 }
 
@@ -152,7 +152,7 @@ void EnemyManager::NormalEnemySpawn(lwp::Vector3 pos)
 //TODO: 生成する敵を指定のものに変更
 void EnemyManager::ArrowEnemySpawn(lwp::Vector3 pos)
 {
-	NormalEnemy* enemy = new NormalEnemy();
+	ArrowEnemy* enemy = new ArrowEnemy();
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
