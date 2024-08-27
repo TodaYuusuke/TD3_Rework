@@ -22,14 +22,28 @@ void IEnemy::LockPlayer()
 	models_[0].worldTF.rotation = lwp::Quaternion::CreateFromAxisAngle(cross, std::acos(dot));
 }
 
+void IEnemy::CreateSpawnDirection(lwp::Vector3 pos) {
+	// 光の柱
+	lightPillarMotion_.Add(&lightPillar_.worldTF.scale, LWP::Math::Vector3{ 1.5f,1.5f,1.5f }, 0, 0.1f)
+		.Add(&lightPillar_.worldTF.scale, LWP::Math::Vector3{ -2.5f,-1.5f,-2.5f }, 0.1f, 0.1f);
+
+	// 出現時の光の柱
+	lightPillar_.material.texture = LWP::Resource::LoadTexture("Title.png");
+	lightPillar_.name = "LightPillar";
+	lightPillar_.worldTF.scale = { 1,100,1 };
+	lightPillar_.worldTF.translation = pos;
+
+	lightPillarMotion_.Start();
+}
+
 void IEnemy::Dying()
 {
 	DyingAnimation();
-	deadFlame_--;
-	if (deadFlame_ <= kDeadFlame_) {
-		IsDead_ = true;
+	deadFrame_--;
+	if (deadFrame_ <= kDeadFrame_) {
+		isDead_ = true;
 	}
-	if (IsDead_) {
+	if (isDead_) {
 		Dead();
 	}
 }

@@ -1,44 +1,44 @@
 #include "EnemyManager.h"
 #include "Object/Player/Player.h"
 
-void EnemyManager::Init(FollowCamera* followCamera){
+void EnemyManager::Init(FollowCamera* followCamera) {
 	// 追従カメラのアドレスを設定
 	followCamera_ = followCamera;
 
-	//NormalEnemy* enemy = new NormalEnemy();
-	//enemy->Init();
-	//enemy->SetTarget(player_);
-	//enemys_.push_back(enemy);
-	//
+	NormalEnemySpawn(lwp::Vector3{ 0,0,10 });
+
 	// 突進するボス
-	DashBoss* dashBoss = new DashBoss();
-	dashBoss->Init();
-	dashBoss->SetTarget(player_);
-	enemys_.push_back(dashBoss);
-	
-	ArrowBoss* arrowBoss = new ArrowBoss();
+	//DashBoss* dashBoss = new DashBoss();
+	//dashBoss->Init();
+	//dashBoss->SetTarget(player_);
+	//dashBoss->CreateSpawnDirection(dashBoss->GetWorldPosition());
+	//enemys_.push_back(dashBoss);
+
+	/*ArrowBoss* arrowBoss = new ArrowBoss();
 	arrowBoss->Init();
 	arrowBoss->SetFollowCamera(followCamera_);
 	arrowBoss->SetTarget(player_);
-	enemys_.push_back(arrowBoss);
+	arrowBoss->CreateSpawnDirection(arrowBoss->GetWorldPosition());
+	enemys_.push_back(arrowBoss);*/
 }
 
-void EnemyManager::Update(){
+void EnemyManager::Update() {
 
 	//敵キャラのIsDeadがtrueなら削除
-	enemys_.remove_if([this](IEnemy* enemy){
-		if (enemy->GetIsDead())	{
+	enemys_.remove_if([this](IEnemy* enemy) {
+		if (enemy->GetIsDead()) {
 			// 死亡パーティクル発生
 			CreateDeadParticle(enemy->GetWorldPosition());
 			delete enemy;
 			return true;
 		}
 		return false;
-	});
+		});
 	//enemyの更新処理
 	for (IEnemy* enemy : enemys_)
 	{
 		enemy->Update();
+		enemy->ClearSpawnDirection();
 	}
 
 	currentFrame_++;
@@ -55,6 +55,23 @@ void EnemyManager::Update(){
 		}
 		currentFrame_ = 0;
 	}
+
+#pragma region particleの解放処理
+	deadParticles_.remove_if([this](DeadParticle* particle) {
+		if (!particle->isActive) {
+			delete particle;
+			return true;
+		}
+		return false;
+		});
+	spawnParticles_.remove_if([this](SpawnParticle* particle) {
+		if (!particle->isActive) {
+			delete particle;
+			return true;
+		}
+		return false;
+		});
+#pragma endregion
 }
 
 void EnemyManager::EnemySpawn()
@@ -127,6 +144,8 @@ void EnemyManager::NormalEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
+	enemy->CreateSpawnDirection(pos);
+	CreateSpawnParticle(pos);
 
 	enemys_.push_back(enemy);
 }
@@ -137,6 +156,8 @@ void EnemyManager::ArrowEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
+	enemy->CreateSpawnDirection(pos);
+	CreateSpawnParticle(pos);
 
 	enemys_.push_back(enemy);
 }
@@ -147,8 +168,31 @@ void EnemyManager::ShieldEnemySpawn(lwp::Vector3 pos)
 	enemy->Init();
 	enemy->SetPosition(pos);
 	enemy->SetTarget(player_);
+	enemy->CreateSpawnDirection(pos);
+	CreateSpawnParticle(pos);
 
 	enemys_.push_back(enemy);
+}
+
+void EnemyManager::DashBossSpawn(lwp::Vector3 pos) {
+	DashBoss* dashBoss = new DashBoss();
+	dashBoss->Init();
+	dashBoss->SetTarget(player_);
+	dashBoss->CreateSpawnDirection(dashBoss->GetWorldPosition());
+	CreateSpawnParticle(pos);
+
+	enemys_.push_back(dashBoss);
+}
+
+void EnemyManager::ArrowBossSpawn(lwp::Vector3 pos) {
+	ArrowBoss* arrowBoss = new ArrowBoss();
+	arrowBoss->Init();
+	arrowBoss->SetFollowCamera(followCamera_);
+	arrowBoss->SetTarget(player_);
+	arrowBoss->CreateSpawnDirection(arrowBoss->GetWorldPosition());
+	CreateSpawnParticle(pos);
+
+	enemys_.push_back(arrowBoss);
 }
 
 void EnemyManager::CreateDeadParticle(lwp::Vector3 pos) {
@@ -157,4 +201,12 @@ void EnemyManager::CreateDeadParticle(lwp::Vector3 pos) {
 	deadParticle->model.worldTF.translation = pos;
 	deadParticle->Add(64);
 	deadParticles_.push_back(deadParticle);
+}
+
+void EnemyManager::CreateSpawnParticle(lwp::Vector3 pos) {
+	SpawnParticle* spawnParticle = new SpawnParticle();
+	spawnParticle->model.LoadCube();
+	spawnParticle->model.worldTF.translation = pos;
+	spawnParticle->Add(32);
+	spawnParticles_.push_back(spawnParticle);
 }

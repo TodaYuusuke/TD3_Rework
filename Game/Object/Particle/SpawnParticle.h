@@ -16,7 +16,7 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 		newData.m.worldTF.translation = model.worldTF.GetWorldPosition();
 		newData.m.worldTF.rotation = model.worldTF.rotation;
 		// 大きさをランダムにする
-		int scale = LWP::Utility::GenerateRandamNum<int>(25, 50);
+		int scale = LWP::Utility::GenerateRandamNum<int>(15, 30);
 		newData.m.worldTF.scale = { scale / 130.0f, scale / 130.0f, scale / 130.0f };
 
 		// 速度ベクトルを生成
@@ -65,7 +65,10 @@ private: // ** 純粋仮想関数のオーバーライド ** //
 			data.velocity = { 0.0f,0.0f,0.0f };
 			data.m.worldTF.scale *= 0.9f;
 			// もし完全に小さくなったなら終了
-			if (data.m.worldTF.scale.x <= 0.001f) { return true; }
+			if (data.m.worldTF.scale.x <= 0.001f) { 
+				isActive = false;
+				return true; 
+			}
 		}
 
 		return false;

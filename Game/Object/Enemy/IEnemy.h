@@ -3,6 +3,20 @@
 
 class Player;
 
+enum AtackWork {
+	Start,
+	Interval,
+	End
+};
+struct MotionWork
+{
+	lwp::Vector3 targetpoint;//目標地点
+	lwp::Quaternion targetRot; // 目標回転値
+	float t;//媒介変数
+	float speed;//媒介変数の増えるスピード
+	bool flag = false;//再生のフラグ
+};
+
 class IEnemy
 {
 public:
@@ -10,10 +24,10 @@ public:
 	/// <param name="attackWaitTime">攻撃ができるようになるまでの時間</param>
 	/// <param name="attackRange">攻撃範囲の広さ</param>
 	/// <param name="deadFlame">死亡演出の長さ</param>
-	IEnemy(float attackWaitTime, float attackRange, float deadFlame)
+	IEnemy(float attackWaitTime, float attackRange, float deadFrame)
 		: kAttackWaitTime_(attackWaitTime),
 		kAttackRange_(attackRange),
-		kDeadFlame_(deadFlame) {};
+		kDeadFrame_(deadFrame) {};
 	virtual ~IEnemy() {};
 
 	virtual void Init() = 0;
@@ -35,6 +49,13 @@ public:
 	// 狙う対象をセット(今回は自機をセットする)
 	void SetTarget(Player* player) { player_ = player; }
 
+	void CreateSpawnDirection(lwp::Vector3 pos);
+	void ClearSpawnDirection() {
+		if (lightPillarMotion_.isEnd()) {
+			lightPillar_.isActive = false;
+		}
+	}
+
 #pragma region
 	//倒された後の処理をまとめた関数
 	void Dying();
@@ -44,7 +65,7 @@ public:
 	void Dead();
 	//
 	bool GetIsDead() {
-		return IsDead_;
+		return isDead_;
 	}
 #pragma endregion 死亡処理関連
 
@@ -63,7 +84,7 @@ public:
 	//攻撃範囲の広さ
 	const float kAttackRange_;
 	//死亡演出の長さ
-	const float kDeadFlame_;
+	const float kDeadFrame_;
 #pragma endregion 定数
 
 protected://関数
@@ -71,11 +92,24 @@ protected://関数
 
 	lwp::Vector3 GetDirectVel();
 
+	lwp::Quaternion LerpQuat(const lwp::Quaternion& start, const lwp::Quaternion& end, float t) {
+		lwp::Quaternion result = {
+			(1.0f - t) * start.x + t * end.x,
+			(1.0f - t) * start.y + t * end.y,
+			(1.0f - t) * start.z + t * end.z,
+			(1.0f - t) * start.w + t * end.w
+		};
+		return result;
+	}
+
 protected://変数
 	//モデルインスタンス
 	std::vector<LWP::Resource::RigidModel> models_;
 	// プレイヤーのポインタ
 	Player* player_;
+
+	LWP::Primitive::Billboard2D lightPillar_;
+	LWP::Resource::Motion lightPillarMotion_;
 
 	//移動の速さ
 	//いじると移動速度に掛ける倍率が変わります
@@ -86,13 +120,13 @@ protected://変数
 	float attackWaitTime_;
 
 	//hpが0になってからの経過フレーム
-	int deadFlame_ = 0;
+	int deadFrame_ = 0;
 	//生きているかどうか
 	//HPが0になったタイミングでtrueになる
-	bool IsDying_ = false;
+	bool isDying_ = false;
 	//HPが0になった後、deadFlame_の値がkDeadFlame()より小さくなったらtrue
-	bool IsDead_ = false;
+	bool isDead_ = false;
 	//攻撃できるかどうか
 	//trueなら攻撃可能
-	bool IsAttack_ = false;
+	bool isAttack_ = false;
 };

@@ -43,6 +43,9 @@
     <ClCompile Include="Game\Object\Enemy\Boss\ArrowBoss.cpp" />
     <ClCompile Include="Game\Object\Enemy\Arrow\Arrow.cpp" />
     <ClCompile Include="Game\Object\Enemy\Arrow\HomingArrow.cpp" />
+    <ClCompile Include="Game\Object\FollowCamera\FollowCamera.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Arrow\ArrowEnemy.cpp" />
+    <ClCompile Include="Game\Object\Enemy\Shield\ShieldEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Scenes\Title\TitleScene.h">
@@ -68,5 +71,8 @@
     <ClInclude Include="Game\Object\Enemy\Arrow\Arrow.h" />
     <ClInclude Include="Game\Object\Enemy\Arrow\HomingArrow.h" />
     <ClInclude Include="Game\Object\Particle\SummonParticle.h" />
+    <ClInclude Include="Game\Object\FollowCamera\FollowCamera.h" />
+    <ClInclude Include="Game\Object\Enemy\Arrow\ArrowEnemy.h" />
+    <ClInclude Include="Game\Object\Enemy\Shield\ShieldEnemy.h" />
   </ItemGroup>
 </Project>

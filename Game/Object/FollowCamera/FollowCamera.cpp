@@ -36,7 +36,7 @@ void FollowCamera::Update() {
 	}
 
 	// コントローラーでの回転
-	dir.x += Pad::GetRStick().y;
+	dir.x -= Pad::GetRStick().y;
 	dir.y += Pad::GetRStick().x;
 
 	// 任意軸を生成
@@ -44,15 +44,22 @@ void FollowCamera::Update() {
 		pCamera_->transform.rotation = pCamera_->transform.rotation * Quaternion::CreateFromAxisAngle(Vector3{ 1, 0, 0 }, 0.03f * dir.x);
 	}
 	// Y軸は常に上を向くように固定
+	//if()
 	if (std::abs(dir.y) >= 0.4f) {
 		pCamera_->transform.rotation = Quaternion::CreateFromAxisAngle(Vector3{ 0, 1, 0 }, 0.03f * dir.y) * pCamera_->transform.rotation;
 	}
+
+	//pCamera_->transform.rotation.x = std::clamp<float>(pCamera_->transform.rotation.x, 0.03f, 0.16f);
 
 	// カメラの座標を決定
 	pCamera_->transform.translation = target_->GetWorldPosition() + kTargetDist * Matrix4x4::CreateRotateXYZMatrix(pCamera_->transform.rotation);
 
 	// fovの設定
 	pCamera_->fov = ExponentialInterpolate(pCamera_->fov, goalFov_, 0.2f, 1.0f);
+
+	ImGui::Begin("Camera");
+	ImGui::DragFloat3("rotation", &pCamera_->transform.rotation.x, 0);
+	ImGui::End();
 }
 
 void FollowCamera::ResetAngle() {

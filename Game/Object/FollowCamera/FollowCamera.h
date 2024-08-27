@@ -67,6 +67,8 @@ private:/// プライベートな関数
 	// オフセットの計算
 	LWP::Math::Vector3 CalcOffset() const;
 
+	float LerpShortAngle(float a, float b, float t);
+
 private:/// 定数
 	///
 	/// 視点操作の設定
